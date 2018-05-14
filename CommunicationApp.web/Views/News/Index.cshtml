@@ -1,0 +1,45 @@
+﻿@{
+    Layout = ViewBag.IsPartial == "Y" ? "" : "~/Views/Shared/_Layout.cshtml";
+}
+<!-- SECTION -->
+<section>
+    <div class="container">
+        <header class="text-center">
+            <h1>OUR NEWS</h1>
+            <div class="divider half-margins onepage center"><!-- lines divider --></div>
+        </header>
+        <div id="portfolio" class="container">
+            <ul class="nav nav-pills isotope-filter isotope-filter hidden" data-sort-id="isotope-list" data-option-key="filter"></ul>
+            <div class="row">
+
+                <ul class="sort-destination isotope" data-sort-id="isotope-list">
+
+                    <li class="sotope-item col-sm-6 col-md-4 development">
+                        <!-- item -->
+                        <div class="item-box">
+                            <figure>
+                                <a class="item-hover" href="#" onclick="location.href='@Url.Action("Vuevent", "News")'">
+                                    <span class="overlay color2"></span>
+                                    <span class="inner">
+                                        <span class="block fa fa-plus fsize20"></span>
+                                        <strong>VUEVENT</strong>
+                                    </span>
+                                </a>
+                                <img class="img-responsive" src="~/assets/images/Ameba/News/vuevent-main.png" width="260" height="260" alt="">
+                            </figure>
+                            <div class="item-box-desc">
+                                <h4><strong>Vuevent</strong> </h4>
+                                <p>
+                                    Vuevent breaks down the walls of the traditional event discovery process by 
+                                    allowing you to find and virtually experience what is going on around you, in real time. 
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div><!-- /.masonry-container -->
+        </div>
+    </div>
+</section>
+<!-- /SECTION -->

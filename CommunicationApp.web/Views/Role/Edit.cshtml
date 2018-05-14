@@ -1,0 +1,76 @@
+﻿@model CommunicationApp.Models.RoleModel
+
+@{
+    ViewBag.Title = " Roles";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+
+<style type="text/css">
+    .validation-summary-errors {
+        font-weight: bold;
+        color: #ff0000;
+    }
+
+    .mycombo {
+        width: 100%;
+    }
+</style>
+
+
+
+<h2 class="text-center">Roles</h2>
+
+@{
+    Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = TempData["MessageBody"] });
+}
+
+@using (Html.BeginForm("Edit", "Role"))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.RoleId)
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelForRequired(model => model.RoleType, "", "control-label col-md-2")
+            <div class="col-md-4">
+                @Html.DropDownList("RoleType", (SelectList)ViewBag.Rolelist, new { @required = "" })
+                @Html.ValidationMessageFor(model => model.RoleType)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelForRequired(model => model.RoleName, "", "control-label col-md-2")
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.RoleName)
+                @Html.ValidationMessageFor(model => model.RoleName)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelForRequired(model => model.RoleDescription, "", "control-label col-md-2")
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.RoleDescription)
+                @Html.ValidationMessageFor(model => model.RoleDescription)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.CheckBoxFor(model => model.IsActive)
+                @Html.ValidationMessageFor(model => model.IsActive)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="bigButton" />
+            </div>
+        </div>
+    </div>
+}
+
+@if (Convert.ToBoolean(TempData["View"]) == true)
+{
+    <p class="operation">
+        <i class="fa fa-mail-reply create_icon"></i>
+        @Html.ActionLink(" Back to List", "Index")
+    </p>
+}

@@ -1,0 +1,262 @@
+
+/************************************************************************************
+smaller than 1280
+*************************************************************************************/
+@media screen and (max-width: 1280px) {
+
+
+
+}
+
+
+/************************************************************************************
+smaller than 1024
+*************************************************************************************/
+@media screen and (max-width: 1024px) 
+{
+.play_store img {
+    margin: 0 20px 0 0;
+    width: 42%;
+}
+
+}
+
+/************************************************************************************
+smaller than 768
+*************************************************************************************/
+@media screen and (max-width: 768px) 
+{
+	.services_box p {
+    float: left;
+    font-family: arial;
+    font-size: 13px;
+    line-height: 25px;
+    width: 100%;
+}
+.about_us {
+    background: url("../images/abput-us.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    float: left;
+    width: 100%;
+	background-size:cover;
+}
+.about_text p {
+    color: black;
+    font-family: arial;
+    font-size: 13px;
+    line-height: 25px;
+    text-align: justify;
+}
+.download_content {
+    float: left;
+    margin: 0;
+    width: 100%;
+}
+.feature_bg {
+    float: left;
+    margin: 19px 0 22px;
+    width: 100%;
+}
+.feature_bg span {
+    color: #404f64;
+    float: left;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 0 10px;
+    width: 80%;
+}
+.play_store {
+    float: left;
+    margin: 50px 0 0;
+    width: 100%;
+}
+.play_store img {
+    margin: 0 20px 0 0;
+    width: 44%;
+}
+.footer_box h4 {
+    color: #ffd21d;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 23px 0 16px;
+}
+	
+}
+
+/************************************************************************************
+smaller than 767
+*************************************************************************************/
+
+@media screen and (max-width: 640px) {
+	
+}
+/************************************************************************************
+smaller than 480
+*************************************************************************************/
+@media screen and (max-width: 480px) {
+.services_box p {
+    float: left;
+    font-family: arial;
+    font-size: 13px;
+    line-height: 25px;
+    width: 73%;
+}
+.about_us {
+    background: url("../images/abput-us.png") no-repeat scroll 0 0 / cover rgba(0, 0, 0, 0);
+    float: left;
+    width: 100%;
+}
+	
+}
+@media screen and (max-width: 360px) {
+		.logo img {
+    width: 100%;
+}
+.banner_left_text {
+    float: left;
+    margin: 4px 0 0;
+    width: 100%;
+}
+.banner_left_text h2 {
+    color: white;
+    font-size: 31px;
+    font-weight: bold;
+}
+.banner_right {
+    background: none repeat scroll 0 0 #ffd21d;
+    float: left;
+    margin: 61px 0 0;
+    width: 100%;
+}
+.services_box {
+    float: left;
+    margin: 0 3px 18px 0;
+    text-align: center;
+    width: 100%;
+}
+.services_icon {
+    background: none repeat scroll 0 0 #404f64;
+    border-radius: 51px;
+    display: unset;
+    float: left;
+    height: 70px;
+    margin: 14px 24px 0 102px;
+    padding: 18px;
+    text-align: center;
+}
+.services_box h5 {
+    color: #404f64;
+    float: left;
+    font-size: 26px;
+    text-align: center;
+    width: 100%;
+}
+.about_us {
+    background: url("../images/abput-us.png") no-repeat scroll 0 0 / cover rgba(0, 0, 0, 0);
+    float: left;
+    width: 100%;
+	height:auto;
+}
+.feature_bg span {
+    color: #404f64;
+    float: left;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 0 10px;
+    width: 70%;
+}
+.play_store {
+    float: left;
+    margin: 50px 2px 3px 20px;
+    width: 100%;
+}
+.play_store img {
+    margin: 0 15px 14px 1px;
+    width: 83%;
+}
+	.services_box p {
+    float: left;
+    font-family: arial;
+    font-size: 13px;
+    line-height: 25px;
+    width: 100%;
+}
+}
+
+/************************************************************************************
+smaller than 320
+*************************************************************************************/
+@media screen and (max-width: 320px) {
+	.logo img {
+    width: 100%;
+}
+.banner_left_text {
+    float: left;
+    margin: 4px 0 0;
+    width: 100%;
+}
+.banner_left_text h2 {
+    color: white;
+    font-size: 31px;
+    font-weight: bold;
+}
+.banner_right {
+    background: none repeat scroll 0 0 #ffd21d;
+    float: left;
+    margin: 61px 0 0;
+    width: 100%;
+}
+.services_box {
+    float: left;
+    margin: 0 3px 18px 0;
+    text-align: center;
+    width: 100%;
+}
+.services_icon {
+    background: none repeat scroll 0 0 #404f64;
+    border-radius: 51px;
+    display: unset;
+    float: left;
+    height: 70px;
+    margin: 14px 24px 0 77px;
+    padding: 18px;
+    text-align: center;
+}
+.services_box h5 {
+    color: #404f64;
+    float: left;
+    font-size: 26px;
+    text-align: center;
+    width: 100%;
+}
+.about_us {
+    background: url("../images/abput-us.png") no-repeat scroll 0 0 / cover rgba(0, 0, 0, 0);
+    float: left;
+    width: 100%;
+	height:auto;
+}
+.feature_bg span {
+    color: #404f64;
+    float: left;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 0 10px;
+    width: 70%;
+}
+.play_store {
+    float: left;
+    margin: 50px 2px 3px 20px;
+    width: 100%;
+}
+.play_store img {
+    margin: 0 15px 14px 1px;
+    width: 83%;
+}
+.services_box p {
+    float: left;
+    font-family: arial;
+    font-size: 13px;
+    line-height: 25px;
+    width: 100%;
+}
+
+}

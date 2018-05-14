@@ -1,0 +1,83 @@
+﻿@model CommunicationApp.Models.SubCategoryModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewBag.Title = "SubCategory";
+}
+
+<!DOCTYPE html>
+
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.chosen-select').chosen({ no_results_text: 'Oops, nothing found!' });
+
+    })
+
+</script>
+
+
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+@using (Html.BeginForm("Create", "SubCategory", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @*@Html.ValidationSummary(true)*@
+    <div class="row">
+        <div class="col-md-12">
+            <div class="sky-form boxed margin-top10">
+                <header>SubCategory</header>
+                @*@Html.ValidationSummary(true)*@
+                <fieldset>
+              
+                    <div class="row">
+                        <section class="col col-md-3">
+                            @Html.LabelForRequired(model => model.SubCategoryName)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.SubCategoryName)
+                                @Html.ValidationMessageFor(model => model.SubCategoryName)
+                            </label>
+                        </section>
+                       
+
+                    </div>
+
+
+                    <div class="row">
+                        <section class="col col-md-3">
+
+                            @Html.LabelForRequired(model => model.CategoryId)
+                            <label class="input">
+                                @Html.DropDownList("CategoryId", (SelectList)ViewBag.CategoryId, "-- Select Category --", new { @required = "", @class = "chosen-select" })
+                                @Html.ValidationMessageFor(model => model.CategoryId)
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-md-3">
+
+                            @Html.LabelFor(model => model.IsActive)
+                            <label class="check-square padding-top30">
+                                @Html.CheckBoxFor(model => model.IsActive)
+                                @Html.ValidationMessageFor(model => model.IsActive)
+                            </label>
+                        </section>
+                    </div>
+
+                </fieldset>
+                <footer>
+                    <input type="submit" value="Save" class="bigButton" id="btnSubmit" />
+                </footer>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+

@@ -1,0 +1,310 @@
+﻿@model IEnumerable<CommunicationApp.Models.CustomerModel>
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+
+<script type="text/javascript">
+    var id = 0;
+    function updateid(pid) {
+        id = pid;
+    }
+    function deleteme() {
+        debugger;
+        window.location = "/Property/DeleteCustomer?id=" + id;
+    }
+
+    function IsApproved(CustomerId, IsActive) {
+        debugger
+
+        var ChekedValue = IsActive;
+
+        $.ajax({
+            type: 'POST',
+            url: '/Customer/Approve',
+            data: JSON.stringify({ CustomerId: CustomerId, IsCheked: ChekedValue }),
+            contentType: 'application/json',
+            success: function (result) {
+                debugger
+                //$("#btnActive_" + CustomerId).text('Active');
+                //$('#ApproveModal').modal('toggle');
+
+
+            },
+            error: function () {
+                $("#divProcessing").hide();
+                $("#btnSecond").click();
+                return false;
+            }
+        });
+
+    }
+
+    $(document).ready(function () {
+        $('input[name="StartDate"]').daterangepicker(
+           {
+               singleDatePicker: true,
+               format: 'MM/DD/YYYY',
+               startDate: '@DateTime.Now.ToString("MM/dd/yyyy")' //'2015/01/01'
+           },
+           function (start, end, label) {
+               //alert('A date range was chosen: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+           }
+       );
+        $('input[name="EndDate"]').daterangepicker(
+          {
+              singleDatePicker: true,
+              format: 'MM/DD/YYYY',
+              //startDate: '2015/01/01'
+              startDate: '@DateTime.Now.ToString("MM/dd/yyyy")'
+          },
+          function (start, end, label) {
+              //alert('A date range was chosen: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+          }
+      );
+        @*$('#UserName').val(@Model.UserName);
+        $('#StartDate').val(@Model.StartDate);
+        $('#EndDate').val(@Model.EndDate);*@
+    });
+
+
+</script>
+
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+
+@using (Html.BeginForm("AppLikes", "User"))
+{
+
+    <div class="row">
+        <div class="col-lg-12">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col col-md-1">
+                Name
+            </div>
+            <div class="col col-md-2">
+                @Html.TextBox("FirstName", null, new { @class = " col-md-12 inputtxt" })
+            </div>
+            <div class="col col-md-1">
+                Mobile No
+            </div>
+            <div class="col col-md-2">
+                @Html.TextBox("PhoneNo", null, new { @class = " col-md-12 inputtxt" })
+            </div>
+
+            <div class="col col-md-1">
+                Email Id
+            </div>
+            <div class="col col-md-2">
+                @Html.TextBox("Email", null, new { @class = " col-md-12 inputtxt" })
+            </div>
+            <div class="col col-md-3">
+                <input type="submit" value="Search" data-id="search" class="bigButton action" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+
+            <div class="col col-md-1">
+                Treb Id
+            </div>
+            <div class="col col-md-2">
+                @Html.TextBox("TrebId", null, new { @class = " col-md-12 inputtxt" })
+            </div>
+
+
+        </div>
+    </div>
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_panel  sky-form boxed margin-top10">
+            <div class="x_title">
+                <header>App Likes By </header>
+                <div class="clearfix"></div>
+                <div class="notifcton_main_bg">
+                    <div class="lbl_clssss"><p> App Likes </p><span id="Agentspanid1" class="notifiction">@HttpContext.Current.Session["Likes"].ToString()</span></div>
+                    <div class="lbl_clssss"><p>Pending</p><span id="Agentspanid1" class="notifiction">@HttpContext.Current.Session["PendingUserCount"].ToString()</span></div>
+                    <div class="lbl_clssss"> <p>Approved</p><span id="Agentspanid2" class="notifiction_2">@HttpContext.Current.Session["ApproveUserCount"].ToString()</span></div>
+                    <div class="lbl_clssss"> <span class="export_log export_data" id="ExportDiv"><a title="Export Users" onclick="location.href='@Url.Action("ExportUsers", "Customer")'"><img src="~/images/icon_export_xls.png" title="Export Users" alt="" /></a></span></div>
+
+
+                </div>
+            </div>
+            <div class="x_content">
+                <table id="mytable" class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%" class="txt-align"><span>@Html.DisplayNameFor(model => model.PhotoPath)</span></th>
+                            <th style="width: 10%" class="txt-align"><span>Name</span></th>
+                            <th style="width: 10%" class="txt-align"><span>Treb Id</span></th>
+                            <th style="width:10%" class="txt-align"><span> @Html.DisplayNameFor(model => model.MobileNo)</span></th>
+                            <th style="width: 10%" class="txt-align"><span>@Html.DisplayNameFor(model => model.EmailID)</span></th>
+                            <th style="width: 10%" class="txt-align"><span>Website Url</span></th>
+                            <th style="width: 10%" class="txt-align"><span>@Html.DisplayNameFor(model => model.ActiveTime)</span></th>
+                            <th style="width: 10%" class="txt-align"><span>Date</span></th>
+                            <th style="width: 10%" class="txt-align"><span>Active</span></th>
+                            @*<th style="width: 10%" class="txt-align"><span>Action</span></th>*@
+
+                            @*<th><span> @Html.DisplayNameFor(model => model.IsActive)</span></th>*@
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+
+                            string RowColors = "";
+
+                        }
+                        @foreach (var item in Model)
+                        {
+                            if (@item.IsActive == true && @item.UpdateStatus == true)
+                            {
+                                RowColors = "Greencolor";
+                            }
+                            else if (@item.IsActive == false)
+                            {
+                                RowColors = "Redcolor";
+                            }
+                            if (@item.IsActive == true && @item.UpdateStatus == false)
+                            {
+                                RowColors = "Yellowcolor";
+                            }
+
+
+                            <tr class="@RowColors">
+                                <td class="txt-align">
+
+                                    @if ((item.PhotoPath != "") && (item.PhotoPath != null))
+                                    {
+                                        <img src="@Url.Content(item.PhotoPath)" height="50" width="50" alt="No Image" />
+                                    }
+                                </td>
+                                <td>
+                                    <a class="info_link @RowColors" style="" @*id="@ids"*@ href="@Url.Action("Edit", "Customer", new { id = @item.CustomerId }) ">@Html.DisplayFor(model => item.FirstName)</a>
+                                </td>
+                                <td class="txt-align">
+                                    @Html.DisplayFor(model => item.TrebId)
+                                </td>
+                                <td class="txt-align">
+                                    @Html.DisplayFor(model => item.MobileNo)
+                                </td>
+                                <td class="txt-align">
+
+                                    @Html.DisplayFor(model => item.EmailID)
+                                </td>
+                                <td class="txt-align">
+
+                                    @Html.DisplayFor(model => item.WebsiteUrl)
+                                </td>
+                                <td class="txt-align">
+
+                                    @Html.DisplayFor(model => item.ActiveTime)
+                                </td>
+                                <td class="txt-align">
+                                    @{
+                                    var createdata = @item.LastUpdatedOn.ToString();
+                                    DateTime create_date = createdata != "" ? Convert.ToDateTime(createdata) : Convert.ToDateTime(DateTime.Now);
+                                    }
+                                    @create_date.ToString("MM/dd/yyyy")
+                                </td>
+                                <td class="operation">
+                                    @{
+                                    string IsActive = "";
+                                    string Colors = "";
+                                    string Pipe = "|";
+
+                                    }
+                                    @if (@item.IsActive == true)
+                                    {
+                                        IsActive = "Yes";
+                                        Colors = "Greencolor";
+                                    }
+                                    else
+                                    {
+                                        IsActive = "No";
+                                        Colors = "Redcolor";
+
+                                    }
+                                    @if (item.IsActive)
+                                    {
+
+                                        <a href="#" class="IsActive #1ABB9C" id="btnActive_@item.CustomerId" data-customerid="@item.CustomerId" @*onclick="IsApproved(@item.CustomerId,'No')"*@><i class="@RowColors">@IsActive</i></a>
+                                    }
+                                    else
+                                    {
+
+                                        <a href="#" class="IsActive #1ABB9C" id="btnActive_@item.CustomerId" data-customerid="@item.CustomerId" @*onclick="IsApproved(@item.CustomerId,'No')"*@><i class="@RowColors">@IsActive</i></a>
+
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Delete User</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <p> Are you sure? This property will be permanently deleted and cannot be recovered.</p>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button class="bigButton" data-dismiss="modal">Close</button>
+                <button class="bigButton" onclick="deleteme();">Delete</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+@{
+    if (Model.ToList().Count == 0)
+    {
+        TempData["Message"] = "No record found .";
+
+    }
+    else
+    {
+        Html.RenderAction("Paging", "Base");
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

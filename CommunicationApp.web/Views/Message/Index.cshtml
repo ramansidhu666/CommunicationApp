@@ -1,0 +1,174 @@
+﻿@model IEnumerable<CommunicationApp.Models.MessageModel>
+
+@{
+    ViewBag.Title = "Message";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+<script type="text/javascript">
+    var id = 0;
+    function updateid(pid) {
+        id = pid;
+    }
+    function deleteme() {
+        debugger;
+        window.location = "/Message/DeleteConfirmed?id=" + id;
+    }
+
+    $(document).ready(function () {
+
+    });
+</script>
+<style>
+    table {
+        border-collapse: collapse;
+        table-layout: fixed;
+        width: 310px;
+    }
+
+        table td {
+            width: 100px;
+            word-wrap: break-word;
+        }
+</style>
+<h2 class="text-center">Message List</h2>
+
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+
+<p class="operation">
+    <i class="fa fa-mail-forward create_icon red"></i>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-lg-12">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col col-md-1">
+                <b>Message</b>
+            </div>
+            <div class="col col-md-2">
+
+                @Html.TextBox("Message", null, new { @class = " col-md-12", @style = "height: 34px;" })
+            </div>
+            <div class="col col-md-1">
+                <b>Heading</b>
+            </div>
+            <div class="col col-md-2">
+
+                @Html.TextBox("Heading", null, new { @class = " col-md-12", @style = "height: 34px;" })
+            </div>
+            <div class="col col-md-3">
+                <input type="submit" value="Search" data-id="search" class="bigButton action" />
+            </div>
+        </div>
+    </div>
+}
+<div>
+    <table id="mytable" class="table">
+        <thead>
+            <tr>
+                <th class="txt-align"><span>Photo</span></th>
+                <th class="txt-align"><span>@Html.DisplayNameFor(model => model.Heading)</span></th>
+                <th class="txt-align"><span>@Html.DisplayNameFor(model => model.Messages)</span></th>
+                @*<th class="txt-align"><span>@Html.DisplayNameFor(model => model.CreatedOn)</span></th>*@
+                <th class="txt-align"><span>@Html.DisplayNameFor(model => model.IsActive)</span></th>
+                <th class="txt-align"><span>Action</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td >
+                        @*<a href="@Url.Action("GetPropertyById", "Property", new { id = @item.PropertyId })">  </a>*@
+                        <ul class="list-inline">
+                            @foreach (var PropertyPhoto in item.ImageUrlList)
+                            {
+                                if ((PropertyPhoto.ImageUrl != "") && (PropertyPhoto.ImageUrl != null))
+                                {
+                                    <li>
+                                        <img src="@PropertyPhoto.ImageUrl" class="avatar" style="height:70px;width:70px" alt="Avatar">
+                                    </li>
+                                }
+                            }
+                        </ul>
+
+                    </td>
+
+
+
+                    <td class="txt-align">
+                        @item.Heading
+                    </td>
+                    <td class="txt-align">
+                        @item.Messages
+                    </td>
+                    @*<td class="txt-align">
+                        @{
+                            var createdata = @item.CreatedOn.ToString();
+                            if(createdata!="")
+                            {
+                                DateTime create_date = Convert.ToDateTime(createdata);
+                        }
+
+                        }
+                        @create_date.ToString("MM/dd/yyyy HH:MM:ss tt")
+                    </td>*@
+
+                    <td class="txt-align">
+                        @item.IsActive
+                    </td>
+
+                    <td class="operation">
+                        <a data-toggle="modal" onclick="updateid(@item.MessageId);" title="Delete" href="#myModal"><i class="fa fa-trash-o red"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Delete Message</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <p> Are you sure? This message will be permanently deleted and cannot be recovered. </p>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button class="bigButton" data-dismiss="modal">Close</button>
+                <button class="bigButton" onclick="deleteme();">Delete</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+
+@{
+    if (Model.ToList().Count == 0)
+    {
+        TempData["Message"] = "No record found .";
+
+    }
+    else
+    {
+        Html.RenderAction("Paging", "Base");
+
+    }
+
+}

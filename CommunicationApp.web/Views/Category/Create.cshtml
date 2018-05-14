@@ -1,0 +1,65 @@
+﻿@model CommunicationApp.Models.CategoryModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewBag.Title = "Category";
+}
+
+<h2 class="text-center">Category</h2>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+  
+</head>
+<body>
+    @using (Html.BeginForm()) 
+    {
+        @Html.AntiForgeryToken()
+        
+        
+        <div class="row">
+        <div class="col-md-12">
+            <div class="sky-form boxed margin-top10">
+                <header>Category</header>
+                @Html.ValidationSummary(true)
+                <fieldset>
+                    
+
+                    <div class="row">
+                        <section class="col col-lg-3">
+                            @Html.LabelFor(model => model.CategoryName)
+                            <label class="input ">
+                                @Html.TextBoxFor(model => model.CategoryName)
+                                @Html.ValidationMessageFor(model => model.CategoryName)
+                            </label>
+                        </section>
+                    </div>
+                    
+                    
+                    <div class="row">
+                        <section class="col col-md-3">
+
+                            @Html.LabelFor(model => model.IsActive)
+                            <label class="check-square padding-top30">
+                                @Html.CheckBoxFor(model => model.IsActive)
+                                @Html.ValidationMessageFor(model => model.IsActive)
+                            </label>
+                        </section>
+                    </div>
+                </fieldset>
+                <footer>
+                    <input type="submit" value="Create" class="bigButton" id="btnSubmit" />
+                </footer>
+            </div>
+        </div>
+    </div>
+        
+      
+    }
+    
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>

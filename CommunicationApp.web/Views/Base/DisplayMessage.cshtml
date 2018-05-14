@@ -1,0 +1,28 @@
+﻿@{
+    if (ViewBag.ShowMessage != null)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                setTimeout(function () { $('#message').show().fadeOut('slow'); }, 5000);
+            });
+        </script>
+        if (ViewBag.ShowMessage == "success")
+        {
+            
+            <div id="message" class="alert alert-success">
+                <!-- SUCCESS -->
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                @ViewBag.MessageBody
+            </div>
+        }
+        if (ViewBag.ShowMessage == "error")
+        {
+            <div id="message" class="alert alert-danger">
+                <!-- ERROR -->
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                @ViewBag.MessageBody
+            </div>
+        }
+    }
+}
+

@@ -1,0 +1,133 @@
+﻿@model CommunicationApp.Models.AdminModel
+
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+
+
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+@using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="sky-form boxed margin-top10">
+                <header>Admin</header>
+                @Html.ValidationSummary(true)
+                <fieldset>                  
+            
+                    <div class="row">
+                        <section class="col col-md-3">
+                           <label>Form1</label>
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.FirstName)
+                               
+                            </label>
+                        </section>
+
+                        <section class="col col-lg-3">
+                           <label>Date:</label>
+                            <label class="input ">
+                                @Html.TextBoxFor(model => model.MiddleName)
+                                
+                            </label>
+                        </section>
+                    </div>
+
+
+                    <div class="row">
+                        <section class="col col-md-3">
+
+                            <label>Office:</label>
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.LastName)
+                                @Html.ValidationMessageFor(model => model.LastName)
+                            </label>
+                        </section>
+                        <section class="col col-lg-3">
+
+                            <label>Completed By:</label>
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.WebsiteUrl)
+                                @*@Html.ValidationMessageFor(model => model.WebsiteUrl)*@
+                            </label>
+                        </section>
+                        <section class="col col-lg-6"></section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-md-3">
+
+                            <label>Date:</label>
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.EmailID)
+                                @Html.ValidationMessageFor(model => model.EmailID)
+                            </label>
+                        </section>
+                        <section class="col col-md-3">
+
+                            <label>Date:</label>
+                            <label class="input">
+                                @Html.EditorFor(model => model.Password)
+                                @Html.ValidationMessageFor(model => model.Password)
+                            </label>
+                        </section>
+
+
+                    </div>
+                    <div class="row">
+                        <section class="col col-md-3">
+
+                            <label>Date:</label>
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.CompanyName)
+                                @Html.ValidationMessageFor(model => model.CompanyName)
+                            </label>
+                        </section>
+                        <section class="col col-md-3">
+
+                            <label>Date:</label>
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.AdminCompanyAddress)
+                                @Html.ValidationMessageFor(model => model.AdminCompanyAddress)
+                            </label>
+                        </section>
+
+                    </div>
+                    <div class="row">
+                        <section class="col col-md-3">
+
+                            @Html.LabelFor(model => model.MobileNo)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.MobileNo)
+                                @Html.ValidationMessageFor(model => model.MobileNo)
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-md-3">
+
+                            <label>Date:</label>
+                            <label class="check-square padding-top30">
+                                @Html.CheckBoxFor(model => model.IsActive)
+                                @Html.ValidationMessageFor(model => model.IsActive)
+                            </label>
+                        </section>
+                    </div>
+                </fieldset>
+                <footer>
+                    <input type="submit" value="Update" class="bigButton" id="btnSubmit" />
+                </footer>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

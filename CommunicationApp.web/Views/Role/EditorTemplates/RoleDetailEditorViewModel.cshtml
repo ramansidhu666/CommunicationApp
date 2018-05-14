@@ -1,0 +1,27 @@
+﻿@model CommunicationApp.Models.RoleDetailEditorViewModel
+<tr>
+    <td class ="SelectRow" data-val="0"><input type="checkbox" /></td>
+    <td>
+        @Html.HiddenFor(model => model.FormId)
+        @Html.HiddenFor(model => model.RoleId)
+        @Html.DisplayFor(model => model.FormName)
+    </td>
+    <td>
+        @Html.CheckBoxFor(model => model.IsCreate, new {@class="create" })
+    </td>
+    <td>
+        @Html.CheckBoxFor(model => model.IsEdit, new {@class="edit" })
+    </td>
+    <td>
+        @Html.CheckBoxFor(model => model.IsView, new { @class = "view" })
+    </td>
+    <td>
+        @Html.CheckBoxFor(model => model.IsDelete, new { @class = "delete" })
+    </td>
+    <td>
+        @Html.CheckBoxFor(model => model.IsDownload, new { @class = "download" })
+    </td>
+    <td>
+        @Html.CheckBoxFor(model => model.IsDetail, new { @class = "detail" })
+    </td>
+</td>

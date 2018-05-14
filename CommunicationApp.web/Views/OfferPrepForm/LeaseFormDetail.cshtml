@@ -1,0 +1,231 @@
+﻿@model CommunicationApp.Web.Models.LeaseFormModel
+@{
+    ViewBag.Title = "Lease Form";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lease Form</title>
+
+    <!-- Bootstrap -->
+    <link href="~/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="~/assets/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="~/assets/css/font.css" rel="stylesheet">
+    <link href="~/assets/css/font-awesome.css" rel="stylesheet">
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/assets/css/style.css" rel="stylesheet">
+    <link href="~/assets/css/media-queries.css" rel="stylesheet">
+
+    <script src="js/npm.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="form_bg">
+            <h2>Lease Form</h2>
+            <div class="form_box">
+                <h2>Agreement of Lease</h2>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label for="exampleSelect1">Office Location</label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.Email, new { @class = "form-control" })
+                    </span>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Your Name:</label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.Name, new { @class = "form-control borer_style" })
+                    </span>
+                </div>
+            </div>
+            <div class="form_box2">
+                <div class="form-group">
+                    <label class="form-check-label chk_box">
+
+                        @Html.DisplayFor(model => model.AgreementofPurchaseandSale, new { @class = "form-check-input" })
+                    </label>
+                </div>
+            </div>
+            <div class="form_box2">
+                <div class="form-group">
+                    <label class="form-check-label chk_box">
+                        @Html.DisplayFor(model => model.GarbageRemovalOrCondoFee, new { @class = "form-check-input" })
+                    </label>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Agreement Date:</label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.AgreementDate, new { @class = "form-control borer_style" })
+                    </span>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label>MLS#:</label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.MLS, new { @class = "form-control borer_style" })
+                    </span>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label>Buyer:</label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.Tenant, new { @class = "form-control borer_style" })
+                    </span>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label>Purchase Price:</label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.Rent, new { @class = "form-control borer_style" })
+                    </span>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label>In Words:</label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.Price_InWords, new { @class = "form-control borer_style" })
+                    </span>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label>Deposit Amt:</label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.DepositAmt, new { @class = "form-control borer_style" })
+                    </span>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label>In Words:</label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.Amt_InWords, new { @class = "form-control borer_style" })
+                    </span>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label>Deposit Date:</label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.Deposit, new { @class = "form-control borer_style" })
+                    </span>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label>Commencement Date:</label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.CompletionDate, new { @class = "form-control borer_style" })
+                    </span>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label>Irrevocable Date:</label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.Irrevocable, new { @class = "form-control borer_style" })
+                    </span>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label>Title Search Date:</label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.TitleSearch, new { @class = "form-control borer_style" })
+                    </span>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label>Co-Operating Broker Commission:</label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.Co_OperatingBrokerCommission, new { @class = "form-control borer_style" })
+                    </span>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group full_wdth_chk">
+                    <label>Are we the</label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.Arewethe, new { @class = "form-check-input" })
+                    </span>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label>Chattels Included:</label>
+                    @foreach (var item in Model.ChattelsTypesModelList)
+                    {
+                    <div class="checkbox full_wdth_chk">
+                        <label>@item.ChattelsName @item.ChattelsCount </label>
+                    </div>
+                    }
+                    @*<div class="checkbox full_wdth_chk">
+                        <span>And All Other Permanent Fixtures now attached to the real Property belonging to the Seller and deemed to be free of all liens and encumbrances</span>
+                    </div>*@
+                    <div class="form-group">
+                        <label>Other:</label>
+                        <span style="float:left;margin:6px;">
+                            @Html.DisplayFor(model => model.Excluded, new { @class = "form-control borer_style" })
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+
+                    <label>Standard Miracle Lease Clouses will be included.</label>
+                    @foreach (var item in Model.ClausesTypeModelList)
+                    {
+                    <div class="checkbox full_wdth_chk">
+                        <label>@item.ClausesName</label>
+                    </div>
+                        if (item.ClausesName == "Final Viewing ")
+                        {
+                        <label class="form-check-label">
+                            @Html.DisplayFor(model => model.FinalView_Option)
+                        </label>
+                        }
+                    }
+
+
+                </div>
+            </div>
+            <div class="form_box">
+                <div class="form-group">
+                    <label for="exampleTextarea">Remarks: </label>
+                    <span style="float:left;margin:6px;">
+                        @Html.DisplayFor(model => model.Remarks, new { @class = "form-control" })
+                    </span>
+                </div>
+            </div>
+            </div>
+        </div>
+
+</body>
+</html>
+
+
+

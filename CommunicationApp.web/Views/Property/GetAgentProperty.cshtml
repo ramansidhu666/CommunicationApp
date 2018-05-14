@@ -1,0 +1,538 @@
+﻿@model  CommunicationApp.Models.AgentModel
+
+@{
+    ViewBag.Title = "Open House";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+@{
+    Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = TempData["MessageBody"] });
+}
+
+@{
+    string IsApprovedYes = "";
+    string IsApprovedNo = "";
+}
+@if (@Model.IsActive == true)
+{
+    IsApprovedYes = "checked";
+}
+else
+{
+    IsApprovedNo = "checked";
+}
+
+
+<script>
+    $(document).ready(function () {
+        var isEditable=true;
+        var $div = $('#RemarksDiv'), isEditable = $div.is('.editable');
+        $('#RemarksDiv').prop('contenteditable', !isEditable).toggleClass('editable')
+
+        $('input[type=radio][name=Approve]').on('change', function(){           
+            
+            $("#btnApproveModal").click();            
+        });
+
+
+
+        var isEditable=false;
+        $('#RemarksDiv').prop('contenteditable', !isEditable).toggleClass('editable')
+        $('#remarksUpdate').click(function () {
+            debugger;
+            var $div = $('#RemarksDiv'), isEditable = $div.is('.editable');
+            $('#RemarksDiv').prop('contenteditable', !isEditable).toggleClass('editable')
+            var PropertyId=@Model.AgentId;
+            var Remarks=$('#RemarksDiv').val();
+            if(isEditable==true)
+            {
+                debugger;
+                $.ajax({
+                    type: 'POST',
+                    url: '/Property/EditAgentRemarks',
+                    data: JSON.stringify({ PropertyId: PropertyId,Remarks:Remarks }),
+                    contentType: 'application/json',
+                    success: function (result) {
+                        debugger;
+                        $('#RemarkModal').modal('toggle');
+                       
+                        if (result != "") {
+                            $('#RemarksDiv').text("");
+                            $('#RemarksDiv').text(result);
+                            isEditable=true;
+                            var $div = $('#RemarksDiv'), isEditable = $div.is('.editable');
+                            $('#RemarksDiv').prop('contenteditable', !isEditable).toggleClass('editable')
+
+                        }
+                        else if (result == "choosecompany") {
+                           // window.location.href = '@Url.Action("Company", "Home")';
+                        }
+
+
+                },
+                    error: function () {
+                        $("#divProcessing").hide();
+                        $("#btnSecond").click();
+                        return false;
+                    }
+            });
+        }
+
+        })
+
+        $('#btnIsApprovedClose').click(function ()
+        {
+            debugger
+            $('#ApproveYes').prop('checked',false);
+            $('#ApproveNo').prop('checked',false);
+
+          @{
+              var ApproveNoStatus = "";
+              var ApprovYesStatus = "";
+                
+          }           
+          @if(@Model.IsActive==true)
+          {
+              ApprovYesStatus = "checked";
+                
+          }
+          else
+          {
+              ApproveNoStatus = "checked";
+
+          }
+            
+            $('#ApproveNo').prop('checked','@ApproveNoStatus');
+            $('#ApproveYes').prop('checked','@ApprovYesStatus');
+        });
+
+    });
+
+
+    function IsApproved()
+    {
+        debugger;
+       
+        var ChekedValue=$('input[type=radio][name=Approve]:checked').val();
+        var PropertyId= @Model.AgentId
+
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/Home/UpdateAgent',
+            data: JSON.stringify({ PropertyId: PropertyId, IsCheked: ChekedValue}),
+            contentType: 'application/json',
+            success: function (result) {
+
+                window.location.href = '@Url.Action("getagentproperty", "property", new { id = @Model.AgentId })';
+                if (result=="Yes") {
+                   
+                }
+                else if (result == "No") {
+                    
+                }
+
+                $("#ApproveModal").attr('style','display:none;');
+
+
+            },
+            error: function () {
+                $("#divProcessing").hide();
+                $("#btnSecond").click();
+                return false;
+            }
+        });
+
+    }
+    function  DeleteAgentImage( id)
+    {
+    
+        debugger
+        //$('#DeleteImageDiv').click(function () {
+        $.ajax({
+            type: 'POST',
+            url:'@Url.Action("DeleteAgentImage")' ,
+            data: JSON.stringify({ id: id }),
+            contentType: 'application/json',
+            success: function (DeleteImageModel) {             
+               
+               
+                var NewImagePath = DeleteImageModel.NewImagePath;
+                var ImagePropertyId=DeleteImageModel.ImagePropertyId;
+                var DeletedImagePath= DeleteImageModel.DeletedImagePath;
+                var Noimage="/images/no-image-available.jpg";
+                $('#DivId-'+ImagePropertyId).empty();
+                $('#DivIconId-'+ImagePropertyId).empty();
+                $('#DivIconId-'+ImagePropertyId).removeClass('edit_in');
+                var Imgprevw=$('#imgprvw').attr('src');
+                
+                if(Imgprevw!=null)
+                {
+                   
+                    if(Imgprevw==DeletedImagePath)
+                    {
+                       
+                        $('#imgprvw').attr('src',"")
+                           
+                    }
+                       
+                    if(NewImagePath!=null)
+                    {
+                       
+                        $('#imgprvw').attr('src',NewImagePath)
+                    }
+                    else
+                    {
+                        
+                        $('#imgprvw').attr('src',Noimage)
+                    }
+
+                }
+
+            },
+            error: function () {
+                $("#divProcessing").hide();
+                $("#btnSecond").click();
+                return false;
+            }
+        });
+        //})
+    }
+
+    function showimagepreview(input) {
+
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#prvwimg').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+    var id = 0;
+    function updateid(pid) {
+
+        id = pid;
+        //$("#btnSecond").click();
+    }
+
+    var DeletedId=0;
+
+    function  DeleteProperty(Pid)
+    {
+        debugger
+        DeletedId=Pid;
+        //$("#btnDelteImageModal").click();
+    }
+    var UpdatePropertyId=0;
+    //UpdateRemarks(PropertyId)
+    //{
+    //    debugger;
+    //    UpdatePropertyId=PropertyId;
+    //}
+
+</script>
+<div class="row">
+
+    <div class="col-md-6 col-sm-6">
+
+        @*<figure class="product-view-image">
+          
+            <img id="imgprvw" class="img-responsive" src="@Model.OpenHousePropertyImage" width="620" height="620" alt="" />
+        </figure>*@
+
+        <figure class="product-view-image">
+            <!-- product image -->
+            @if ((@Model.OpenHousePropertyImage != "") && (@Model.OpenHousePropertyImage != null))
+            {
+                <img id="imgprvw" class="img-responsive" src="@Model.OpenHousePropertyImage" data-propertyimageid="-1" width="620" height="620" alt="" />
+            }
+            @if (Model.PropertyPhotolist != null)
+            {
+                if (Model.PropertyPhotolist.Count() > 0)
+                {
+                    <section>
+                        <footer>
+                            @*<input type="submit" value="Update" class="bigButton" id="btnSubmit" />*@
+                            <a data-toggle="modal" onclick="updateid(@Model.AgentId);" style="color: #34C7F4" href="#myModal"><i class="">Edit Image</i></a>
+                           
+                        </footer>
+                    </section>
+                }
+
+            }
+        </figure>
+
+
+
+    </div>
+
+    <div class="col-md-6 col-sm-6">
+        <p>
+            <h2>@Model.MLS</h2>
+        </p>
+
+        <hr class="half-margins" />
+
+        <span id="product-view-stock-info" class="shop-stock-info stock-yes">
+           
+            <label>Approve :</label>
+            <p>
+                <input type="radio" name="Approve" id="ApproveYes" @IsApprovedYes value="Yes"> Yes
+                <input type="radio" name="Approve" id="ApproveNo" @IsApprovedNo value="No"> No
+            </p>
+
+</span>
+       
+
+        <!-- see the bottom of the page for the script -->
+        <section class="product-view-colors">
+            @{
+                if (Model.PropertyPhotolist != null)
+                {
+                    foreach (var item in Model.PropertyPhotolist)
+                    {
+                        <div class="Property_img">
+
+                            <div id="DivId-@item.PropertyImageId">
+                                <a data-color="pink" data-stock="yes" data-id="@item.PropertyImageId" class="imageclass" data-src="@item.imagelist" href="#">
+                                    <img src="@item.imagelist" height="70" alt="" />
+
+                                </a>
+                            </div>                            
+                            <div id="DivIconId-@item.PropertyImageId" class="edit_in" data-toggle="modal" onclick="DeleteProperty(@item.PropertyImageId);" href="#DeleteModal">
+                                <i class="fa fa-times"></i> <a href="#"></a>
+
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </section>
+
+
+        <form action="#" method="get" class="form-inline margin-top30 nopadding clearfix">
+            <div class="remarks_scttt">
+                <span>Remarks:</span>
+                <textarea class="text_in" maxlength="150" required id="RemarksDiv" type="text"  value="Mickey" style="width: 300px;" />@Model.Comments</textarea>              
+            </div>
+        </form>
+
+        <div>
+            <button id="RemarksBtn" data-toggle="modal" href="#RemarkModal" onclick="UpdateRemarks(@Model.AgentId);" class="bigButton action">Update Remarks</button>
+        </div>
+       
+
+        <hr class="half-margins" />
+
+
+
+    </div>
+
+
+
+</div>
+<div class="dt-sc-tabs-frame-content" style="">
+    <div class="sky-form boxed margin-top10">
+        <header><b>General Information For Availabilty</b></header>
+        <br>
+        <div class="detail_left_Section_top" style="font-family:Arial">
+            <span id="MainContent_PropertyDetailsControl_lblSubTypeofhome"><b>Date:</b> @Model.Date</span>
+            <br>
+            <span id="MainContent_PropertyDetailsControl_lblStorey"><b>FromTime:</b> @Model.FromTime</span><br>
+            <b>ToTime:</b>
+            <span id="MainContent_PropertyDetailsControl_lblDirCrossSt">@Model.ToTime</span>
+            <br>            
+            
+
+        </div>
+
+        <div id="MainContent_PropertyDetailsControl_room" style="font-family:Arial">
+            <div class="detail_span" id="MainContent_PropertyDetailsControl_Fronting">
+                <span id="MainContent_PropertyDetailsControl_lblfronting"><b>Date:</b> @Model.Date2</span>
+            </div>
+            <div class="detail_span">
+                <b>FromTime: </b>
+                <span id="MainContent_PropertyDetailsControl_lblroom">@Model.FromTime2</span>
+                <br>
+                <b>ToTime :</b>
+                <span id="MainContent_PropertyDetailsControl_lblBedroom">@Model.ToTime2 :</span>
+                <br>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<a id="btnSecond" data-toggle="modal" style="color: #34C7F4; opacity: 0;" href="#myModal"><i class="">Show Modal</i></a>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Uplaod File</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            @using (Html.BeginForm("EditAgentImage", "Property", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="modal-body">
+                    <div class="col-md-6 col-sm-6">
+
+                        <figure class="product-view-image">                          
+                            <img id="prvwimg" class="img-responsive" src="~/images/no-image-available.jpg" width="620" height="620" alt="" />
+
+                        </figure>
+                    </div>
+                    <input type="hidden" id="PropertyId" name="PropertyId" value="@Model.AgentId" />
+                    <section class="col col-md-3">
+
+                        Upload Image
+                        <input type="file" name="file" id="ImageUpload" onchange="showimagepreview(this)" />
+
+                    </section>
+
+                    <section style="display:none" class="col col-md-4">
+                        <input type='file' name='file' id='file' />
+                        @*<div class="button"><input type="file" id="fileToUpload" onchange="this.parentNode.nextSibling.value = this.value" name="fileToUpload">Browse</div>*@
+                        <span style="color:red;"></span><span id="spanfile" class="field-validation-error"></span>
+                    </section>
+                </div>
+            <!-- /modal body -->
+
+                <div class="modal-footer" style="float:left">
+                    <!-- modal footer -->
+                    <button class="bigButton" data-dismiss="modal">Close</button>
+                    <button type="submit" class="bigButton" @*onclick="Uplaod();"*@>Upload</button>
+                </div><!-- /modal footer -->
+
+            }
+
+
+
+        </div>
+    </div>
+</div>
+<a id="btnApproveModal" data-toggle="modal" style="color: #34C7F4; opacity: 0;" href="#ApproveModal"><i class="">Show Modal</i></a>
+<div class="modal fade" id="ApproveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Approve</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <p> Are you sure? You want to change the status.</p>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button id="btnIsApprovedClose" class="bigButton" data-dismiss="modal">Close</button>
+                <button class="bigButton" onclick="IsApproved();">Ok</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+
+
+<a id="btnDelteImageModal" data-toggle="modal" style="color: #34C7F4; opacity: 0;" href="#DeleteModal"><i class="">Show Modal</i></a>
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Delete</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <p> Are you sure? You want to delete this Image.</p>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button id="btnIsApprovedClose" class="bigButton" data-dismiss="modal">Close</button>
+                <button class="bigButton" onclick="DeleteAgentImage(DeletedId);">Ok</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+
+<a id="btnRamarkModal" data-toggle="modal" style="color: #34C7F4; opacity: 0;" href="#RemarkModal"><i class="">Show Modal</i></a>
+<div class="modal fade" id="RemarkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Remarks</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <p> Are you sure? You want to update this remarks.</p>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button id="btnIsApprovedClose" class="bigButton" data-dismiss="modal">Close</button>
+                <button class="bigButton" id="remarksUpdate" @*onclick="RemarksUpdate(UpdatePropertyId);"*@>Ok</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    /** CHANGE BIG IMAGE **/
+    jQuery("#imgprvw").attr('src', jQuery(this).attr('data-src'));
+    jQuery('section.product-view-colors a').bind("click", function (e) {
+        e.preventDefault();
+
+        /** Reset the selected thumbnail **/
+        jQuery('.product-view-colors a').removeClass('active');
+        jQuery(this).addClass('active');
+
+        /** add the color (value) to the hidden input, inside the form **/
+        jQuery("input#color").val(jQuery(this).attr('data-color').trim());
+
+
+        /** CHANGE BIG IMAGE **/
+        jQuery("#imgprvw").attr('src', jQuery(this).attr('data-src'));
+
+
+        /**
+
+        /* stock color */
+        var data_stock = jQuery(this).attr('data-stock').trim();
+        jQuery("#product-view-stock-info").removeClass('stock-yes stock-no');
+        jQuery("#product-view-stock-info").addClass('stock-' + data_stock);
+
+        /* stock icon */
+        jQuery("#product-view-stock-info i").removeClass('fa-check fa-times');
+        if (data_stock == 'yes') {
+            jQuery("#product-view-stock-info i").addClass('fa-check');
+        } else {
+            jQuery("#product-view-stock-info i").addClass('fa-times');
+        }
+
+    });
+
+</script>
+
+<div>
+    @Html.ActionLink("Back to List", "Agentlist")
+</div>

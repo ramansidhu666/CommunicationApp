@@ -1,0 +1,331 @@
+﻿@model  CommunicationApp.Models.AgentListModel
+
+@{
+    ViewBag.Title = "Open House";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+
+<script type="text/javascript">
+
+    //delete experience
+    var id = 0;
+    function updateid(pid) {
+        id = pid;
+    }
+    function deleteme() {
+        debugger;
+        window.location = "/property/DeleteAgents?id=" + id;
+    }
+    $(document).ready(function () {
+
+
+        $("#propertyspanid").removeClass("notification");
+        $("#Agentspanid").removeClass("notification");
+
+        $('input[name="StartDate"]').daterangepicker(
+           {
+               singleDatePicker: true,
+               format: 'DD/MM/YYYY',
+               startDate: '@DateTime.Now.ToString("dd/MM/yyyy")'
+           },
+           function (start, end, label) {
+               //alert('A date range was chosen: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+           }
+       );
+        $('input[name="EndDate"]').daterangepicker(
+          {
+              singleDatePicker: true,
+              format: 'DD/MM/YYYY',
+              startDate: '@DateTime.Now.ToString("dd/MM/yyyy")'
+          },
+          function (start, end, label) {
+              //alert('A date range was chosen: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+          }
+      );
+    });
+
+
+
+
+</script>
+
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-lg-12">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col col-md-1">
+                <b>Name</b>
+            </div>
+            <div class="col col-md-2">
+                @Html.TextBox("UserName", null, new { @class = " col-md-12", @style = "height: 34px;" })
+            </div>
+            <div class="col col-md-1">
+                <b>Treb Id</b>
+            </div>
+            <div class="col col-md-2">
+                @Html.TextBox("TrebId", null, new { @class = " col-md-12", @style = "height: 34px;" })
+            </div>
+
+            <div class="col col-md-1">
+                <b>Mobile No</b>
+            </div>
+            <div class="col col-md-2">
+                @Html.TextBox("MobileNo", null, new { @class = " col-md-12", @style = "height: 34px;" })
+            </div>
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+
+            <div class="col col-md-1">
+                <b>From Date</b>
+            </div>
+            <div class="col col-md-2">
+                @*<input type="text" id="StartDate" name="StartDate" class="form-control" />*@
+                @Html.TextBox("StartDate", null, new { @class = " col-md-12", @style = "height: 34px;",@readonly="readonly" })
+            </div>
+            <div class="col col-md-1">
+                <b>To Date</b>
+            </div>
+            <div class="col col-md-2">
+                @*<input type="text" id="EndDate" name="EndDate" class="form-control" />*@
+                @Html.TextBox("EndDate", null, new { @class = " col-md-12", @style = "height: 34px;", @readonly = "readonly" })
+            </div>
+            <div class="col col-md-3">
+                <input type="submit" value="Search" data-id="search" class="bigButton action" />
+                <input type="button" value="Reset" class="bigButton action Reset" />
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel  sky-form boxed margin-top10">
+                <div class="x_title">
+                    <header>Open House</header>
+                    <div class="clearfix"></div>
+                    <div class="notifcton_main_bg">
+                        <div class="lbl_clssss"><p>App Likes</p><span id="" class="notifiction">@HttpContext.Current.Session["Likes"].ToString()</span></div>
+                        <div class="lbl_clssss"><p>Pending</p><span id="Agentspanid1" class="notifiction">@HttpContext.Current.Session["PendingAgentCount"].ToString()</span></div>
+                        <div class="lbl_clssss"> <p>Approved</p><span id="Agentspanid2" class="notifiction_2">@HttpContext.Current.Session["ApproveAgentCount"].ToString()</span></div>
+                    </div>
+                </div>
+                <div class="x_content">
+                    <!-- start project list -->
+                    <table id="mytable" class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%"><span>Photo</span></th>
+                                <th style="width: 10%"><span>Name</span> </th>
+                                <th style="width: 10%"><span>Treb Id</span></th>
+                                <th style="width: 10%"><span>Mobile No</span></th>
+                                <th style="width: 10%"><span>Agent Type</span></th>
+                                <th style="width: 15%"> <span>Available Date </span></th>
+                                <th style="width: 17%"><span>Remarks</span></th>
+                                <th style="width: 10%"> <span>Posted Date </span></th>
+                                <th style="width: 5%"><span>Status</span></th>
+                                <th style="width: 8%"><span>Action</span></th>
+                                @*<th style="width: 10%"></th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+
+    string RowColors = "";
+
+                            }
+                            @foreach (var item in Model._AgentListModel)
+                            {
+                                if (@item.IsActive == true)
+                                {
+                                    RowColors = "Greencolor";
+                                }
+                                else
+                                {
+                                    RowColors = "Redcolor";
+                                }
+
+
+                                <tr class="@RowColors">
+                                    <td>
+
+                                        <ul class="list-inline">
+
+                                            @if ((@item.CustomerPhoto != "") && (@item.CustomerPhoto != null))
+                                            {
+                                                <li>
+                                                    <img src="@item.CustomerPhoto" class="avatar" alt="Avatar">
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    </td>
+                                    <td>
+
+                                        <a class="@RowColors" href="@Url.Action("GetAgentProperty", "Property", new { id = @item.AgentId })" style="@RowColors"><i class="@RowColors">@item.CustomerName</i>    </a>
+                                    </td>
+                                    <td>
+                                        @item.TrebId
+                                    </td>
+
+                                    <td>
+                                        @item.CustomerMobileNo
+                                    </td>
+                                    <td>
+                                        @item.AgentType
+                                    </td>
+                                    <td>
+
+                                        @{
+                                            var Date = @item.Date.ToString();
+                                            var FromTime = @item.FromTime.ToString();
+                                            var ToTime = @item.ToTime.ToString();
+                                            var AvailableTime = Date + " " + FromTime + " To " + ToTime;
+                                        }
+                                        @AvailableTime
+                                    </td>
+                                    <td>
+                                        @{
+                                if (HttpUtility.HtmlDecode(item.Comments).Length != null && HttpUtility.HtmlDecode(item.Comments).Length > 100)
+                                {
+                                    @Html.Raw(HttpUtility.HtmlDecode(item.Comments).Substring(0, 100).Trim())
+                                }
+                                else
+                                {
+                                    @Html.Raw(HttpUtility.HtmlDecode(item.Comments).Trim())
+                                }
+                                        }
+                                        @*@item.Comments*@
+                                    </td>
+
+                                    <td>
+                                        @{
+                                string createdate = "";
+                                        }
+                                        @if (@item.CreatedOn != null)
+                                        {
+                                            createdate = @item.CreatedOn.ToString();
+                                            DateTime create_date = Convert.ToDateTime(createdate);
+                                            create_date.ToString("MM/dd/yyyy hh:mm tt");
+                                        }
+
+                                        @createdate
+
+
+
+                                    </td>
+                                    <td class="operation">
+                                        @{
+                                        string IsApproved = "";
+                                        string Colors = "";
+
+                                        }
+                                        @if (@item.IsActive == true)
+                                        {
+                                            IsApproved = "Approved";
+                                            Colors = "Greencolor";
+                                        }
+                                        else
+                                        {
+                                            IsApproved = "Pending";
+                                            Colors = "Redcolor";
+
+                                        }
+                                        <a href="#" class="#1ABB9C"><i class="@RowColors">@IsApproved</i>    </a>
+
+                                    </td>
+                                    <td class="operation">
+
+
+                                        <a href="@Url.Action("GetAgentProperty", "Property", new { id = @item.AgentId })" style="color: #20A12E" class=""><i class="">Edit</i>    </a>|
+                                        <a data-toggle="modal" onclick="updateid(@item.AgentId);" style="color: #20A12E" title="Delete" href="#myModal"><i class="">Delete</i></a>
+                                    </td>
+                                </tr>
+
+
+                            }
+                        </tbody>
+                    </table>
+                    <!-- end project list -->
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Delete Open House</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <p> Are you sure? This Open House will be permanently deleted and cannot be recovered. </p>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button class="bigButton" data-dismiss="modal">Close</button>
+                <button class="bigButton" onclick="deleteme();">Delete</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+
+@{
+    if (Model._AgentListModel.ToList().Count == 0)
+    {
+        TempData["Message"] = "No record found .";
+
+    }
+    else
+    {
+        Html.RenderAction("Paging", "Base");
+
+    }
+
+}
+
+<script>
+    $(document).ready(function () {
+        $(".Reset").click(function () {
+            debugger;
+            $('#UserName').val("");
+            $('#TrebId').val("");
+            $('#MobileNo').val("");
+            $('#StartDate').val("");
+            $('#EndDate').val("");
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+

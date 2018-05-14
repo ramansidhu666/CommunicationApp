@@ -1,0 +1,326 @@
+﻿@model IEnumerable<CommunicationApp.Web.Models.BrokerageListModel>
+
+@{
+    ViewBag.Title = "Risk Assessment Forms";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+<style>
+    .label {
+        display: inline;
+        padding: .2em .6em .3em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25em;
+    }
+
+    .label-danger {
+        background-color: #d9534f;
+    }
+
+    .label.label-success {
+        background: #00acac;
+    }
+</style>
+<script type="text/javascript">
+    var id = 0;
+    function updateid(pid) {
+        id = pid;
+    }
+    $(document).on("click", ".modalLink", function () {
+        var passedID = $(this).data('id');
+        $(".modal-body .hiddenid").val(passedID);
+    });
+    function approve() {
+        debugger;
+        var name = $('#txtName').val();
+        var description = $('#txtDescription').val();
+        if (name == '') {
+            $('#error').html('Please fill name');
+            return false;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/Brokerage/ApproveDisapprove',
+            data: JSON.stringify({ Name: name, Description: description, BrokerageId: $(".modal-body .hiddenid").val(), Status: true }),
+            contentType: 'application/json',
+            success: function (result) {
+                if (result == "success") {
+                    $('#txtName').val('');
+                    $('#txtDescription').val('');
+                    $('#error').html('');
+                    $('#myModal').hide();
+                    location.reload();
+                }
+                else {
+                    $('#error').html(result);
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+    function disApprove() {
+        debugger;
+        var name = $('#txtName').val();
+        var description = $('#txtDescription').val();
+        if (name == '') {
+            $('#error').html('Please fill name');
+            return false;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/Brokerage/ApproveDisapprove',
+            data: JSON.stringify({ Name: name, Description: description, BrokerageId: $(".modal-body .hiddenid").val(), Status: false }),
+            contentType: 'application/json',
+            success: function (result) {
+                if (result == "success") {
+                    $('#txtName').val('');
+                    $('#txtDescription').val('');
+                    $('#error').html('');
+                    $('#myModal').hide();
+                    location.reload();
+                }
+                else {
+                    $('#error').html(result);
+                }
+            },
+            error: function () {
+                $('#myModal').hide();
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $('input[name="StartDate"]').daterangepicker(
+           {
+               singleDatePicker: true,
+               format: 'MM/DD/YYYY',
+               startDate: '@DateTime.Now.ToString("MM/dd/yyyy")'
+           },
+           function (start, end, label) {
+               //alert('A date range was chosen: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+           }
+       );
+        $('input[name="EndDate"]').daterangepicker(
+          {
+              singleDatePicker: true,
+              format: 'MM/DD/YYYY',
+              startDate: '@DateTime.Now.ToString("MM/dd/yyyy")'
+          },
+          function (start, end, label) {
+              //alert('A date range was chosen: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+          }
+      );
+    });
+</script>
+
+<h2 class="text-center">Risk Assessment Forms</h2>
+
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+
+
+@using (Html.BeginForm("Index", "brokerage"))
+{
+
+    <div class="row">
+        <div class="col-lg-12">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col col-md-1">
+                Name
+            </div>
+            <div class="col col-md-2">
+                @Html.TextBox("FirstName", null, new { @class = " col-md-12 inputtxt" })
+            </div>
+            <div class="col col-md-1">
+                Mobile No
+            </div>
+            <div class="col col-md-2">
+                @Html.TextBox("PhoneNo", null, new { @class = " col-md-12 inputtxt" })
+            </div>
+
+            <div class="col col-md-1">
+                Email Id
+            </div>
+            <div class="col col-md-2">
+                @Html.TextBox("Email", null, new { @class = " col-md-12 inputtxt" })
+            </div>
+            <div class="col col-md-3">
+                <input type="submit" value="Search" data-id="search" class="bigButton action" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+
+            <div class="col col-md-1">
+                Treb Id
+            </div>
+            <div class="col col-md-2">
+                @Html.TextBox("TrebId", null, new { @class = " col-md-12 inputtxt" })
+            </div>
+
+
+        </div>
+    </div>
+
+}
+
+<div>
+    <table id="mytable" class="table">
+        <thead>
+            <tr>
+                <th class="txt-align"><span>S. No</span></th>
+                <th class="txt-align"><span>Name</span></th>
+                <th class="txt-align"><span>TrebId</span></th>
+                @*<th class="txt-align"><span>@Html.DisplayNameFor(model => model.BrokerageDate)</span></th>*@
+                <th class="txt-align"><span>Mobile No</span></th>
+                <th class="txt-align"><span>Email Id</span></th>
+                @*<th class="txt-align"><span>@Html.DisplayNameFor(model => model.VerificationDate)</span></th>*@
+
+                <th class="txt-align"><span>@Html.DisplayNameFor(model => model.Explanation)</span></th>
+                <th class="txt-align"><span>Created On</span></th>
+                <th class="txt-align"><span>Status</span></th>
+                <th class="txt-align"><span>Approved/Disapproved By</span></th>
+                <th class="txt-align"><span>Approval Date</span></th>
+               
+                <th class="txt-align"><span>Details</span></th>
+                <th class="txt-align"><span>Approve/Dissaprove</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int rowNo = 0; }
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        @(rowNo += 1)
+                    </td>
+                    <td class="txt-align">
+                        @item.Completedby
+                    </td>
+                    <td class="txt-align">
+                        @item.TrebId
+                        @*@{
+                            var createdata = @item.CreatedOn.ToString();
+                            DateTime create_date = Convert.ToDateTime(createdata);
+                                    }
+                                    @create_date.ToString("MM/dd/yyyy HH:MM:ss tt")*@
+                    </td>
+                    @*<td class="txt-align">
+                            @item.BrokDate
+                        </td>*@
+                    <td class="txt-align">
+                        @item.PhNo
+                    </td>
+                    <td class="txt-align">
+                        @item.EmailID
+                    </td>
+                    @*<td class="txt-align">
+                            @item.VerifDate
+                        </td>*@
+
+
+
+
+                    <td class="txt-align">
+                        @item.Explanation
+                    </td>
+                    <td class="txt-align">
+                        @Convert.ToString(string.Format("{0:MM/dd/yyyy}", @item.CreatedOn))
+                    </td>
+
+                    <td class="txt-align">
+
+                        @if (item.Status == "approved")
+                        {
+                            <label class="label label-success">Approved</label>
+                        }
+                        else
+                        {
+                            <label class="label label-danger">Disapproved</label>
+                        }
+                    </td>
+                    <td class="txt-align">
+                        @item.ApprovedBy
+                    </td>
+
+                    <td class="txt-align">
+                        @Convert.ToString(string.Format("{0:MM/dd/yyyy}", @item.ApprovalDate))
+                    </td>
+                    <td class="txt-align">
+                        <a target="_blank" href="@item.PageUrl">Details</a>
+                    </td>
+                    <td class="txt-align" style="text-align: center;">
+
+                        <a data-toggle="modal" title="Approve/Disapprove" data-id="@item.BrokerageId" data-target="#myModal" class="modalLink" href="#"><i class="fa fa-bars"></i></a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Approve or Disapprove</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3">Name</div>
+                    <div class="col-md-4"><input type="text" id="txtName" required /></div>
+                    <div class="col-md-3" style="color:red" id="error"></div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Any comments (optional)</div>
+                    <div class="col-md-9"><textarea id="txtDescription" rows="10" style="    width: 375px!important"></textarea></div>
+
+                </div>
+
+
+                @Html.Hidden("id", "", new { @class = "hiddenid" })
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                @*<button class="bigButton" data-dismiss="modal">Close</button>*@
+                <button class="bigButton" id="btnDisapprove" onclick="approve();">Approve</button>
+                <button class="bigButton" id="btnApprove" onclick="disApprove();">Disapprove</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+
+@{
+    if (Model.ToList().Count == 0)
+    {
+        TempData["Message"] = "No record found .";
+
+    }
+    else
+    {
+        Html.RenderAction("Paging", "Base");
+
+    }
+
+}

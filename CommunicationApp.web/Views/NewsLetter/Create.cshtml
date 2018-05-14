@@ -1,0 +1,141 @@
+﻿@model CommunicationApp.Models.NewsLetter_Model
+
+@{
+    ViewBag.Title = "Event";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+
+<script type="text/javascript" src="~/assets/plugins/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery-ui-1.10.4.min.js"></script>
+<link href="~/Timepicker1/src/jquery.ptTimeSelect.css" rel="stylesheet" />
+<script src="~/Timepicker1/src/jquery.ptTimeSelect.js"></script>
+<script type="text/javascript">
+    var todayDate = new Date();
+    $(document).ready(function () {
+
+        $('.chosen-select').chosen({ no_results_text: 'Oops, nothing found!' });
+       
+
+
+    });
+    function show_First_imagepreview(input) {
+        debugger;
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#imgprvw').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function show_Second_imagepreview(input) {
+        debugger;
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#second_imgprvw').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+@using (Html.BeginForm("Create", "Newsletter", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+
+    @Html.HiddenFor(model => model.AdminId)
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="sky-form boxed margin-top10">
+                <header>NewsLetter</header>
+                @*@Html.ValidationSummary(true)*@
+                <fieldset>
+                    <div class="row">
+                        <section class="col col-md-3">
+                                <img id="imgprvw" alt="Avatar" src="" height="120" width="120" />
+                            Front Image
+                            <input type="file" name="file" id="ImageUpload" onchange="show_First_imagepreview(this)" />
+                           
+                        </section>
+
+                        <section style="display:none" class="col col-md-4">
+                            <div class="button"><input type="file" id="fileToUpload" onchange="this.parentNode.nextSibling.value = this.value" name="file">Browse</div>
+                            <span style="color:red;"></span><span id="spanfile" class="field-validation-error"></span>
+                        </section>
+
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-md-3">
+                            <img id="second_imgprvw" alt="Avatar" src="" height="120" width="120" />
+                            Back Image
+                            <input type="file" name="SecondFile" id="Second_ImageUpload" onchange="show_Second_imagepreview(this)" />
+
+                        </section>
+
+                        <section style="display:none" class="col col-md-4">
+                            <div class="button"><input type="file" id="fileToUpload" onchange="this.parentNode.nextSibling.value = this.value" name="file">Browse</div>
+                            <span style="color:red;"></span><span id="spanfile" class="field-validation-error"></span>
+                        </section>
+
+                    </div>
+
+         
+                    <div class="row" id="sample1">
+                        <section class="col col-md-3">
+
+                            @Html.LabelForRequired(model => model.NewsLetterName)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.NewsLetterName, null, new { @class = " col-md-12", @style = "height: 34px;", @required = "true" })
+                                
+                                @Html.ValidationMessageFor(model => model.NewsLetterName)
+                            </label>
+                        </section>
+                    </div>
+                 
+                    <div class="row">
+                        <section class="col col-md-3">
+                            @Html.LabelForRequired(model => model.OrderNo)
+                            <label class="input">
+                                @*@Html.TextBoxFor(model => model.OrderNo, null, new { @required = "true" })*@
+                                @Html.DropDownList("OrderNo", ViewData["OrderList"] as List<SelectListItem>, new { @class = "ddlclass" })
+                                @Html.ValidationMessageFor(model => model.OrderNo)
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row">
+
+                        <section class="col col-md-3">
+                            @Html.LabelFor(model => model.SelectedCustomer)
+                            <label class="input">
+                                @Html.ListBoxFor(m => m.SelectedCustomer, Model.CustomersList, new { @class = "chosen-select", data_placeholder = "Select Uses" })
+                            </label>
+                            
+                                   
+                               
+                        </section>
+
+                    </div>
+
+
+                </fieldset>
+                <footer>
+                    <input type="submit" value="Save NewsLetter" class="bigButton" id="btnSubmit" />
+                </footer>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "NewsLetterList")
+</div>
+

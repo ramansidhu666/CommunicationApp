@@ -1,0 +1,155 @@
+﻿@model IEnumerable<CommunicationApp.Models.TipModel>
+
+@{
+    ViewBag.Title = "Tip of the day";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+<script type="text/javascript">
+    var id=0;
+    function updateid(pid) {
+        id = pid;
+    }
+    function deleteme() {
+        debugger;
+        window.location = "/Tip/Delete?id=" + id;
+    }
+
+    $(document).ready(function () {
+        $('input[name="StartDate"]').daterangepicker(
+           {
+               singleDatePicker: true,
+               format: 'MM/DD/YYYY',
+               startDate: '@DateTime.Now.ToString("MM/dd/yyyy")'
+           },
+           function (start, end, label) {
+               //alert('A date range was chosen: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+           }
+       );
+        $('input[name="EndDate"]').daterangepicker(
+          {
+              singleDatePicker: true,
+              format: 'MM/DD/YYYY',
+              startDate: '@DateTime.Now.ToString("MM/dd/yyyy")'
+          },
+          function (start, end, label) {
+              //alert('A date range was chosen: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+          }
+      );
+    });
+</script>
+
+<h2 class="text-center">Tip of the day</h2>
+
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+
+<p class="operation">
+    <i class="fa fa-mail-forward create_icon red"></i>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-lg-12">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+           
+            <div class="col col-md-1">
+                <b>From Date</b>
+            </div>
+            <div class="col col-md-2">
+
+                @Html.TextBox("StartDate", null, new { @class = " col-md-12", @style = "height: 34px;" })
+            </div>
+            <div class="col col-md-1">
+                <b>To Date</b>
+            </div>
+            <div class="col col-md-2">
+
+                @Html.TextBox("EndDate", null, new { @class = " col-md-12", @style = "height: 34px;" })
+            </div>
+            <div class="col col-md-3">
+                <input type="submit" value="Search" data-id="search" class="bigButton action" />
+            </div>
+        </div>
+    </div>
+}
+<div>
+    <table id="mytable" class="table">
+        <thead>
+            <tr>
+                <th class="txt-align"><span>@Html.DisplayNameFor(model => model.Title)</span></th>
+                <th class="txt-align"><span>@Html.DisplayNameFor(model => model.CreatedOn)</span></th>                
+                <th class="txt-align"><span>@Html.DisplayNameFor(model => model.TipUrl)</span></th>
+                <th class="txt-align"><span>Action</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="txt-align">
+                        @item.Title
+                    </td>
+                    <td class="txt-align">
+                        @{
+                            var createdata = @item.CreatedOn.ToString();
+                            DateTime create_date = Convert.ToDateTime(createdata);
+                        }
+                        @create_date.ToString("MM/dd/yyyy HH:MM:ss tt")
+                    </td>
+                    
+                    <td class="txt-align">
+                        <a target="_blank" href="@item.TipUrl"><i class="fa fa-download red"></i></a>
+                    </td>
+                    
+                    <td class="operation">
+                        <a data-toggle="modal" onclick="updateid(@item.TipId);" title="Delete" href="#myModal"><i class="fa fa-trash-o red"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Delete Open House</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <p> Are you sure? This Tip will be permanently deleted and cannot be recovered. </p>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button class="bigButton" data-dismiss="modal">Close</button>
+                <button class="bigButton" onclick="deleteme();">Delete</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+
+@{
+    if (Model.ToList().Count == 0)
+    {
+        TempData["Message"] = "No record found .";
+
+    }
+    else
+    {
+        Html.RenderAction("Paging", "Base");
+
+    }
+
+}

@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('.btn-update').click(function () {
+            var element = this;
+            var root = '@Url.Content("~")';
+            $('#loadingElement').show();
+            $.ajax({
+                type: 'GET',
+                url: root + 'AssginRole/UpdateRole',
+                data: { 'UserId': $(this).attr('data-id'), 'RoleId': $(element).prev().val() },
+                dataType: 'json',
+                success: function () {
+                    $('#loadingElement').hide();
+                },
+                error: function (req, status, err) {
+                    alert('unable to update the role, sorry, pls. try again... ' + err);
+                    $('#loadingElement').hide();
+                }
+            });
+        });
+    });
+</script>
+
+<table class="table-responsive">
+    <tbody>
+        <tr>
+            <th>User Name</th>
+            <th>User Type</th>
+
+        </tr>
+    </tbody>
+    <tbody>
+        @foreach (var item in @ViewBag.UserList)
+        {
+            <tr>
+                <td>@item.UserName</td>
+                <td> @Html.DropDownList("RoleId", "Select")</td>
+                <td><input type="button" data-id="@item.UserName" value="set" class="btn-update" />  </td>
+            </tr>
+
+        }
+
+    </tbody>
+</table>
+

@@ -1,0 +1,60 @@
+﻿@model CommunicationApp.Entities.State
+
+@{
+    ViewBag.Title = "States";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+
+<h2 class="text-center">States</h2>
+
+@{
+    Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = TempData["MessageBody"] });
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.StateID)
+
+        <div class="form-group">
+            @Html.LabelForRequired(model => model.CountryID, "Country", "control-label col-md-2")
+            <div class="col-md-10">
+                @Html.DropDownList("CountryID", "-- Select Country --")
+                @Html.ValidationMessageFor(model => model.CountryID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelForRequired(model => model.StateName, "State", "control-label col-md-2")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StateName)
+                @Html.ValidationMessageFor(model => model.StateName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelForRequired(model => model.IsActive, "Is Active", "control-label col-md-2")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsActive)
+                @Html.ValidationMessageFor(model => model.IsActive)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="bigButton" />
+            </div>
+        </div>
+    </div>
+}
+
+@if (Convert.ToBoolean(TempData["View"]) == true)
+{
+    <p class="operation">
+        <i class="fa fa-mail-reply create_icon"></i>
+        @Html.ActionLink(" Back to List", "Index")
+    </p>
+}

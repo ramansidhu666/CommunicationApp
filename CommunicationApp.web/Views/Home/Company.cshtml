@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Company";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+
+<h2 class="text-center">Company</h2>
+
+<div class="sky-form boxed margin-top10">
+    <header>Choose a Company</header>
+    <fieldset>
+        <div class="row text-center">
+            @foreach (var company in ViewBag.CompanyList)
+            { 
+                 <div class="col-md-3">
+                     <div id="btnSelect_@company.CompanyID" class="circular-bar" data-companyid="@company.CompanyID" data-companyname="@*@company.CompanyName*@" data-logopath="@company.LogoPath">
+                         <canvas></canvas><input class="knob" data-linecap="round" data-bgcolor="#FAFAFA" data-fgcolor="#A94442" data-thickness=".06" value="100" data-readonly="true" data-displayinput="false" readonly="readonly" style="display: none; width: 0px; visibility: hidden;">
+                         <div class="circular-bar-content">
+                             @if (company.LogoPath != "")
+                             { 
+                                <img src="@company.LogoPath.ToString().Substring(1)"  alt="" />    
+                             }
+                             <strong>@*@company.CompanyName*@</strong>
+                         </div>
+                     </div>
+                </div>
+            }
+        </div>
+    </fieldset>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.circular-bar').click(function () {
+            var _CompanyID = $(this).data("companyid");
+            var _CompanyName=$(this).data("companyname");
+            var _LogoPath = $(this).data("logopath");
+            //alert(_CompanyID);
+
+            $.ajax({
+                type: 'POST',
+                url: '/Account/SetCompany',
+                data: JSON.stringify({ CompanyID: _CompanyID, CompanyName: _CompanyName, LogoPath: _LogoPath }),
+                contentType: 'application/json',
+                success: function (result) {
+                    OnSuccess(result);
+                },
+                error: function () {
+                    OnError();
+                }
+            });
+
+            //alert("End");
+        });
+
+        function OnSuccess(result) {
+            if (result == "success") {
+                window.location.href = '@Url.Action("WelcomeHome", "Home")';
+            }
+            else {
+                alert('Please choose a correct company.');
+                return false;
+            }
+        }
+        function OnError() {
+            alert('Please choose a correct company.');
+            return false;
+        }
+    });
+</script>
+
+
+

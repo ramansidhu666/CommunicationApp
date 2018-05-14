@@ -1,0 +1,154 @@
+﻿@model CommunicationApp.Models.UserModel
+
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+<h2 class="text-center">Users</h2>
+<div class="form-horizontal">
+    <dl class="dl-horizontal">
+        @*<dt class="hidden">
+            @Html.DisplayNameFor(model => model.Companys.CompanyName)
+        </dt>
+        <dd class="hidden">
+            @Html.DisplayFor(model => model.Companys.CompanyName)
+        </dd>*@
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserEmailAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserEmailAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+    </dl>
+</div>
+
+<p class="operation">
+    @if (Convert.ToBoolean(TempData["View"]) == true)
+    {
+        <i class="fa fa-mail-reply create_icon"></i>
+        @Html.ActionLink(" Back to List", "Index")
+        <b>|</b>
+    }
+    @if (Convert.ToBoolean(TempData["Edit"]) == true)
+    {
+        @Html.ActionLink(" ", "Edit", new { id = Model.UserId }, new { @class = "glyphicon glyphicon-edit edit_icon", @data_original_title = "Edit", @data_placement = "top", @data_toggle = "tooltip" })
+    }
+</p>
+
+
+
+
+@*@model CommunicationApp.Entity.User
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>User</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Companies.CompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Companies.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserEmailAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserEmailAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@

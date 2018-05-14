@@ -1,0 +1,309 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]>       <html class="ie ie10"><!-->
+<html class="">
+<!--<![endif]-->
+<head>
+
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - CommunicationApp</title>
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-4716462-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+
+    <!-- mobile settings -->
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
+
+    <meta charset="UTF-8">
+    <meta name="description" content="Ameba Softwares is a software development company which provides offshore solutions like Application Development, Application Maintenance, website development, Staffing and Augmentation, mobile applications development, internet marketing, IOS Development. For more information call us today +1 (559) 374-2558">
+    <meta name="keywords" content="Ameba,Ameba Softwares,Ameba Technologies USA,Ameba Software,Software company in Mohali,Staffing,Chandigarh, India,Application Development, Android Development, IOS, Apple, MAC, SQL Server, Visual Studio, .net,asp.net,PHP">
+    <meta name="author" content="Ameba Softwares">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/assets/images/Ameba/favicon.ico" />
+
+    <!-- WEB FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css" />
+
+    <!-- CORE CSS -->
+    <link href="~/assets/css/flexslider.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/revolution-slider.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="~/assets/css/header-default.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/media-queries.css" rel="stylesheet">
+
+
+    @*<link href="~/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />*@
+    <link href="~/assets/css/sky-forms.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/weather-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/line-icons.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/owl-carousel/owl.pack.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/animate.css" rel="stylesheet" type="text/css" />
+
+
+    <!-- REVOLUTION SLIDER -->
+
+    <link href="~/assets/css/layerslider.css" rel="stylesheet" type="text/css" />
+
+    <!-- THEME CSS -->
+    @*<link href="~/assets/css/essentials.css" rel="stylesheet" type="text/css" />*@
+
+
+    <link href="~/assets/css/footer-default.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/assets/css/color_scheme/red.css" rel="stylesheet" type="text/css" id="color_scheme" />*@
+    <!--<link href="assets/css/layout-dark.css" rel="stylesheet" type="text/css"  />-->
+    <!-- Morenizr -->
+    <script type="text/javascript" src="~/assets/plugins/modernizr.min.js"></script>
+
+    <!-- Choosen v1.4.0 -->
+    <link rel="stylesheet" href="~/chosen_v1.4.0/docsupport/prism.css">
+    <link rel="stylesheet" href="~/chosen_v1.4.0/chosen.css">
+    <!--[if lte IE 8]>
+        <script src="assets/plugins/respond.js"></script>
+    <![endif]-->
+
+
+</head>
+<body class="smoothscroll">
+    @{
+
+        if (ViewBag.HideSideContactUs == "F")
+        {
+
+        }
+    }
+
+
+
+    <div class="header_top">
+        <div class="banner_section">
+            <img src="~/assets/images/banner-img.png" alt="" title="" />
+        </div>
+        <div class="banner_text">
+            <div class="container">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-4 col-sm-4">
+                        <figure class="logo">
+                            <a href="#" onclick="location.href='@Url.Action("Index", "Home")'">@*<img src="~/assets/images/logo.png" alt="" title="" />*@</a>
+                        </figure>
+                    </div>
+                    <div class="col-md-3 col-sm-3"></div>
+                    <div class="col-md-5 col-sm-5">
+                        <div class="login_bg">
+                            <ul>
+
+                                <li><a href="#" onclick="location.href='@Url.Action("LogOn", "Account")'">Login</a></li>
+                                <li><a href="#" onclick="location.href='@Url.Action("Register", "Register")'">Register</a></li>
+
+                            </ul>
+
+                        </div>
+                        <div class="social_icon">
+                            <a href="#"><img src="~/assets/images/f-icon.png" alt="" title="" /></a>
+                            <a href="#"><img src="~/assets/images/t-icon.png" alt="" title="" /></a>
+                            <a href="#"><img src="~/assets/images/g-icon.png" alt="" title="" /></a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                @*<div class="col-md-12 col-sm-12">
+                    <div class="col-md-7 col-sm-7">
+                        <div class="banner_left_text">
+                            <h2>Track Your Taxi</h2>
+
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-sm-5">
+                        <div class="banner_right">
+                            <div class="taxi_strip"></div>
+                            <h5>Fill in the Details Below to Book Your Transfer</h5>
+                            <div class="input_bg">
+                                <div class="input_in">
+                                    <select class="form-control">
+                                        <option>City</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+
+                                </div>
+                                <div class="input_in">
+                                    <input type="text" placeholder="Pickup Location" class="form-control">
+
+                                </div>
+                                <div class="input_in">
+                                    <input type="text" placeholder="Drop-Off Location" class="form-control">
+
+                                </div>
+                                <div class="input_in2">
+                                    <input type="text" placeholder="dd/mm/yy" class="form-control">
+
+                                </div>
+                                <div class="input_in2">
+                                    <input type="text" placeholder="08:00" class="form-control">
+
+                                </div>
+                                <div class="input_in">
+                                    <button class="btn btn-primary" type="button">Book Your Taxi</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="row">
+        <div class="menu_bg">
+            <div class="container">
+                <div role="navigation" class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <a href="#" onclick="location.href='@Url.Action("Index", "Home")'">HOME</a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="location.href='@Url.Action("About", "Home")'">ABOUT US </a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="location.href='@Url.Action("_Services", "Services")'">SERVICES</a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="location.href='@Url.Action("_GetTouch", "GetTouch")'">CONTACT </a>
+                                </li>
+                            </ul>
+
+                        </div><!--/.nav-collapse -->
+                    </div><!--/.container-fluid -->
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div id="body">
+        @RenderBody()
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer_bg">
+        <div class="container">
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-3 col-sm-3">
+                    <div class="footer_box">
+                        <h4>About  Cab</h4>
+                        <p>Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
+
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="footer_box">
+                        <h4>Downloads</h4>
+                        <p>Now you can download our app on every mobile device: </p>
+
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="footer_box">
+                        <h4>More stuff</h4>
+                        <p>
+                            Taxi drivers for hire in your city
+                            Latest from our blog
+                            Useful links - check the complete list
+                            New bigger & better F.A.Q. section
+                        </p>
+
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="footer_box">
+                        <h4>Contact us</h4>
+                        <p>
+                            SCF 44, First Floor, Phase-7, <br />
+                            Industrial Area, Mohali-160 055, Punjab, India<br />
+                            Phone: +91-172-4652333<br />
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- /FOOTER -->
+
+    <a href="#" id="toTop"></a>
+
+
+    <!-- JAVASCRIPT FILES -->
+    <script type="text/javascript" src="~/assets/plugins/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/jquery.isotope.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/masonry.js"></script>
+
+    <script type="text/javascript" src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/owl-carousel/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/knob/js/jquery.knob.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/flexslider/jquery.flexslider-min.js"></script>
+
+    <!-- REVOLUTION SLIDER -->
+    <script type="text/javascript" src="~/assets/plugins/revolution-slider/js/jquery.themepunch.plugins.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/revolution_slider.js"></script>
+
+    <script type="text/javascript" src="~/assets/plugins/jquery-browser.js"></script>
+
+    <script type="text/javascript" src="~/assets/js/scripts.js"></script>
+
+    <script type="text/javascript" src="~/chosen_v1.4.0/chosen.jquery.js"></script>
+    <script type="text/javascript" src="~/chosen_v1.4.0/docsupport/prism.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+
+    <script src="~/assets/js/jquery-1.11.1.min.js"></script>
+    <script src="~/assets/js/bootstrap.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

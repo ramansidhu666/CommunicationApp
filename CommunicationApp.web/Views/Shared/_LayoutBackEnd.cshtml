@@ -1,0 +1,390 @@
+﻿@using CommunicationApp.Models;
+
+<!DOCTYPE html>
+<!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]>       <html class="ie ie10"><!-->
+<html class="">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - CommunicationApp</title>
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-4716462-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <!-- mobile settings -->
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/assets/images/Ameba/favicon.ico" />
+
+    <!-- WEB FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css" />
+
+    <!-- CORE CSS -->
+    <link href="~/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/sky-forms.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/weather-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/line-icons.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/owl-carousel/owl.pack.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/animate.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/flexslider.css" rel="stylesheet" type="text/css" />
+
+    <!-- DATE PICKER -->
+    <link href="~/assets/css/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+
+    <!-- REVOLUTION SLIDER -->
+    <link href="~/assets/css/revolution-slider.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/layerslider.css" rel="stylesheet" type="text/css" />
+
+    <!-- THEME CSS -->
+    <link href="~/assets/css/essentials.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/header-default.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/footer-default.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/color_scheme/red.css" rel="stylesheet" type="text/css" id="color_scheme" />
+    <!--<link href="assets/css/layout-dark.css" rel="stylesheet" type="text/css"  />-->
+    <!-- Morenizr -->
+    <script type="text/javascript" src="~/assets/plugins/modernizr.min.js"></script>
+
+    <!-- Choosen v1.4.0 -->
+    <link rel="stylesheet" href="~/chosen_v1.4.0/docsupport/prism.css">
+    <link rel="stylesheet" href="~/chosen_v1.4.0/chosen.css">
+
+    <!--[if lte IE 8]>
+        <script src="assets/plugins/respond.js"></script>
+    <![endif]-->
+
+</head>
+<body class="smoothscroll">
+    <div id="wrapper">
+
+        <div id="header">
+            <!-- class="sticky" for sticky menu -->
+            <!-- Top Bar -->
+            <header id="topBar">
+                <div class="container">
+
+                    <div class="pull-right fsize13 margin-top10 hide_mobile_new">
+                        @*<a href="#"><i class="fa fa-phone-square"></i></a>
+                            <span><strong>+91-172-4652333</strong></span>*@
+                        @*|*@
+                        <!-- mail , phone -->
+                        @*<a href="mailto:contact@amebasoftwares.com">contact@amebasoftwares.com</a>*@
+                        @*|*@
+
+                        @{
+                            try
+                            {
+                                if (HttpContext.Current.Session["UserPermission"] == null)
+                                {
+                                    Response.Redirect("/Home");
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                Response.Redirect("/Home");
+                            }
+                        }
+
+                        <span class="welcome">Welcome, </span>@HttpContext.Current.Session["FullUserName"]
+                        <div class="btn-group">
+                            @*<a class="btn btn-primary" href="#"><i class="fa fa-user fa-fw"></i> User</a>*@
+                            <a class="btn btn-primary edit_button" data-toggle="dropdown" href="#">
+                                <span class="fa fa-bars"></span>
+                            </a>
+                            <ul class="dropdown-menu key_margin">
+                                @*<li><a href="#" onclick="location.href='@Url.Action("LogOff", "Account")'"><i class="fa fa-pencil fa-fw"></i> Log Out</a></li>*@
+
+                                @if (Session["RoleType"].ToString().ToLower() == RoleTypes.RoleTypeValue.SuperAdmin.ToString().ToLower())
+                                {
+
+                                    try
+                                    {
+                                        if ((HttpContext.Current.Session["CompanyID"] != null) && (Convert.ToInt16(HttpContext.Current.Session["CompanyID"]) != 0))
+                                        {
+                                            <li><a href="#" onclick="location.href='@Url.Action("company", "Home")'"><i class="fa fa-exchange setting_icon_offset"></i><span>Switch Company</span></a></li>
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                    }
+
+                                }
+                                @{
+                                    try
+                                    {
+                                        if ((HttpContext.Current.Session["CompanyID"] != null) && (Convert.ToInt16(HttpContext.Current.Session["CompanyID"]) != 0))
+                                        {
+                                            @*<li><a href="#" onclick="location.href='@Url.Action("ChangePassword", "Account")'"><i class="fa fa-unlock-alt setting_icon_offset"></i><span>Change Password</span></a></li>
+                                            <li class="divider setting_divider_margin"></li>*@
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                    }
+                                }
+                                @*<li><a href="#"><i class="fa fa-ban fa-fw"></i> Ban</a></li>*@
+
+                                <li><a href="#" onclick="location.href='@Url.Action("LogOn", "Account")'"><i class="fa fa-sign-out setting_icon_offset"></i><span>Log Out</span></a></li>
+
+                            </ul>
+
+
+                        </div>
+                        <div class="company_nme">
+                            @if (Session["RoleType"].ToString().ToLower() == RoleTypes.RoleTypeValue.SuperAdmin.ToString().ToLower())
+                            { <b>@HttpContext.Current.Session["CompanyName"]</b>
+                            }
+                        </div>
+                        @*<a href="#" onclick="location.href='@Url.Action("LogOff", "Account")'">Log Out</a>*@
+                        @*<div class="block text-right">
+                                <a href="https://www.facebook.com/amebasoftwares" target="_blank" class="social fa fa-facebook"></a>
+                                <a href="https://twitter.com/amebasoftpvtltd" target="_blank" class="social fa fa-twitter"></a>
+                                <a href="https://plus.google.com/114436126947594516372/about?hl=en&authuser=0&socpid=247&socfid=maps_embed:placecard" target="_blank" class="social fa fa-google-plus"></a>
+                                <a href="https://www.linkedin.com/company/ameba-softwares-pvt-ltd" target="_blank" class="social fa fa-linkedin"></a>
+                            </div>*@
+
+                    </div>
+
+                    <!-- Logo -->
+                    @{
+                        try
+                        {
+                            if ((HttpContext.Current.Session["CompanyID"] != null) && (Convert.ToInt16(HttpContext.Current.Session["CompanyID"]) != 0) && (@HttpContext.Current.Session["LogoPath"] != ""))
+                            {
+                                <a class="logo" href="#" onclick="location.href='@Url.Action("Index", "Home")'">
+                                    <img src="@HttpContext.Current.Session["LogoPath"].ToString().Substring(1)" height="50" alt="" />
+                                </a>
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Response.Redirect("/Home");
+                        }
+                    }
+
+                </div><!-- /.container -->
+            </header>
+            <!-- /Top Bar -->
+            <!-- Top Nav -->
+            @{
+
+                try
+                {
+                    if ((HttpContext.Current.Session["CompanyID"] != null) && (Convert.ToInt16(HttpContext.Current.Session["CompanyID"]) != 0))
+                    {
+                        <header id="topNav" class="admin_edit">
+                            <div class="container">
+
+                                <!-- Mobile Menu Button -->
+                                <button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
+                                    <i class="fa fa-bars"></i>
+                                </button>
+
+                                <!-- Search -->
+                                @*<form class="search" method="get" action="search.html">
+                                        <input type="text" class="form-control" name="s" value="" placeholder="Search">
+                                        <button class="fa fa-search"></button>
+                                    </form>*@
+                                <!-- /Search -->
+                                <!-- Top Nav -->
+                                <div class="navbar-collapse nav-main-collapse collapse">
+                                    <nav class="nav-main">
+
+                                        <!--
+                                              NOTE
+
+                                              For a regular link, remove "dropdown" class from LI tag and "dropdown-toggle" class from the href.
+                                              Direct Link Example:
+
+                                              <li>
+                                                  <a href="#">HOME</a>
+                                        Default1      </li>
+                                          -->
+                                        <ul id="topMain" class="nav nav-pills nav-main menu_color">
+                                            @{
+                        List<RoleDetailModel> _lst = Session["UserPermission"] as List<RoleDetailModel>;
+
+                        if (
+                            (_lst.Where(z => z.form.ControllerName.ToLower() == "states").Select(z => z.IsView).FirstOrDefault()) ||
+                            (_lst.Where(z => z.form.ControllerName.ToLower() == "company").Select(z => z.IsView).FirstOrDefault()) ||
+                             (_lst.Where(z => z.form.ControllerName.ToLower() == "vehicletype").Select(z => z.IsView).FirstOrDefault()) ||
+                             (_lst.Where(z => z.form.ControllerName.ToLower() == "vehicle").Select(z => z.IsView).FirstOrDefault()) ||
+                             (_lst.Where(z => z.form.ControllerName.ToLower() == "vehicletyperate").Select(z => z.IsView).FirstOrDefault()))
+                        {
+                            @*<li>
+                                <a class="dropdown-toggle" href="#">Master</a>
+                                <ul class="dropdown-menu">
+                                    @if (_lst.Where(z => z.form.ControllerName.ToLower() == "company").Select(z => z.IsView).FirstOrDefault())
+                                    {
+                                        if (Session["RoleType"].ToString().ToLower() == RoleTypes.RoleTypeValue.SuperAdmin.ToString().ToLower())
+                                        {
+                                            <li>
+                                                <a href="#" onclick="location.href='@Url.Action("Index", "Company")'">Company<span>&nbsp;</span></a>
+                                            </li>
+                                        }
+                                    }
+                                    @if (_lst.Where(z => z.form.ControllerName.ToLower() == "states").Select(z => z.IsView).FirstOrDefault())
+                                    {
+                                        <li>
+                                            <a href="#" onclick="location.href='@Url.Action("Index", "States")'">States<span>&nbsp;</span></a>
+                                        </li>
+                                    }
+                                    @if (_lst.Where(z => z.form.ControllerName.ToLower() == "vehicletype").Select(z => z.IsView).FirstOrDefault())
+                                    {
+                                        <li>
+                                            <a href="#" onclick="location.href='@Url.Action("Index", "Vehicletype")'">Vehicle Type<span>&nbsp;</span></a>
+                                        </li>
+                                    }
+                                    @if (_lst.Where(z => z.form.ControllerName.ToLower() == "vehicle").Select(z => z.IsView).FirstOrDefault())
+                                    {
+                                        <li>
+                                            <a href="#" onclick="location.href='@Url.Action("Index", "Vehicle")'">Vehicle<span>&nbsp;</span></a>
+                                        </li>
+                                    }
+                                    @if (_lst.Where(z => z.form.ControllerName.ToLower() == "vehicletyperate").Select(z => z.IsView).FirstOrDefault())
+                                    {
+                                        <li>
+                                            <a href="#" onclick="location.href='@Url.Action("Index", "VehicleTypeRate")'">Vehicle Type Rate<span>&nbsp;</span></a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>*@
+                        }
+                        if ((_lst.Where(z => z.form.ControllerName.ToLower() == "user").Select(z => z.IsView).FirstOrDefault())
+                            || (_lst.Where(z => z.form.ControllerName.ToLower() == "role").Select(z => z.IsView).FirstOrDefault())
+                            || (_lst.Where(z => z.form.ControllerName.ToLower() == "assginrole").Select(z => z.IsView).FirstOrDefault()))
+                        {
+                            @*<li>
+                                <a class="dropdown-toggle" href="#">Authentication</a>
+                                <ul class="dropdown-menu">
+                                    @if (_lst.Where(z => z.form.ControllerName.ToLower() == "user").Select(z => z.IsView).FirstOrDefault())
+                                    {
+                                        <li>
+                                            <a href="#" onclick="location.href='@Url.Action("Index", "User")'">Users<span>&nbsp;</span></a>
+                                        </li>
+                                    }
+                                    @if (_lst.Where(z => z.form.ControllerName.ToLower() == "role").Select(z => z.IsView).FirstOrDefault())
+                                    {
+                                        <li>
+                                            <a href="#" onclick="location.href='@Url.Action("Index", "Role")'">Roles<span>&nbsp;</span></a>
+                                        </li>
+                                    }
+                                    @if (_lst.Where(z => z.form.ControllerName.ToLower() == "assginrole").Select(z => z.IsView).FirstOrDefault())
+                                    {
+                                        <li>
+                                            <a href="#" onclick="location.href='@Url.Action("Index", "AssginRole")'">Assign Roles<span>&nbsp;</span></a>
+                                        </li>
+                                    }
+                                </ul>
+
+
+                            </li>*@
+
+
+                            if ((_lst.Where(z => z.form.ControllerName.ToLower() == "driver").Select(z => z.IsView).FirstOrDefault()) ||
+                                ((_lst.Where(z => z.form.ControllerName.ToLower() == "Customer").Select(z => z.IsView).FirstOrDefault())))
+                            {
+                                @*<li>
+                                    <a href="#" onclick="location.href='@Url.Action("Index", "Driver")'">Driver<span>&nbsp;</span></a>
+                                </li>
+                                                <li>
+                                                    <a href="#" onclick="location.href='@Url.Action("Index", "Customer")'">Customer<span>&nbsp;</span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" onclick="location.href='@Url.Action("GoogleMap", "Driver")'">Find Driver<span>&nbsp;</span></a>
+                                                </li>*@
+                                            }
+
+                                              }
+                                            }
+                                        </ul>
+
+
+
+                                    </nav>
+                                </div>
+                                <!-- /Top Nav -->
+
+                            </div><!-- /.container -->
+                        </header>
+                        <!-- /Top Nav -->
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Response.Redirect("/Home");
+                }
+            }
+
+        </div>
+        <div id="body">
+            @RenderBody()
+        </div>
+
+        <!-- FOOTER -->
+        @*<footer id="footer">
+                <div class="copyright">
+                    <div class="container text-center fsize12">
+                        <a href="#" target="_blank" title="All Right Reserved &copy; Ameba Softwares Pvt. Ltd." class="copyright">All Right Reserved &copy; Ameba Softwares Pvt. Ltd ©@DateTime.Now.Year &nbsp;</a>
+                    </div>
+                </div>
+            </footer>*@
+        <!-- /FOOTER -->
+
+        <a href="#" id="toTop"></a>
+
+    </div><!-- /#wrapper -->
+    <!-- JAVASCRIPT FILES -->
+    <script type="text/javascript" src="~/assets/plugins/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-ui-1.10.4.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/jquery.isotope.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/masonry.js"></script>
+
+    <script type="text/javascript" src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/owl-carousel/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/knob/js/jquery.knob.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/flexslider/jquery.flexslider-min.js"></script>
+
+    <!-- REVOLUTION SLIDER -->
+    <script type="text/javascript" src="~/assets/plugins/revolution-slider/js/jquery.themepunch.plugins.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/revolution_slider.js"></script>
+
+    <script type="text/javascript" src="~/assets/plugins/jquery-browser.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/jquery.tablesorter.pager.js"></script>
+
+    <script type="text/javascript" src="~/assets/js/scripts.js"></script>
+
+    <script type="text/javascript" src="~/chosen_v1.4.0/chosen.jquery.js"></script>
+    <script type="text/javascript" src="~/chosen_v1.4.0/docsupport/prism.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <link href="~/assets/css/uploadfile.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/Scripts/jquery.MultiFile.js"></script>
+    @*<script src="~/assets/plugins/jquery.uploadfile.min.js"></script>*@
+
+    @*<script type="text/javascript" src="assets/plugins/styleswitcher/styleswitcher.js">        /** REMOVE ON PRODUCTION **/</script>*@
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

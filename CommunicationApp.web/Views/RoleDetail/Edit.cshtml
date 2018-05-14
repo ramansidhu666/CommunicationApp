@@ -1,0 +1,190 @@
+﻿@model CommunicationApp.Models.RoleDetailModel
+
+@{
+    ViewBag.Title = "Role Detail Model";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+
+<h2 class="text-center">Role Detail Model</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+     <div class="row">
+        <div class="col-md-12">
+
+            <div class="sky-form boxed margin-top10">
+               
+                <fieldset>
+
+                    <div class="row ">
+                        <section class="col col-md-2">
+                            @Html.LabelForRequired(model => model.IsCreate)
+                            <label class="check-square padding-top30">
+                                @Html.EditorFor(model => model.IsCreate)
+
+                            </label>
+                        </section>
+                        <section class="col col-md-2">
+                            @Html.LabelForRequired(model => model.IsEdit)
+                            <label class="check-square padding-top30">
+                                @Html.CheckBoxFor(model => model.IsEdit)
+                                @Html.ValidationMessageFor(model => model.IsEdit)
+                            </label>
+                        </section>
+                        <section class="col col-md-2">
+                            @Html.LabelForRequired(model => model.IsView)
+                            <label class="check-square padding-top30">
+                                @Html.CheckBoxFor(model => model.IsView)
+                                @Html.ValidationMessageFor(model => model.IsView)
+                            </label>
+
+                        </section>
+                        <section class="col col-md-2">
+                            @Html.LabelFor(model => model.IsDelete)
+                            <label class="check-square padding-top30">
+                                @Html.CheckBoxFor(model => model.IsDelete)
+                                @Html.ValidationMessageFor(model => model.IsDelete)
+                            </label>
+
+                        </section>
+                        <section class="col col-md-4">
+                            @Html.LabelFor(model => model.IsDetail)
+                            <label class="check-square padding-top30">
+                                @Html.CheckBoxFor(model => model.IsDetail)
+                                @Html.ValidationMessageFor(model => model.IsDetail)
+                            </label>
+
+                        </section>
+                    </div>
+                 
+                  
+                    <div class="row">
+                        <section class="col col-md-4">
+                            @Html.LabelFor(model => model.FormId)
+                            <label class="select">
+                                @Html.DropDownList("FormId", "-- Select FormId --")
+                                @Html.ValidationMessageFor(model => model.FormId)
+                            </label>
+
+                        </section>
+                        <section class="col col-md-4">
+                            @Html.LabelFor(model => model.RoleId)
+                            <label class="select">
+                                @Html.DropDownList("RoleId", "-- Select RoleId --")
+                                @Html.ValidationMessageFor(model => model.RoleId)
+                            </label>
+
+                        </section>
+                    </div>
+                  
+                    <div class="row">
+                        <section class="col col-md-4">
+                            @Html.LabelFor(model => model.CreateDate)
+                            <label class="input">
+                                @Html.EditorFor(model => model.CreateDate)
+                                @Html.ValidationMessageFor(model => model.CreateDate)
+                            </label>
+
+                        </section>
+                    </div>
+                   
+
+
+                </fieldset>
+                <footer>
+                    <button type="submit" value="update" class="bigButton" id="btn">Update</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+    @*<div class="form-horizontal">
+       
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.RoleDetailID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsCreate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsCreate)
+                @Html.ValidationMessageFor(model => model.IsCreate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsEdit, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsEdit)
+                @Html.ValidationMessageFor(model => model.IsEdit)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsView, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsView)
+                @Html.ValidationMessageFor(model => model.IsView)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsDelete, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsDelete)
+                @Html.ValidationMessageFor(model => model.IsDelete)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsDetail, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsDetail)
+                @Html.ValidationMessageFor(model => model.IsDetail)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsDownload, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsDownload)
+                @Html.ValidationMessageFor(model => model.IsDownload)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CreateDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CreateDate)
+                @Html.ValidationMessageFor(model => model.CreateDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FormId, "FormId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("FormId", String.Empty)
+                @Html.ValidationMessageFor(model => model.FormId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RoleId, "RoleId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("RoleId", String.Empty)
+                @Html.ValidationMessageFor(model => model.RoleId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>*@
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

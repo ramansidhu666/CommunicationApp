@@ -1,0 +1,108 @@
+﻿@model CommunicationApp.Models.CustomerModel
+
+@{
+    ViewBag.Title = "SignUp";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+@using (Html.BeginForm("Register", "Register", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+
+    <section>
+        <div class="container">
+            <div class="row margin-top100 sign_up_bg">
+                <div class="col-md-4 col-md-4 ">
+                </div>
+
+                <!-- LOGIN -->
+
+                <div class="col-md-5 col-md-5 sign_up_in">
+
+                    <div class="sky-form boxed">
+                        <fieldset class="text-center">
+                            <!-- Logo -->
+                            <a class="logo" href="#">
+                                <img src="~/assets/images/logo.png" height="40" alt="Logo" title="Ameba" />
+                            </a>
+                        </fieldset>
+                        <h4>Sign up</h4>
+                        @Html.ValidationSummary(true)
+                        <form id="loginform">
+                            <fieldset>
+                                <section>
+                                    @Html.LabelForRequired(model => model.FirstName)
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.FirstName)
+                                        @Html.ValidationMessageFor(model => model.FirstName)
+                                    </label>
+                                </section>
+                                <section >
+                                    @Html.LabelForRequired(model => model.LastName)
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.LastName)
+                                        @Html.ValidationMessageFor(model => model.LastName)
+                                    </label>
+
+                                </section>
+                                <section >
+                                    @Html.LabelFor(model => model.EmailID, new { @class = "label" })
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.EmailID)
+                                        @Html.ValidationMessageFor(model => model.EmailID)
+                                    </label>
+                                </section>
+                                <section >
+                                    @Html.LabelForRequired(model => model.Password)
+                                    <label class="input">
+                                        @Html.PasswordFor(model => model.Password)
+                                        @Html.ValidationMessageFor(model => model.Password)
+                                    </label>
+
+                                </section>
+                                @*<section class="col col-md-2">
+                                        @Html.LabelForRequired(model => model.ConfirmPassword)
+                                        <label class="input">
+                                            @Html.PasswordFor(model => model.ConfirmPassword)
+                                            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                                        </label>
+                                    </section>*@
+                                <section>
+                                    @Html.LabelFor(model => model.MobileNo, new { @class = "label" })
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.MobileNo)
+                                        @Html.ValidationMessageFor(model => model.MobileNo)
+                                    </label>
+                                </section>
+                                <section >
+                                    @Html.LabelFor(model => model.ZipCode, new { @class = "label" })
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.ZipCode)
+                                        @Html.ValidationMessageFor(model => model.ZipCode)
+                                    </label>
+                                </section>
+
+                            </fieldset>
+                            <footer>
+                                <button type="submit" value="Create" class="button new_btn" id="btn">Save</button>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+                <!-- /LOGIN -->
+                <div class="col-md-4 col-md-4 ">
+                </div>
+
+
+
+            </div>
+        </div>
+    </section>
+}
+
+
+

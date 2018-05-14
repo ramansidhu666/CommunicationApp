@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    HtmlHelper.ClientValidationEnabled = true;
+}
+
+@section Scripts{
+    <script src="~/Scripts/jquery.cookie.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            if ($.cookie('EmailID') != "" && $.cookie('Password') != "") {
+                $('#email').val($.cookie('EmailID'));
+                $('#password').val($.cookie('Password'));
+                $('#chkloggedin').attr('checked', true);
+            }
+
+            $("#btnLogin").click(function () {
+                var email = document.getElementById("email").value;
+                var password = document.getElementById("password").value;
+                var loggedin = $("#chkloggedin:checked").val();
+                if (email != "" && password != "") {
+                    $("#loginform").attr("action", "#");
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Login/LoginMethod',
+                        data: JSON.stringify({ Email: email, Password: password, LoggedIn: loggedin }),
+                        contentType: 'application/json',
+                        success: function (result) {
+                            if (result == "OK") {
+                                window.location.href = '@Url.Action("WelcomeHome", "Home")';
+                            }
+                            else {
+                                $("#btnSecond").click();
+                                return false;
+                            }
+                        },
+                        error: function () {
+                            $("#btnSecond").click();
+                            return false;
+                        }
+                    });
+                }
+                else {
+                    $("#loginform").attr("action", "#");
+                }
+            });
+        });
+    </script>
+}
+<section>
+    <div class="container">
+        <div class="row margin-top100">
+            <div class="col-md-4 col-md-4 ">
+            </div>
+
+            <!-- LOGIN -->
+            <div class="col-md-4 col-md-4 ">
+
+                <!-- login form -->
+                <div class="sky-form boxed">
+                    <fieldset class="text-center">
+                        <!-- Logo -->
+                        <a class="logo" href="#">
+                            <img src="~/assets/images/Ameba/logo.png" height="50" alt="Logo" title="Ameba" />
+                        </a>
+                    </fieldset>
+                    <header class="text-danger text-center bold">
+                        <span>
+                            <span class="icon">
+                                <i class="fa fa-user"></i>&nbsp; Login
+                            </span>
+                        </span>
+                    </header>
+
+                    <form id="loginform">
+                        <fieldset>
+
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-envelope"></i>
+                                    <input id="email" required type="email" placeholder="Email address">
+                                    <b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
+                                </label>
+                            </section>
+
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    <input id="password" required type="password" placeholder="Password">
+                                    <b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
+                                </label>
+                                <div class="note"><a href="#">Forgot Password?</a></div>
+                            </section>
+
+                            <section>
+                                <label class="checkbox"><input type="checkbox" id="chkloggedin"><i></i>Keep me logged in</label>
+                            </section>
+
+                        </fieldset>
+
+                        <footer class="text-right">
+                            <button id="btnLogin" type="submit" class="bigButton">Log in</button>
+                        </footer>
+                    </form>
+                </div>
+                <div class="text-center">
+                    @Html.ActionLink("Home", "Index", "Home")
+                </div>
+                <!-- /login form -->
+                <div class="col-md-4 col-md-4 ">
+                    
+                </div>
+            </div>
+            <!-- /LOGIN -->
+            <div class="col-md-4 col-md-4 ">
+            </div>
+
+
+            <button class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" id="btnSecond" aria-hidden="true" style="opacity: 0;">Small Modal</button>
+            <div id="Mymodel" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <!-- modal header -->
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Error</h4>
+                        </div><!-- /modal header -->
+                        <!-- modal body -->
+                        <div class="modal-body">
+                            Invalid Email ID or Password
+                        </div>
+                        <!-- /modal body -->
+
+                        <div class="modal-footer">
+                            <!-- modal footer -->
+                            <button class="bigButton" data-dismiss="modal">OK</button>
+                        </div><!-- /modal footer -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

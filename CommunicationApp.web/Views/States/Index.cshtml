@@ -1,0 +1,73 @@
+﻿@model IEnumerable<CommunicationApp.Models.StateModel>
+
+@{
+    ViewBag.Title = "States";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+
+<h2 class="text-center">States</h2>
+
+<p class="operation">
+    @if (Convert.ToBoolean(TempData["Create"]) == true)
+    {
+        <i class="glyphicon glyphicon-share-alt create_icon"></i>
+        @Html.ActionLink("Create New", "Create")
+    }
+</p>
+
+@{
+    Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = TempData["MessageBody"] });
+}
+
+
+@using (Html.BeginForm())
+{   
+    <div class="table-responsive">
+        <table id="mytable" class="table">
+            <thead>
+                <tr>
+                    <th><span>@Html.DisplayNameFor(model => model.Country.CountryName)</span></th>
+                    <th><span>@Html.DisplayNameFor(model => model.StateName)</span></th>
+                    <th><span>@Html.DisplayNameFor(model => model.IsActive)</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Country.CountryName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StateName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsActive)
+                        </td>
+                        <td class="operation">
+                            @if (Convert.ToBoolean(TempData["Edit"]) == true)
+                            {
+                                @Html.ActionLink(" ", "Edit", new { id = item.StateID }, new { @class = "glyphicon glyphicon-edit edit_icon", @data_original_title = "Edit", @data_placement = "top", @data_toggle = "tooltip" })
+                                <b>|</b>
+                            }
+                            @if (Convert.ToBoolean(TempData["Detail"]) == true)
+                            {
+                                @Html.ActionLink(" ", "Details", new { id = item.StateID }, new { @class = "glyphicon glyphicon-info-sign info_icon", @data_original_title = "Details", @data_placement = "top", @data_toggle = "tooltip" })
+                                <b>|</b>
+                            }
+                            @if (Convert.ToBoolean(TempData["Delete"]) == true)
+                            {
+                                @Html.ActionLink(" ", "Delete", new { id = item.StateID }, new { @class = "glyphicon glyphicon-trash delete_icon", @data_original_title = "Delete", @data_placement = "top", @data_toggle = "tooltip" })
+                            }  
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@{
+    Html.RenderAction("Paging", "Base");
+}

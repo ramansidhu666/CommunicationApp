@@ -1,0 +1,91 @@
+﻿@model CommunicationApp.Models.RoleDetailModel
+
+@{
+    ViewBag.Title = "Role Detail Model";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+
+<h2 class="text-center">Role Detail Model</h2>
+
+<div>
+  
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.form.FormName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.form.FormName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Role.RoleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Role.RoleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsCreate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsCreate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsEdit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsEdit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsView)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsView)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDelete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDelete)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDetail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDetail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDownload)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDownload)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RoleDetailID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

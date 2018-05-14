@@ -1,0 +1,71 @@
+﻿@model CommunicationApp.Models.RoleDetailViewModel
+@{
+    ViewBag.Title = "Assign Permission";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+<h2 class="text-center"> Assign Permission for @ViewData["RoleName"]</h2>
+
+<h2>@ViewBag.UserName</h2>
+@using (Html.BeginForm("AssignPermission", "Role"))
+{
+    <div class="table-responsive">
+        <table id="mytable" class="table">
+            <thead>
+                <tr>
+                    <th><span></span></th>
+                    <th><span>Form Name</span></th>
+                    <th><span><input type="checkbox" class="SelectAll" data-operation="create" /> Save</span></th>
+                    <th><span><input type="checkbox" class="SelectAll" data-operation="edit" /> Update</span></th>
+                    <th><span><input type="checkbox" class="SelectAll" data-operation="view" /> View</span></th>
+                    <th><span><input type="checkbox" class="SelectAll" data-operation="delete" /> Delete</span></th>
+                    <th><span><input type="checkbox" class="SelectAll" data-operation="download" /> Download</span></th>
+                    <th><span><input type="checkbox" class="SelectAll" data-operation="detail" /> Detail</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                @Html.EditorFor(model => model.RoleDetail)
+            </tbody>
+        </table>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-2">
+                <input type="submit" value="Assign Permission" class="bigButton" id="btnSubmit" />
+
+            
+                
+           
+            </div>
+            <div class="col-md-4 operation">
+                @Html.ActionLink("Reset", "AssignPermission", new { RoleId = ViewBag.RoleId }, new { @class = "bigButton" })
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.SelectAll').click(function (e) {
+            $(this).closest('table').find('td input.' + $(this).data("operation") + ':checkbox').prop('checked', this.checked);
+        });
+        $(".SelectRow").click(function (e) {
+            if ($(this).data("val") == "0") {
+                $(this).closest('tr').find('td input:checkbox').prop('checked', true);
+                $(this).data("val", "1");
+            }
+            else {
+                $(this).closest('tr').find('td input:checkbox').prop('checked', false);
+                $(this).data("val", "0");
+            }
+        });
+    });
+</script>
+@if (Convert.ToBoolean(TempData["View"]) == true)
+{
+    <p>
+        <i class="fa fa-mail-reply create_icon"></i>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+
+

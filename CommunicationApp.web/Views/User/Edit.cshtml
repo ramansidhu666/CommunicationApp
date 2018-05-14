@@ -1,0 +1,204 @@
+﻿@model CommunicationApp.Models.UserModel
+
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+<style type="text/css">
+    .validation-summary-errors {
+        font-weight: bold;
+        color: #ff0000;
+    }
+
+    .mycombo {
+        width: 100%;
+    }
+</style>
+<h2 class="text-center">Users</h2>
+
+@{
+    Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = TempData["MessageBody"] });
+}
+
+@using (Html.BeginForm("Edit", "User"))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.UserId)
+    <div class="form-horizontal">
+        @*<header>Create</header>*@
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group hidden">
+            @Html.LabelForRequired(model => model.CompanyID, "", "control-label col-md-2")
+            <div class="col-md-10">
+                @Html.DropDownList("CompanyID", null, "-- Select Company --")
+                @Html.ValidationMessageFor(model => model.CompanyID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelForRequired(model => model.FirstName, "", "control-label col-md-2")
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.JobDescription)*@
+
+                @Html.EditorFor(model => model.FirstName, new { @class = "label half" })
+                @Html.ValidationMessageFor(model => model.FirstName)
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelForRequired(model => model.UserName, "", "control-label col-md-2")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName)
+                @Html.ValidationMessageFor(model => model.CompanyID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.CompanyName, new { @class = "label half" })*@
+            @Html.LabelForRequired(model => model.Password, "", "control-label col-md-2")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelForRequired(model => model.UserEmailAddress, "", "control-label col-md-2")
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserEmailAddress)
+                @Html.ValidationMessageFor(model => model.UserEmailAddress)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.LeavingDate, new { @class = "label half" })*@
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.IsActive)
+                @Html.ValidationMessageFor(model => model.IsActive)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <section class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="bigButton" />
+            </section>
+        </div>
+    </div>
+}
+
+@if (Convert.ToBoolean(TempData["View"]) == true)
+{
+    <p class="operation">
+        <i class="fa fa-mail-reply create_icon"></i>
+        @Html.ActionLink(" Back to List", "Index")
+    </p>
+}
+
+
+
+
+
+@*@model CommunicationApp.Entity.User
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>User</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.UserId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstName)
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastName)
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName)
+                @Html.ValidationMessageFor(model => model.UserName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserEmailAddress, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserEmailAddress)
+                @Html.ValidationMessageFor(model => model.UserEmailAddress)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompanyID, "CompanyID", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CompanyID", String.Empty)
+                @Html.ValidationMessageFor(model => model.CompanyID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CreatedOn, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CreatedOn)
+                @Html.ValidationMessageFor(model => model.CreatedOn)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastUpdatedOn, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastUpdatedOn)
+                @Html.ValidationMessageFor(model => model.LastUpdatedOn)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsActive, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsActive)
+                @Html.ValidationMessageFor(model => model.IsActive)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@

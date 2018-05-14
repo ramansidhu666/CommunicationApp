@@ -1,0 +1,50 @@
+﻿@model CommunicationApp.Entities.State
+
+@{
+    ViewBag.Title = "States";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+
+<h2 class="text-center">States</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Country.CountryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country.CountryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StateName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StateName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+    </dl>
+</div>
+
+<p class="operation">
+    @if (Convert.ToBoolean(TempData["View"]) == true)
+    {
+        <i class="fa fa-mail-reply create_icon"></i>
+        @Html.ActionLink(" Back to List", "Index")
+        <b>|</b>
+    }
+    @if (Convert.ToBoolean(TempData["Edit"]) == true)
+    {
+        @Html.ActionLink(" ", "Edit", new { id = Model.StateID }, new { @class = "glyphicon glyphicon-edit edit_icon", @data_original_title = "Edit", @data_placement = "top", @data_toggle = "tooltip" })
+    }
+</p>

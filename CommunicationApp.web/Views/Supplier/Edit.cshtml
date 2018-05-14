@@ -1,0 +1,330 @@
+﻿@model CommunicationApp.Models.SupplierModel
+
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnSubmit').click(function () {
+            if ($('#fileToUpload').val() == "") {
+                if ($('#LogoPath').val() == "") {
+                    $("#spanfile").html("Please upload file");
+                    return false;
+                }
+            }
+            else {
+                return checkfile();
+            }
+        });
+
+        $('.chosen-select').chosen({ no_results_text: 'Oops, nothing found!' });
+
+        function LoadSubCategories(Category, SubCategory) {
+
+
+            $("#" + SubCategory + "").empty();
+            $.ajax({
+                type: 'Post',
+                //url: '@Url.Action("GetSubCategories")',
+                url: '/SubCategory/GetSubCategories?Id=' + $("#" + Category + "").val(),
+                dataType: 'json',
+                async: true,
+                processData: true,
+                cache: false,
+                //data: { id: $("#" + Category + "").val() },
+                success: function (categories) {
+                    $.each(categories, function (i, category) {
+                        $("#" + SubCategory + "").append('<option value="' + category.Value + '">' + category.Text + '</option>');
+                    });
+                    $("#" + SubCategory + "").trigger("chosen:updated");
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve subcategory.' + ex);
+                }
+            });
+
+            return false;
+        }
+
+        function LoadSubSubRegion(Region, SubRegion) {
+
+            $("#" + SubRegion + "").empty();
+            $.ajax({
+                type: 'Post',
+                //url: '@Url.Action("GetSubSubRegion")',
+                url: '/Supplier/GetSubRegion?id=' + $("#" + Region + "").val(),
+                dataType: 'json',
+                async: true,
+                processData: true,
+                cache: false,
+                //data: { id: $("#" + Category + "").val() },
+                success: function (SubRegionss) {
+
+                    $.each(SubRegionss, function (i, SubRegions) {
+
+                        $("#" + SubRegion + "").append('<option value="' + SubRegions.Value + '">' + SubRegions.Text + '</option>');
+                    });
+                    $("#" + SubRegion + "").trigger("chosen:updated");
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve subcategory.' + ex);
+                }
+            });
+
+            return false;
+        }
+
+        //For State
+        $("#CategoryId").change(function () {
+            LoadSubCategories('CategoryId', 'SubCategoryId');
+        });
+
+        //For region
+        $("#Region").change(function () {
+
+            LoadSubSubRegion('Region', 'SubRegion');
+        });
+        //get file size
+        function GetFileSize(fileid) {
+            try {
+                var fileSize = 0;
+                // Detecting IE
+                var isIE = false;
+                if ($('html').is('.ie ie7, .ie ie8, .ie ie9, .ie ie10')) {
+                    isIE = true;
+                    //alert("IE");
+                }
+
+                if (isIE) {
+                    //before making an object of ActiveXObject,
+                    //please make sure ActiveX is enabled in your IE browser
+                    var objFSO = new ActiveXObject("Scripting.FileSystemObject"); var filePath = $("#" + fileid)[0].value;
+                    var objFile = objFSO.getFile(filePath);
+                    var fileSize = objFile.size; //size in kb
+                    fileSize = fileSize / 1048576; //size in mb
+                }
+                    //for FF, Safari, Opeara and Others
+                else {
+                    fileSize = $("#" + fileid)[0].files[0].size //size in kb
+                    fileSize = fileSize / 1048576; //size in mb
+                }
+
+                // alert("Uploaded File Size is" + fileSize + "MB");
+                return fileSize;
+            }
+            catch (e) {
+                alert("Error is :" + e);
+            }
+        }
+        function checkfile() {
+            var file = getNameFromPath($("#fileToUpload").val());
+            if (file != null) {
+                var extension = file.substr((file.lastIndexOf('.') + 1));
+                //alert(extension);
+                switch (extension) {
+                    case 'jpg':
+                    case 'png':
+                        flag = true;
+                        break;
+                    default:
+                        flag = false;
+                }
+            }
+            if (flag == false) {
+                $("#spanfile").html("You can upload only jpg, png extension file");
+                return false;
+
+            }
+            else {
+                var size = GetFileSize('fileToUpload');
+                if (size > 3) {
+                    $("#spanfile").html("You can upload file up to 3 MB");
+                    return false;
+                }
+                else {
+                    $("#spanfile").html("");
+                }
+            }
+        }
+        $(function () {
+            $("#fileToUpload").change(function () {
+                checkfile();
+            });
+
+        });
+
+    })
+    function showimagepreview(input) {
+        debugger;
+        if (input.files && input.files[0]) {
+            debugger
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                debugger
+                $('#imgprvw').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+@using (Html.BeginForm("Edit", "Supplier", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.SupplierId)
+    @Html.HiddenFor(model => model.Photopath)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="sky-form boxed margin-top10">
+                <header>Supplier</header>
+                @Html.ValidationSummary(true)
+                <fieldset>
+
+                    <div class="row">
+                        <section class="col col-md-3">
+                            @if (Model.Photopath != null)
+                            {
+                                <img id="imgprvw" alt="Avatar" src="@Model.Photopath" height="120" width="120" />
+                            }
+                            else
+                            {
+                                <img id="imgprvw" alt="Avatar" src=" ~/images/noImage.jpg" height="120" width="120" />
+
+                            }
+                            Upload Image
+                            <input type="file" name="file" id="ImageUpload" onchange="showimagepreview(this)" />
+
+                        </section>
+
+                        <section style="display:none" class="col col-md-4">
+                            <div class="button"><input type="file" id="fileToUpload" onchange="this.parentNode.nextSibling.value = this.value" name="file">Browse</div>
+                            <span style="color:red;"></span><span id="spanfile" class="field-validation-error"></span>
+                        </section>
+
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-md-3">
+                            @Html.LabelForRequired(model => model.FirstName)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.FirstName)
+                                @Html.ValidationMessageFor(model => model.FirstName)
+                            </label>
+                        </section>
+                        <section class="col col-md-3">
+
+                            @Html.LabelForRequired(model => model.LastName)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.LastName)
+                                @Html.ValidationMessageFor(model => model.LastName)
+                            </label>
+                        </section>
+
+                    </div>
+
+
+                    <div class="row">
+                        <section class="col col-lg-3">
+                            @Html.LabelForRequired(model => model.MobileNo)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.MobileNo)
+                                @Html.ValidationMessageFor(model => model.MobileNo)
+                            </label>
+                        </section>
+                        <section class="col col-lg-3">
+                            @Html.LabelForRequired(model => model.EmailID)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.EmailID)
+                                @Html.ValidationMessageFor(model => model.EmailID)
+                            </label>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-md-3">
+
+                            @Html.LabelForRequired(model => model.Address)
+                            <label class="input">
+                                @Html.TextAreaFor(model => model.Address, new { @style = "width:254px" })
+                                @Html.ValidationMessageFor(model => model.Address)
+                            </label>
+                        </section>
+                        <section class="col col-md-3">
+                            @Html.LabelForRequired(model => model.Description)
+                            <label class="input">
+                                @Html.TextAreaFor(model => model.Description, new { @style = "width:254px" })
+                                @Html.ValidationMessageFor(model => model.Description)
+                            </label>
+                        </section>
+
+                    </div>
+                    <div class="row">
+                        <section class="col col-md-3">
+
+                            @Html.LabelForRequired(model => model.CategoryId)
+                            <label class="input">
+                                @*, new { @style = "height:50px;width:670px" }*@
+                                @Html.DropDownList("Region", (SelectList)ViewBag.RegionList, "--Region --", new { @class = "chosen-select" })
+                                @Html.ValidationMessageFor(model => model.CategoryId)
+                            </label>
+                        </section>
+                        <section class="col col-md-3">
+
+                            @Html.LabelForRequired(model => model.SubCategoryId)
+                            <label class="input">
+                                @*@Html.DropDownList("SubCategoryId", (SelectList)ViewBag.SubCategoryList, "--Skill --", new { @style = "height:50px;width:670px" })*@
+                                @Html.DropDownList("SubRegion", (SelectList)ViewBag.SubRegionList, "-- Select SubRegion --", new { @required = "", @class = "chosen-select" })
+                                @Html.ValidationMessageFor(model => model.SubCategoryId)
+                            </label>
+                        </section>
+                    </div>
+                   
+                    <div class="row">
+                        <section class="col col-md-3">
+
+                            @Html.LabelForRequired(model => model.CategoryId)
+                            <label class="input">
+                                @*, new { @style = "height:50px;width:670px" }*@
+                                @Html.DropDownList("CategoryId", (SelectList)ViewBag.CategoryIdList, "--InDoor/OutDoor --", new { @class = "chosen-select" })
+                                @Html.ValidationMessageFor(model => model.CategoryId)
+                            </label>
+                        </section>
+                        <section class="col col-md-3">
+
+                            @Html.LabelForRequired(model => model.SubCategoryId)
+                            <label class="input">
+                                @*@Html.DropDownList("SubCategoryId", (SelectList)ViewBag.SubCategoryList, "--Skill --", new { @style = "height:50px;width:670px" })*@
+                                @Html.DropDownList("SubCategoryId", (SelectList)ViewBag.SubCategoryIdList, "-- Select SubCategory --", new { @required = "", @class = "chosen-select" })
+                                @Html.ValidationMessageFor(model => model.SubCategoryId)
+                            </label>
+                        </section>
+                    </div>
+                    
+                    <div class="row">
+                        <section class="col col-md-3">
+
+                            @Html.LabelFor(model => model.IsActive)
+                            <label class="check-square padding-top30">
+                                @Html.CheckBoxFor(model => model.IsActive)
+                                @Html.ValidationMessageFor(model => model.IsActive)
+                            </label>
+                        </section>
+                    </div>
+                </fieldset>
+                <footer>
+                    <input type="submit" value="Update" class="bigButton" id="btnSubmit" />
+                </footer>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+

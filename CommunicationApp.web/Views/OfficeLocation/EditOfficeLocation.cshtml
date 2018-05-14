@@ -1,0 +1,104 @@
+﻿@model CommunicationApp.Models.OfficeLocationModel
+
+@{
+    ViewBag.Title = "Office Location";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+
+
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+@using (Html.BeginForm("EditOfficeLocation", "OfficeLocation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.OfficeLocationId)
+    @Html.HiddenFor(model => model.CompanyId)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="sky-form boxed margin-top10">
+                <header>Office Location</header>
+                @Html.ValidationSummary(true)
+                <fieldset>
+                    <div class="row">
+                        <section class="col col-md-4">
+                            @Html.LabelForRequired(model => model.OfficeAddress)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.OfficeAddress)
+                                @Html.ValidationMessageFor(model => model.OfficeAddress)
+                            </label>
+                        </section>
+
+                    </div>
+                    <div class="row">
+                        <section class="col col-md-4">
+                            @Html.LabelForRequired(model => model.City)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.City)
+                                @Html.ValidationMessageFor(model => model.City)
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-md-4">
+                            @Html.LabelForRequired(model => model.TelephoneNo)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.TelephoneNo)
+                                @Html.ValidationMessageFor(model => model.TelephoneNo)
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-4">
+                            @Html.LabelForRequired(model => model.Fax)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.Fax)
+                                @Html.ValidationMessageFor(model => model.Fax)
+                            </label>
+                        </section>
+                        <section class="col col-lg-8"></section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-4">
+                            @Html.LabelForRequired(model => model.Email)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.Email)
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </label>
+                        </section>                        
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-4">
+                            @Html.LabelFor(model => model.Latitude)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.Latitude)
+                                @Html.ValidationMessageFor(model => model.Latitude)
+                            </label>
+                        </section>
+                        <section class="col col-lg-6"></section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-4">
+
+                            @Html.LabelFor(model => model.Longitude)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.Longitude)
+                                @Html.ValidationMessageFor(model => model.Longitude)
+                            </label>
+                        </section>
+                        <section class="col col-lg-6"></section>
+                    </div>
+
+                </fieldset>
+                <footer>
+                    <input type="submit" value="Update" class="bigButton" />
+                </footer>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "OfficeLocation")
+</div>

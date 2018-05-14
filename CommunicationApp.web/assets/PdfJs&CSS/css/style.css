@@ -1,0 +1,274 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+html, body, address, blockquote, div, dl, form, h1, h2, h3, h4, h5, h6, ol, p, pre, table, ul, dd, dt, li, tbody, td, tfoot, th, thead, tr, button, del, ins, map, object, a, abbr, acronym, b, bdo, big, br, cite, code, dfn, em, i, img, kbd, q, samp, small, span, strong, sub, sup, tt, var, legend, fieldset, p {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+a, input, select, textarea {
+	outline: none;
+	margin: 0;
+	padding: 0;
+}
+img, fieldset {
+	border: 0;
+}
+a {
+	outline: none;
+	border: none;
+}
+img {
+	max-width: 100%;
+	height: auto;
+	width: auto\9;
+	vertical-align: middle;
+	border: none;
+	outline: none;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+div, h1, h2, h3, h4, span, p, input, form, img, hr, img, a {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+.clear {
+	clear: both;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+
+
+
+
+.com_form_header_section
+{
+	float:left;
+	width:100%;
+}
+.left_logo
+{
+	float:left;
+	width:100%;
+	margin:12px 0 0;
+}
+.com_form_heading {
+    float: left;
+    margin: 25px 0 0;
+    width: 100%;
+}
+.com_form_heading h2
+{
+	float:left;
+	width:100%;
+	font-size:32px;
+	text-align:center;
+	font-family: 'open_sansbold';
+	color:black;
+}
+.right_logo {
+    float: left;
+    text-align: right;
+    width: 100%;
+}
+
+.com_form_line
+{
+	float:left;
+	width:100%;
+}
+.com_form_bg {
+    border-color: #231f20;
+    border-style: solid;
+    border-width: 6px 1px 1px;
+    float: left;
+    width: 100%;
+}
+.com_form_sect
+{
+	float:left;
+	width:100%;
+	padding:8px;
+}
+.com_form_sect h2
+{
+	float:left;
+	width:100%;
+		font-size:24x;
+	font-family: 'open_sansbold';
+	color:black;
+}
+.com_form_sect p
+{
+	float:left;
+	width:100%;
+		font-size:16x;
+	font-family: 'open_sansregular';
+	color:black;
+	margin:6px 0;
+}
+.com_form_box {
+    float: left;
+    margin: 6px 0;
+    width: 100%;
+}
+.com_form_box label {
+    font-size: 16px;
+    margin: 7px 0 0;
+}
+.com_form_box input {
+    border-color: -moz-use-text-color -moz-use-text-color #878686 !important;
+    border-radius: 0;
+    border-style: none none dotted !important;
+    border-width: medium medium 2px !important;
+    box-shadow: none;
+}
+.com_form_box span {
+    color: #878686;
+    float: left;
+    margin: 4px 0 0;
+}
+.com_form_headng_bg
+{
+	float:left;
+	width:100%;
+	background: #dcddde;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	padding:12px 0;
+}
+.com_form_headng_bg2
+{
+	float:left;
+	width:100%;
+	background:#f1f1f2;
+	padding:12px;
+}
+.com_form_headng_bg3 {
+    background: #ffffff none repeat scroll 0 0;
+    border-bottom: 1px solid red;
+    float: left;
+    padding: 8px;
+    width: 100%;
+}
+.com_form_hding_box
+{
+	float:left;
+	width:100%;
+}
+.com_form_hding_box span
+{
+	float:left;
+	width:100%;
+	font-size:16px;
+	font-family: 'open_sansbold';
+	color:black;
+}
+.com_form_hding_box h2
+{
+	float:left;
+	width:100%;
+	font-size:17px;
+	font-family: 'open_sansbold';
+	color:black;
+	font-style:italic;
+}
+.com_form_hding_box p
+{
+	float:left;
+	width:100%;
+	font-size:16px;
+	font-family: 'open_sansregular';
+	color:black;
+}
+.com_form_hding_chkbox
+{
+	float:left;
+	width:100%;
+    padding:8px;
+}
+.com_form_cntnt_box
+{
+	float:left;
+	width:50%;
+}
+.table {
+    margin-bottom: 20px;
+    max-width: 100%;
+    width: 97% !important;
+}
+th
+{
+	background:#dcddde;
+}
+.none
+{
+	border:0px !important;
+}
+.com_form_hding_chkbox input
+{
+    float:left;
+}
+.com_form_hding_chkbox h2
+{
+    float:left;
+    font-family: 'open_sansregular';
+	color:black;
+    font-size:14px;
+    margin:2px 0 2px 14px;
+}
+.com_form_cntnt_box
+{
+	float:left;
+	width:50%;
+}
+.bottom_section
+{
+	float:left;
+	width:100%;
+}
+td {
+    font-family: arial;
+    line-height: 24px !important;
+}
+.un_box {
+    float: left;
+    margin-bottom: 17px;
+    width: 100%;
+}
+.un_box > p {
+    color: #a9a9a9;
+}
+
+
+
+.table_form_heading
+{
+	width:100%;
+		font-size:16x;
+	font-family: 'open_sansregular';
+	color:black;
+    padding:6px;
+}
+
+.table_quest {
+    float:left;
+    width:100%;
+    font-size:16x;
+	font-family: 'open_sansregular';
+	color:black;
+    padding:12px;
+    border-bottom:1px solid #f1f1f2;
+    border-top:1px solid #f1f1f2;
+}

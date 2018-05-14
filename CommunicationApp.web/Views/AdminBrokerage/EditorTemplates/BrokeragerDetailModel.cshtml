@@ -1,0 +1,85 @@
+﻿@model CommunicationApp.Web.Models.BrokeragerDetailModel
+
+@Html.HiddenFor(model => model.BrokerageServices)
+@Html.HiddenFor(model => model.BrokerageId)
+@Html.HiddenFor(model => model.BrokerageServicesId)
+
+@if (Model.ParentId == null)
+{
+    <div class="col-md-12 col-sm-12" style="background:#f1f1f2;">
+        <div class="table_form_heading"style="border:0px;">@Model.BrokerageServices</div>
+    </div>
+}
+@if (Model.ParentId != null)
+{
+    <div class="row">
+        <div class="col-md-6 col-sm-6"><div class="table_quest">@Model.BrokerageServices</div></div>
+       
+        <div class="col-md-6"><div class="col-md-2 ttt">
+    <div class="com_form_hding_chkbox">
+        @Html.RadioButtonFor(model => model.BrokerageValue, '1', new { @disabled = "disabled" })
+        <h2>Frequently</h2>
+    </div>
+</div>
+            <div class="col-md-2 ttt">
+                <div class="com_form_hding_chkbox">
+                    @Html.RadioButtonFor(model => model.BrokerageValue, '2', new { @disabled = "disabled" })
+                    <h2>Occasionally</h2>
+                </div>
+            </div>
+            <div class="col-md-2 ttt">
+                <div class="com_form_hding_chkbox">
+                    @Html.RadioButtonFor(model => model.BrokerageValue, '3', new { @checked = "checked" })
+                    <h2>Seldom</h2>
+                </div>
+            </div>
+        <div class="col-md-2 ttt">
+            <div class="com_form_hding_chkbox">
+                @Html.RadioButtonFor(model => model.BrokerageValue, '4')
+                <h2>Never</h2>
+            </div>
+        </div>
+            <div class="col-md-2 ttt">
+                <div class="com_form_hding_chkbox">
+                    @Html.RadioButtonFor(model => model.BrokerageValue, '5', new { @disabled = "disabled" })
+                    <h2>N/A</h2>
+                </div>
+            </div>
+            <div class="col-md-2 ttt">
+                <div class="com_form_hding_chkbox">
+                    @Html.RadioButtonFor(model => model.BrokerageValue, '6', new { @disabled = "disabled" })
+                    <h2>Don't Know</h2>
+                </div>
+            </div>
+    </div>
+        </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}

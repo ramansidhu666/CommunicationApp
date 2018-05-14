@@ -1,0 +1,145 @@
+﻿@model IEnumerable<CommunicationApp.Web.Models.BannerModel>
+
+@{
+    ViewBag.Title = "Banners";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+<h2 class="text-center">Banners</h2>
+
+
+<script type="text/javascript">
+
+    //delete experience
+    function updateid(pid) {
+        id = pid;
+    }
+    function deleteme() {
+
+        window.location = "/Admin/DeleteBanner?id=" + id;
+    }
+
+
+</script>
+<p class="operation">
+    <i class="fa fa-mail-forward create_icon red"></i>
+    @Html.ActionLink("Create New", "CreateBanner")
+</p>
+
+@{
+    Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = TempData["MessageBody"] });
+}
+@using (Html.BeginForm())
+{
+
+    <div class="row">
+        <div class="col-md-12">           
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_panel  sky-form boxed margin-top10">
+            <div class="x_title">
+                <header>Banners</header>
+                <div class="clearfix"></div>
+
+            </div>
+            <div class="x_content">
+                <!-- start project list -->
+                <table id="mytable" class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%"><span>Banner Image</span></th>
+                            <th style="width: 10%"><span>IsActive</span></th>
+                            <th style="width: 10%"><span>Action</span></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+
+                            string RowColors = "";
+
+                        }
+                        @foreach (var item in Model)
+                        {
+                            if (@item.IsActive == true)
+                            {
+                                RowColors = "Greencolor";
+                            }
+                            else
+                            {
+                                RowColors = "Redcolor";
+                            }
+
+
+                            <tr class="@RowColors">
+                                <td>
+                                    <ul class="list-inline" >
+
+                                        @if ((item.Url != "") && (item.Url != null))
+                                        {
+                                            <li>
+                                                <img src="@item.Url" class="avatar" alt="Avatar">
+                                            </li>
+                                        }
+
+                                    </ul>
+
+                                </td>
+                                <td>
+                                    @item.IsActive
+                                </td>
+
+                                <td class="operation">
+
+
+                                    @*<a href="@Url.Action("DeleteBanner", "admin", new { id = @item.BannerId })" style="color: #20A12E" class=""><i class="">Delete</i>    </a>*@
+                                    <a data-toggle="modal" onclick="updateid(@item.BannerId);" style="color: #20A12E" title="Delete" href="#myModal"><i class="">Delete</i></a>
+                                </td>
+                            </tr>
+
+
+                        }
+                    </tbody>
+                </table>
+                <!-- end project list -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Delete Banner</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <p>All the related data will be permanently deleted and cannot be recovered. Are you sure?</p>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button class="bigButton" data-dismiss="modal">Close</button>
+                <button class="bigButton" onclick="deleteme();">Delete</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+@{
+    Html.RenderAction("Paging", "Base");
+}

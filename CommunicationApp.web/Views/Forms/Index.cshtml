@@ -1,0 +1,40 @@
+﻿@model IEnumerable<CommunicationApp.Models.FormModel>
+
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+
+<h2 class="text-center">Form</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FormName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ControllerName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ControllerName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.FormId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.FormId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.FormId })
+        </td>
+    </tr>
+}
+
+</table>

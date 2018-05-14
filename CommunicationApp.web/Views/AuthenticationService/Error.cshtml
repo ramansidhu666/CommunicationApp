@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<h1 class="text-center">Error</h1>
+
+@{
+    Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = TempData["MessageBody"] });
+}
+

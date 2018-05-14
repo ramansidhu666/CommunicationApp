@@ -1,0 +1,45 @@
+﻿@model CommunicationApp.Entity.Form
+
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+
+<h2 class="text-center">Form</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FormName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FormName)
+                @Html.ValidationMessageFor(model => model.FormName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ControllerName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ControllerName)
+                @Html.ValidationMessageFor(model => model.ControllerName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="bigButton" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

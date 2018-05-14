@@ -1,0 +1,399 @@
+﻿@model  IEnumerable<CommunicationApp.Models.NewsLetter_Model>
+
+@{
+    ViewBag.Title = "NewsLetter";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+
+<script type="text/javascript">
+    var todayDate = new Date();
+    var id = 0;
+    function updateid(pid) {
+        //model common properties.
+        $('#imgsrc').css('display', 'block');
+        $('#Date_ErrorMessage').css('display', 'none');
+        $('#show_usrs').css('display', 'block');
+        //End
+        id = pid;
+    }
+    function deleteme() {
+        window.location = "/NewsLetter/DeleteNewsLetter?id=" + id;
+    }
+
+    $(document).ready(function () {
+
+        $('.chosen-select').chosen({ no_results_text: 'Oops, nothing found!' });
+        $(".ddlclass").on('change', function () {
+            var NewsletterId = $(this).closest('tr').attr('id');;
+            var val = this.value;
+            $.ajax({
+                url: '/NewsLetter/UpdateNewsLetter',
+                type: 'post',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ NewsLetterId: NewsletterId, DropdownId: val }),
+                success: function (data) {
+                    window.location.href = "/NewsLetter/NewsletterList";
+
+                },
+
+            });
+        })
+
+
+        $(".get_src li img").click(function () {
+            
+            var imgsrc = $(this).attr('src');
+            $('#show_usrs').css('display', 'none');
+            $('#imgsrc').css('display', 'block');
+            $('#imgsrc').attr('src', imgsrc)
+            $('#ImgModal').modal('show');
+        })
+
+
+        $('input[name="fwd_date"]').daterangepicker(
+         {
+             singleDatePicker: true,
+             format: 'MM/DD/YYYY',
+             startDate: todayDate,
+             minDate: todayDate
+
+         },
+         function (start, end, label) {
+
+         }
+     );
+
+        $('.dateBtn').on('apply.daterangepicker', function (ev, picker) {
+            var currentdate = $(this).val();
+            var CurrentId = $(this).closest('tr').attr('id');
+            var currentrow = $(this).closest("tr");
+            $('#mytable tr').each(function () {
+                debugger;
+                var RowId = this.id;
+                var NewsLetterName = $(this).closest("tr").find(".newslettername").text();
+
+                if (CurrentId != RowId) {
+                    var CompareDAte = $(this).find(".dateBtn").val();
+                    if (CompareDAte != undefined && currentdate != undefined && CompareDAte != "" && currentdate != "") {
+                        var diffi = myfunc(currentdate, CompareDAte);
+                        diffi = Math.abs(diffi);
+                        debugger;
+                        if (diffi != null && diffi != "") {
+                            if (diffi <= 15) {
+
+                                currentrow.find(".dateBtn").val('');
+                                $('#imgsrc').css('display', 'none');
+                                $('#Date_ErrorMessage').css('display', 'block');
+                                $('#Date_ErrorMessage').text('');
+                                $('#Date_ErrorMessage').text("Please set diffirence b/w your date and " + NewsLetterName + " minimum 15 days.")
+                                $('#ImgModal').modal('show');
+
+                            }
+                            else {
+                                $.ajax({
+                                    url: '/NewsLetter/UpdateNewsLetterDate',
+                                    type: 'post',
+                                    dataType: 'json',
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify({ NewsletterId: CurrentId, UpdatedDate: currentdate }),
+                                    success: function (data) {
+                                        //window.location.href = "/NewsLetter/NewsletterList";
+
+                                    },
+
+                                });
+                            }
+                        }
+
+                    }
+                }
+
+
+            });
+        });
+
+        $(".selected_user").click(function () {
+
+            var SelectedVal = $(this).closest("tr").find("#SelectedCustomer").val();
+            var NewsletterId = $(this).closest('tr').attr('id');;
+            $.ajax({
+                url: '/NewsLetter/UpdateSelectedUsers',
+                type: 'post',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ NewsLetterId: NewsletterId, SelectedUsers: SelectedVal }),
+                success: function (data) {
+                    window.location.href = "/NewsLetter/NewsletterList";
+
+                },
+
+            });
+        })
+
+        $('.show_user').click(function () {
+            
+            //model common properties.
+            $('#imgsrc').css('display', 'none');
+            $('#Date_ErrorMessage').css('display', 'none');
+            $('#show_usrs').css('display', 'block');
+            var divHtml = $(this).closest("tr").find("#selectedUsrs").html();
+            $('#show_usrs').html('');
+            $('#show_usrs').html(divHtml);
+
+            $('#ImgModal').modal('show');
+            //End
+        })
+    })
+
+    function myfunc(start, end) {
+        var start = convertLocalDateToUTCDate(start, false);
+        var end = convertLocalDateToUTCDate(end, false);
+        days = (end - start) / (1000 * 60 * 60 * 24);
+        //alert(Math.round(days));
+        return Math.round(days);
+    }
+
+    function convertLocalDateToUTCDate(date, toUTC) {
+        date = new Date(date);
+        //Local time converted to UTC
+        console.log("Time: " + date);
+        var localOffset = date.getTimezoneOffset() * 60000;
+        var localTime = date.getTime();
+        if (toUTC) {
+            date = localTime + localOffset;
+        } else {
+            date = localTime - localOffset;
+        }
+        date = new Date(date);
+        console.log("Converted time: " + date);
+        return date;
+    }
+</script>
+
+<p class="operation">
+
+    <i class="fa fa-mail-forward create_icon red"></i>
+    @Html.ActionLink("Create New", "Create")
+
+</p>
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+
+@using (Html.BeginForm("NewsletterList", "Newsletter"))
+{
+    <div class="row">
+        <div class="col-lg-12">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col col-md-1">
+                <b>NewsLetter Name</b>
+            </div>
+            <div class="col col-md-3">
+                @Html.TextBox("NewsLetterName", null, new { @class = " col-md-12", @style = "height: 34px;" })
+            </div>
+
+            <div class="col col-md-4">
+                <input type="submit" value="Search" data-id="search" class="bigButton action" />
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel  sky-form boxed margin-top10">
+                <div class="x_title">
+                    <header>NewsLetter</header>
+                </div>
+
+                <div class="x_content">
+                    <!-- start project list -->
+                    <table id="mytable" class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%"><span>NewsLetter Image</span></th>
+                                <th style="width: 10%"><span>NewsLetter Name</span> </th>
+                                <th style="width: 5%"><span>Order No.</span></th>
+                                <th style="width: 10%"><span>Set Date</span></th>
+                                <th style="width: 15%"><span>Select Users</span></th>
+                                <th style="width: 10%"><span>Action</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+
+                                <tr id="@item.NewsLetterId" class="closest_tr">
+                                    <td>
+                                        <ul class="list-inline get_src">
+                                            @if ((@item.first_img != "" && @item.second_img != "") && (@item.first_img != null && @item.second_img != null))
+                                            {
+                                                <li>
+                                                    <img src="@item.first_img" class="nwsltr " alt="nwsltr">
+                                                </li>
+                                                <li>
+                                                    <img src="@item.second_img" class="nwsltr " alt="nwsltr">
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <img src="@item.Image" class="nwsltr " alt="nwsltr">
+                                                </li>
+                                            }
+
+
+
+                                        </ul>
+                                    </td>
+
+
+                                    <td class="newslettername">
+                                        @item.NewsLetterName
+                                    </td>
+                                    <td>
+                                        @Html.DropDownList("OrderNo", ViewData["OrderList"] as List<SelectListItem>, new { @class = "ddlclass" })
+                                    </td>
+                                    <td>
+                                        @{
+                                            var createdata = @item.fwd_date.ToString();
+                                            createdata = createdata == "" ? null : createdata;
+                                            DateTime create_date = Convert.ToDateTime(createdata);
+                                            //create_date=create_date==01/01/0001 00:01:00 AM
+                                            var convrtdata = @create_date.ToString("MM/dd/yyyy");
+                                            convrtdata = convrtdata == "01/01/0001" ? null : convrtdata;
+                                        }
+
+
+                                        <input type="text" id="fwd_date" name="fwd_date" value="@convrtdata" class="form-control dateBtn" />
+                                    </td>
+                                    <td>
+                                        @if (item.Select_users != null)
+                                        {
+                                            <div id="selectedUsrs" style="display:none">
+                                                <ul>
+                                                    @foreach (var itm in item.Select_users)
+                                                    {
+                                                        <li>@itm</li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                            <div><button class="show_user bigButton" value="Select" type="button">Show Users</button></div>
+                                           <div><button class="selected_user bigButton" style="background-color: #FF0000" value="ReSet" type="button">ReSet</button></div> 
+                                        }
+                                        else
+                                        {
+                                            @Html.ListBox("SelectedCustomer", (IEnumerable<SelectListItem>)ViewBag.Customerlist, new { @class = "chosen-select", data_placeholder = "Select Users" })
+                                            <div><button class="selected_user bigButton"  value="Select" style="float: left; margin-top: 8px; background-color: #FF0000;" type="button">Set</button></div>
+                                        }
+
+
+
+                                    </td>
+                                    <td>
+                                        @*<a href="@Url.Action("CancelEvent", "Event", new { id = @item.EventId })" title="Cancel"><i class="fa fa-scissors red"></i></a>*@
+                                        <a data-toggle="modal" onclick="updateid(@item.NewsLetterId);" title="Delete" href="#myModal"><i class="fa fa-scissors red"></i></a>
+
+                                    </td>
+                                </tr>
+
+
+                            }
+                        </tbody>
+                    </table>
+                    <!-- end project list -->
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Delete NewsLetter</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <p> Are you sure? You want to cancel this NewsLetter. </p>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button class="bigButton" data-dismiss="modal">Close</button>
+                <button class="bigButton" onclick="deleteme();">Cancel</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="ImgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">News Letter</h4>
+
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <img alt="" src="" id="imgsrc" height="100%" width="100%" style="display:block" />
+                <h4 id="Date_ErrorMessage" style="display:none"></h4>
+                <div id="show_usrs" class="user_listt" style="display:none">
+
+                </div>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button class="bigButton" data-dismiss="modal">Close</button>
+                @*<button class="bigButton" onclick="deleteme();">Cancel</button>*@
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+
+@{
+    //if (Model.ToList().Count == 0)
+    //{
+    //    TempData["Message"] = "No record found .";
+
+    //}
+    //else
+    //{
+    //    Html.RenderAction("Paging", "Base");
+
+    //}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

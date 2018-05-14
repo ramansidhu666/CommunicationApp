@@ -1,0 +1,304 @@
+﻿@model CommunicationApp.Models.CompanyModel
+
+@{
+    ViewBag.Title = "Company";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        function LoadStates(Country, State) {
+
+            $("#" + State + "").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetStates")',
+                dataType: 'json',
+                async: true,
+                processData: true,
+                cache: false,
+                data: { id: $("#" + Country + "").val() },
+                success: function (states) {
+                    $.each(states, function (i, state) {
+                        $("#" + State + "").append('<option value="' + state.Value + '">' + state.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+
+            return false;
+        }
+
+        function LoadCities(State, City) {
+
+            $("#" + City + "").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetCity")',
+                dataType: 'json',
+                async: true,
+                processData: true,
+                cache: false,
+                data: { id: $("#" + State + "").val() },
+                success: function (cities) {
+                    $.each(cities, function (i, CityObj) {
+                        $("#" + City + "").append('<option value="' + CityObj.Value + '">' + CityObj.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve Cities.' + ex);
+                }
+            });
+            return false;
+        }
+
+        //For State
+        $("#CountryID").change(function () {
+            LoadStates('CountryID', 'StateID');
+        });
+
+        //For City
+        $("#StateID").change(function () {
+            LoadCities('StateID', 'CityID');
+        });
+
+
+        $('#btnSave').click(function () {
+            if ($('#fileToUpload').val() == "") {
+                $("#spanfile").html("Please upload file");
+                return false;
+            }
+            else {
+                return checkfile();
+            }
+        });
+
+        //get file path from client system
+        function getNameFromPath(strFilepath) {
+
+            var objRE = new RegExp(/([^\/\\]+)$/);
+            var strName = objRE.exec(strFilepath);
+
+            if (strName == null) {
+                return null;
+            }
+            else {
+                return strName[0];
+            }
+
+        }
+        //get file size
+        function GetFileSize(fileid) {
+            try {
+                var fileSize = 0;
+                // Detecting IE
+                var isIE = false;
+                if ($('html').is('.ie ie7, .ie ie8, .ie ie9, .ie ie10')) {
+                    isIE = true;
+                    //alert("IE");
+                }
+
+                if (isIE) {
+                    //before making an object of ActiveXObject,
+                    //please make sure ActiveX is enabled in your IE browser
+                    var objFSO = new ActiveXObject("Scripting.FileSystemObject");
+                    var filePath = $("#" + fileid)[0].value;
+                    var objFile = objFSO.getFile(filePath);
+                    var fileSize = objFile.size; //size in kb
+                    fileSize = fileSize / 1048576; //size in mb
+                }
+                    //for FF, Safari, Opeara and Others
+                else {
+                    fileSize = $("#" + fileid)[0].files[0].size //size in kb
+                    fileSize = fileSize / 1048576; //size in mb
+                }
+
+                // alert("Uploaded File Size is" + fileSize + "MB");
+                return fileSize;
+            }
+            catch (e) {
+                alert("Error is :" + e);
+            }
+        }
+        function checkfile() {
+            var file = getNameFromPath($("#fileToUpload").val());
+            if (file != null) {
+                var extension = file.substr((file.lastIndexOf('.') + 1));
+                //alert(extension);
+                switch (extension.toLowerCase()) {
+                    case 'jpg':
+                    case 'jpeg':
+                    case 'png':
+                        flag = true;
+                        break;
+                    default:
+                        flag = false;
+                }
+            }
+            if (flag == false) {
+                $("#spanfile").html("You can upload only jpg, png extension file");
+                return false;
+
+            }
+            else {
+                //var size = GetFileSize('fileToUpload');
+                //if (size > 3) {
+                //    $("#spanfile").html("You can upload file up to 3 MB");
+                //    return false;
+                //}
+                //else {
+                //    $("#spanfile").html("");
+                //}
+            }
+        }
+        var _URL = window.URL || window.webkitURL;
+
+        $("#fileToUpload").change(function (e) {
+            //debugger;
+            var image, file;
+            if ((file = this.files[0])) {
+                image = new Image();
+                image.onload = function () {
+                    // alert("The image width is " + this.width + " and image height is " + this.height);
+                    //if (this.width != 1000 && this.height != 667) {
+                    //    alert("Please check the Image Size");
+                    //}
+                };
+
+                image.src = _URL.createObjectURL(file);
+
+
+            }
+            checkfile();
+        });
+
+    });
+</script>
+
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+@using (Html.BeginForm("Create", "Company", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-12">
+            <div class="sky-form boxed margin-top10">
+                <header>Company</header>
+                @Html.ValidationSummary(true)
+                <fieldset>
+                    <div class="row">
+                        <section class="col col-md-6">
+                            @Html.LabelForRequired(model => model.LogoPath)
+                            <label class="input input-file" for="fileToUpload">
+                                <div class="button"><input type="file" name="file" onchange="this.parentNode.nextSibling.value = this.value" id="fileToUpload">Browse</div><input type="text" readonly="">
+                                <span style="color:red;"></span><span class="field-validation-error" id="spanfile"></span>
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-md-6">
+                            @Html.LabelForRequired(model => model.CompanyName)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.CompanyName)
+                                @Html.ValidationMessageFor(model => model.CompanyName)
+                            </label>
+                        </section>
+
+                    </div>
+                    <div class="row">
+
+                        <section class="col col-md-6">
+                            @*@Html.LabelFor(model => model.EmployeeAddress, new { @class = "label" })*@
+                            @Html.LabelForRequired(model => model.CompanyAddress)
+                            <label class="textarea">
+                                @Html.TextAreaFor(model => model.CompanyAddress)
+                                @Html.ValidationMessageFor(model => model.CompanyAddress)
+                            </label>
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-md-2">
+
+                            @Html.LabelForRequired(model => model.CountryID)
+                            <label class="select">
+                                @Html.DropDownList("CountryID", "<--Select Country-->")
+                                @Html.ValidationMessageFor(model => model.CountryID)
+                            </label>
+                        </section>
+                        <section class="col col-md-2">
+                            @*@Html.LabelFor(model => model.StateID, new { @class = "label" })*@
+                            @Html.LabelForRequired(model => model.StateID)
+                            <label class="select">
+                                @Html.DropDownList("StateID", new SelectList(string.Empty, "StateID", "StateName"), "<--Select State-->")
+                                @Html.ValidationMessageFor(model => model.StateID)
+                            </label>
+                        </section>
+                        <section class="col col-md-2">
+                            @*@Html.LabelFor(model => model.CityID, new { @class = "label" })*@
+                            @Html.LabelForRequired(model => model.CityID)
+                            <label class="select">
+                                @Html.DropDownList("CityID", new SelectList(string.Empty, "CityID", "CityName"), "<--Select City-->")
+                                @Html.ValidationMessageFor(model => model.CityID)
+                            </label>
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-md-2">
+
+                            @Html.LabelForRequired(model => model.WebSite)
+                            <label class="input">
+                                @Html.EditorFor(model => model.WebSite)
+                                @Html.ValidationMessageFor(model => model.WebSite)
+                            </label>
+                        </section>
+                        <section class="col col-md-4">
+
+                            @Html.LabelForRequired(model => model.EmailID)
+                            <label class="input">
+                                @Html.EditorFor(model => model.EmailID)
+                                @Html.ValidationMessageFor(model => model.EmailID)
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-md-2">
+
+                            @Html.LabelForRequired(model => model.PhoneNo)
+                            <label class="input">
+                                @Html.EditorFor(model => model.PhoneNo)
+                                @Html.ValidationMessageFor(model => model.PhoneNo)
+                            </label>
+                        </section>
+                        <section class="col col-md-3">
+
+
+                            @*@Html.LabelFor(model => model.IsActive, new { @class = "label" })*@
+                            @Html.LabelForRequired(model => model.IsActive)
+                            <label class="check-square padding-top30">
+                                @Html.CheckBoxFor(model => model.IsActive)
+                                @Html.ValidationMessageFor(model => model.IsActive)
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row">
+                    </div>
+
+                </fieldset>
+                <footer>
+                    <button type="submit" value="Create" class="bigButton" id="btnSave">Save</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+}
+
+@*@if (Convert.ToBoolean(TempData["View"]) == true)
+    {*@
+<p class="operation">
+    <i class="fa fa-mail-reply create_icon"></i>
+    @Html.ActionLink(" Back to List", "Index")
+</p>
+@*}*@
+

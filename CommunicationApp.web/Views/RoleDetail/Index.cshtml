@@ -1,0 +1,82 @@
+﻿@model IEnumerable<CommunicationApp.Models.RoleDetailModel>
+
+@{
+    ViewBag.Title = "Role Detail Model";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+
+<h2 class="text-center">Role Detail Model</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.form.FormName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Role.RoleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsCreate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsEdit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsView)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDelete)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDetail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDownload)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.form.FormName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Role.RoleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsCreate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsEdit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsView)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDelete)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDetail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDownload)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RoleDetailID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RoleDetailID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RoleDetailID })
+        </td>
+    </tr>
+}
+
+</table>

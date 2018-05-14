@@ -1,0 +1,28 @@
+﻿@model CommunicationApp.Web.Models.PDFDetailModel   
+
+@Html.HiddenFor(model => model.BrokerageServices)
+@Html.HiddenFor(model => model.BrokerageId)
+@Html.HiddenFor(model => model.BrokerageServicesId)
+
+@if (Model.ParentId == null)
+{
+    <tr style="background:#f1f1f2;">
+        <td colspan="7" style="border:0px;">@Model.BrokerageServices</td>
+    </tr>
+}
+@if (Model.ParentId != null)
+{
+    <tr>
+
+
+        <td style="width:100px">@Model.BrokerageServices </td>
+       
+        <td>
+           
+            <div style="width:100px" class="com_form_hding_chkbox">
+                @Model.BrokerageValue
+            </div>
+        </td>
+       
+    </tr>
+}

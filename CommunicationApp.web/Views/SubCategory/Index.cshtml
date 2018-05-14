@@ -1,0 +1,90 @@
+﻿@model IEnumerable<CommunicationApp.Models.SubCategoryModel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewBag.Title = "SubCategory";
+}
+<h2 class="text-center">SubCategory</h2>
+<!DOCTYPE html>
+<script>
+    $(document).ready(function () {
+        $('.chosen-select').chosen({ no_results_text: 'Oops, nothing found!' });
+
+    })
+    var id = 0;
+    function updateid(pid) {
+        id = pid;
+    }
+    function deleteme() {
+        debugger;
+        window.location = "/SubCategory/DeleteConfirmed?id=" + id;
+    }
+</script>
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+<p class="operation">
+    <i class="fa fa-mail-forward create_icon red"></i>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div>
+    <table id="mytable" class="table">
+        <thead>
+            <tr>
+                <th class="txt-align"><span>Category Name</span></th>  
+                <th class="txt-align"><span>Sub Category Name</span></th>                
+                <th class="txt-align"><span>IsActive</span></th>
+                <th class="txt-align"><span>Action</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr> 
+                    <td class="txt-align">
+                        @item.CategoryName
+                    </td> 
+                    <td class="txt-align">
+                        @item.SubCategoryName
+                    </td>
+                  
+                    <td class="txt-align">
+                        @item.IsActive
+                    </td>
+                    @if (HttpContext.Current.Session["UserName"].ToString() == "SuperAdmin")
+                    {
+                        <td class="operation">
+                            <a href="@Url.Action("Edit", "SubCategory", new { id = @item.SubCategoryId })" style="color: #20A12E" class=""><i class="">Edit</i>    </a>|
+                            <a data-toggle="modal" onclick="updateid(@item.SubCategoryId);" title="Delete" style="color: #20A12E" href="#myModal"><i class="">Delete</i></a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Delete SubCategory</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <p> Are you sure? This Tip will be permanently deleted and cannot be recovered. </p>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button class="bigButton" data-dismiss="modal">Close</button>
+                <button class="bigButton" onclick="deleteme();">Delete</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+
+

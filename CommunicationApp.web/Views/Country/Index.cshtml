@@ -1,0 +1,166 @@
+﻿@model IEnumerable<CommunicationApp.Models.CountryModel>
+
+@{
+    ViewBag.Title = "Country";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+
+<h2 class="text-center">Country</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = TempData["MessageBody"] });}
+<div class="table-responsive">
+    <table id="mytable" class="table">
+        <thead>
+            <tr>
+
+                <th><span>@Html.DisplayNameFor(model => model.CountryName)</span></th>
+                <th><span>@Html.DisplayNameFor(model => model.CountryFlag)</span></th>
+                <th><span> @Html.DisplayNameFor(model => model.CurrencyCode)</span></th>
+                <th><span> @Html.DisplayNameFor(model => model.CurrrencySymbol)</span></th>
+                <th><span>@Html.DisplayNameFor(model => model.SubUnitName)</span></th>
+                <th><span> @Html.DisplayNameFor(model => model.SubUnitValue)</span></th>
+                <th><span> @Html.DisplayNameFor(model => model.ISOAlpha2)</span></th>
+                <th><span>@Html.DisplayNameFor(model => model.ISOAlpha3)</span></th>
+                <th><span> @Html.DisplayNameFor(model => model.ISONumeric)</span></th>
+                <th><span>@Html.DisplayNameFor(model => model.IsActive)</span></th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.CountryName)
+                    </td>
+                    <td>
+
+                        @Html.DisplayFor(model => item.CountryFlag)
+                    </td>
+
+                    <td>
+                            @Html.DisplayFor(model => item.CurrencyCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.CurrrencySymbol)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.SubUnitValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.SubUnitName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.ISOAlpha2)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.ISOAlpha3)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.ISONumeric)
+                    </td>
+                   
+                    <td>
+                        @Html.DisplayFor(model => item.IsActive)
+                    </td>
+                    <td class="operation">
+
+                        @Html.ActionLink(" ", "Edit", new { id = item.CountryID }, new { @class = "glyphicon glyphicon-edit edit_icon", @data_original_title = "Edit", @data_placement = "top", @data_toggle = "tooltip" })
+
+                        <b> | </b>
+                        @Html.ActionLink(" ", "Details", new { id = item.CountryID }, new { @class = "glyphicon glyphicon-info-sign info_icon", @data_original_title = "Details", @data_placement = "top", @data_toggle = "tooltip" })
+
+
+                        <b> | </b>
+                        @Html.ActionLink(" ", "Delete", new { id = item.CountryID }, new { @class = "glyphicon glyphicon-trash delete_icon", @data_original_title = "Delete", @data_placement = "top", @data_toggle = "tooltip" })
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CountryName)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.CountryFlag)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrencyCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrrencySymbol)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubUnitName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubUnitValue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ISOAlpha2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ISOAlpha3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ISONumeric)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CountryName)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.CountryFlag)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrencyCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrrencySymbol)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubUnitName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubUnitValue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ISOAlpha2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ISOAlpha3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ISONumeric)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CountryID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CountryID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CountryID })
+        </td>
+    </tr>
+}
+
+</table>*@

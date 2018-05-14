@@ -1,0 +1,551 @@
+﻿@model CommunicationApp.Web.Models.OfferPrepFormModel
+@{
+    ViewBag.Title = "OfferPrepForm";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Offer Prep Form</title>
+
+    <!-- Bootstrap -->
+    <link href="~/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="~/assets/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="~/assets/css/font.css" rel="stylesheet">
+    <link href="~/assets/css/font-awesome.css" rel="stylesheet">
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/assets/css/style.css" rel="stylesheet">
+    <link href="~/assets/css/media-queries.css" rel="stylesheet">
+    <link href="~/assets/css/jquery.datetimepicker.min.css" rel="stylesheet" />
+    <script src="js/npm.js"></script>
+
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script src="~/assets/js/jquery.datetimepicker.full.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+
+
+        @using (Html.BeginForm())
+        {
+
+
+            <div class="form_bg">
+                <h2>OFFER PREP FORM</h2>
+                <div class="form_box">
+                    @*<h2>Agreement of Purchase and Sale</h2>*@
+                </div>
+                <div class="form_box">
+                    <div class="form-group">
+                        @Html.LabelForRequired(m => m.Email)
+                        @Html.DropDownList("Email", (SelectList)ViewBag.EmailList, "--Email --", new { @class = "form-control" })
+
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @style = "color:red" })
+                    </div>
+                </div>
+
+                <div class="form_box">
+                    <div class="form-group">
+                        @Html.LabelForRequired(m => m.AgentName)
+                        @Html.TextBoxFor(m => m.AgentName, new { @maxlength = "250", @class = "form-control borer_style" })
+                        @Html.ValidationMessageFor(m => m.AgentName, "", new { @style = "color:red" })
+                    </div>
+                </div>
+                <div class="form_box2">
+                    <div class="form-group">
+                        <label class="form-check-label chk_box">
+                            @Html.RadioButtonFor(m => m.AgreementofPurchaseandSale, '1', new { @class = "form-check-input" })
+                            FREEHOLD
+                        </label>
+                        <label class="form-check-label">
+                            @Html.RadioButtonFor(m => m.AgreementofPurchaseandSale, '2', new { @class = "form-check-input" })
+                            CONDO
+                        </label>
+                        <label class="form-check-label">
+                            @Html.RadioButtonFor(m => m.AgreementofPurchaseandSale, '3', new { @class = "form-check-input" })
+                            Town House With Fee
+
+                        </label>
+                        @Html.ValidationMessageFor(m => m.AgreementofPurchaseandSale)
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group">
+                        @Html.LabelForRequired(m => m.AgreementDate)
+                        @*<input type="text" id="AgreementDate" name="AgreementDate" class="form-control borer_style" />*@
+                        @Html.TextBoxFor(m => m.AgreementDate, new { @maxlength = "30", @class = "form-control borer_style", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(m => m.AgreementDate, "", new { @style = "color:red" })
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group">
+                        @Html.LabelForRequired(m => m.MLS)
+                        @Html.TextBoxFor(m => m.MLS, new { @maxlength = "20", @class = "form-control borer_style" })
+                        @Html.ValidationMessageFor(m => m.MLS)
+                        
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group">
+                        @Html.LabelForRequired(m => m.Buyer)
+                        @Html.TextBoxFor(m => m.Buyer, new { @maxlength = "250", @class = "form-control borer_style" })
+                        @Html.ValidationMessageFor(m => m.Buyer)
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group">
+                        @Html.LabelForRequired(m => m.PurchasePrice)
+                        <input type="text" onkeyup="PurchasePriceFun(this.value)" name="PurchasePrice" id="PurchasePrice" maxlength="21" class="form-control borer_style" placeholder="$" required>
+
+                        @Html.ValidationMessageFor(m => m.PurchasePrice)
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group">
+                        @Html.LabelForRequired(m => m.Price_InWords)
+                        <input type="text" name="Price_InWords" id="Price_InWords" class="form-control borer_style">
+
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group">
+                        @Html.LabelForRequired(m => m.DepositAmt)
+                        <input type="text" onkeyup="depositamt(this.value)" name="DepositAmt" id="DepositAmt" maxlength="21" class="form-control borer_style" placeholder="$" required>
+                        @Html.ValidationMessageFor(m => m.DepositAmt)
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group">
+                        <label>In Words :</label>
+                        <input type="text" name="Amt_InWords" id="amt_InWords" class="form-control borer_style">
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group full_wdth_chk">
+                        <label>Deposit</label>
+                        <label class="form-check-label fnt_wght">
+                            @Html.RadioButtonFor(m => m.Deposit, '1', new { @class = "form-check-input" })
+                            Here With
+                        </label>
+                        <label class="form-check-label fnt_wght">
+                            @Html.RadioButtonFor(m => m.Deposit, '2', new { @class = "form-check-input" })
+                            Upon Acceptance
+                        </label>
+                        @Html.ValidationMessageFor(m => m.Deposit)
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group">
+                        @Html.LabelForRequired(m => m.CompletionDate)
+                        @Html.TextBoxFor(m => m.CompletionDate, new { @class = "form-control borer_style", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(m => m.CompletionDate)
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group">
+                        @*@Html.LabelForRequired(m => m.Irrevocable)
+                        <h5>Format - dd/mm/yy hh:mm</h5>*@
+                        <label>Irrevocable Date&Time<br />Format - dd/mm/yy hh:mm</label>
+                        @Html.TextBoxFor(m => m.Irrevocable, new { @class = "form-control borer_style" })
+                        @Html.ValidationMessageFor(m => m.Irrevocable)
+                        <label id="lblTimeError" style="color:red"></label>
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group">
+                        @Html.LabelForRequired(m => m.TitleSearch)
+                        @Html.TextBoxFor(m => m.TitleSearch, new { @class = "form-control borer_style" })
+                        @Html.ValidationMessageFor(m => m.TitleSearch)
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group">
+                        @Html.LabelForRequired(m => m.Co_OperatingBrokerCommission)
+                        @Html.TextBoxFor(m => m.Co_OperatingBrokerCommission, new { @class = "form-control borer_style" })
+                        @Html.ValidationMessageFor(m => m.Co_OperatingBrokerCommission)
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group full_wdth_chk">
+                        <label>Are we the</label>
+                        <label class="form-check-label fnt_wght">
+                            @Html.RadioButtonFor(m => m.Arewethe, '1', new { @class = "form-check-input" })
+                            Co-Operating Brokerage
+                        </label>
+                        <label class="form-check-label fnt_wght">
+                            @Html.RadioButtonFor(m => m.Arewethe, '2', new { @class = "form-check-input" })
+                            Listing Brokerage & Co-Operating Brokerage
+                        </label>
+                        @Html.ValidationMessageFor(m => m.Arewethe)
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group">
+                        <label>Chattels Included:</label>
+                        @foreach (var item in Model.ChattelsTypesModelList)
+                        {
+
+                            if (Model.ChattelsIds.Contains(Convert.ToInt32(@item.Id)))
+                            {
+                                <div class="checkbox full_wdth_chk">
+                                    <label><input type="checkbox" name="Chattelschk" data-role ="@item.ChattelsCount" class="Chattelschk" id="chattel_@item.Id" value="@item.Id"> @item.ChattelsName</label>
+                                </div>
+
+                                <div class="checkbox full_wdth_chk">
+                                    <div class="form-check-label chattelcount">
+                                        <input type="radio" name="@item.ChattelsCount" data-id="chattel_@item.Id" value="1" class="form-check-input chattelclik"> One
+                                    </div>
+                                    <div class="form-check-label chattelcount">
+                                        <input type="radio" name="@item.ChattelsCount" value="2" data-id="chattel_@item.Id" class="form-check-input chattelclik"> Two
+                                    </div>
+                                    <div class="form-check-label chattelcount">
+                                        <input type="radio" name="@item.ChattelsCount" value="3" data-id="chattel_@item.Id" class="form-check-input chattelclik"> Three
+                                    </div>
+                                    <div class="form-check-label chattelcount">
+                                        <input type="radio" name="@item.ChattelsCount" value="none" data-id="chattel_@item.Id" class="form-check-input chattelclik"> None
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="checkbox full_wdth_chk">
+                                    <label><input type="checkbox" name="Chattelschk" id="@item.Id" value="@item.Id"> @item.ChattelsName</label>
+                                </div>
+                            }
+
+                        }
+                        @if (TempData["Message"] != null)
+                        {
+                            <p style="color:red">@TempData["Message"]</p>
+                        }
+                        @*<div class="checkbox full_wdth_chk">
+                            <span>And All Other Permanent Fixtures now attached to the real Property belonging to the Seller and deemed to be free of all liens and encumbrances</span>
+                        </div>*@
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Excluded)
+                            @Html.TextBoxFor(m => m.Excluded, new { @class = "form-control borer_style" })
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group">
+                        <label>Clauses:</label>
+                        @foreach (var item in Model.ClausesTypeModelList)
+                        {
+                            <div class="checkbox full_wdth_chk">
+                                @{
+                            var id = "clause" + @item.Id + "";
+                                }
+                                @if (item.Ischeked)
+                                {
+                                    <label class="clickcls"> <input type="checkbox" style="outline: 2px solid #c00;" name="Clauseschk" id="@id" data-id="chk_chkd" value="@item.Id" checked="checked" readonly="readonly"> @item.ClausesName</label>
+                                }
+                                else
+                                {
+                                    <label> <input type="checkbox" name="Clauseschk" id="@id" data-id="chk_" value="@item.Id"> @item.ClausesName</label>
+                                }
+
+                            </div>
+                        }
+
+                        <div class="checkbox full_wdth_chk" id="finalviewOption" style="display:none">
+                            <label class="form-check-label">
+                                @Html.RadioButtonFor(m => m.FinalView_Option, '1', new { @class = "form-check-input radioclick" })
+                                One
+                            </label>
+                            <label class="form-check-label">
+                                @Html.RadioButtonFor(m => m.FinalView_Option, '2', new { @class = "form-check-input radioclick" })
+                                Two more times
+                            </label>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form_box">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Remarks)
+                        @Html.TextAreaFor(m => m.Remarks, new { @maxlength = "100", @class = "form-control borer_style" })
+                        
+                    </div>
+                </div>
+                <div class="form_box">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+
+    </div>
+
+</body>
+</html>
+
+<link href="~/assets/css/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="~/assets/js/scripts.js"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+<script>
+    //$('.chosen-select').chosen({ no_results_text: 'Oops, nothing found!' });
+    var todayDate = new Date();
+
+
+    $(document).ready(function () {
+
+
+
+
+
+
+        $('input[name="AgreementDate"]').daterangepicker(
+     {
+         singleDatePicker: true,
+         format: 'MM/DD/YYYY',
+         startDate: todayDate,
+         minDate: todayDate
+
+     },
+     function (start, end, label) {
+
+     }
+ );
+
+        $('input[name="CompletionDate"]').daterangepicker(
+        {
+            singleDatePicker: true,
+            format: 'MM/DD/YYYY',
+            startDate: todayDate,
+            minDate: todayDate
+
+        },
+        function (start, end, label) {
+
+        });
+
+        $('input[name="TitleSearch"]').daterangepicker(
+            {
+                singleDatePicker: true,
+                format: 'MM/DD/YYYY',
+                startDate: todayDate,
+                minDate: todayDate
+
+            },
+            function (start, end, label) {
+
+            });
+
+        //$('input[name="Irrevocable"]').datetimepicker(
+        //    {
+        //        format: 'd/m/Y H:i'
+        //    })
+        $('input[name="Irrevocable"]').change(function () {
+            debugger;
+            var value = $('input[name="Irrevocable"]').val()
+            var split = value.split(" ")
+           // var dateRegex = /^(?=\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(?:\x20|$))|(?:2[0-8]|1\d|0?[1-9]))([-.\/])(?:1[012]|0?[1-9])\1(?:1[6-9]|[2-9]\d)?\d\d(?:(?=\x20\d)\x20|$))?(((0?[1-9]|1[012])(:[0-5]\d){0,2}(\x20[AP]M))|([01]\d|2[0-3])(:[0-5]\d){1,2})?$/;
+            var validDate = /^(?=\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(?:\x20|$))|(?:2[0-8]|1\d|0?[1-9]))([-.\/])(?:1[012]|0?[1-9])\1(?:1[6-9]|[2-9]\d)?\d\d(?:(?=\x20\d)\x20|$))?(((0?[1-9]|1[012])(:[0-5]\d){0,2}(\x20[AP]M))|([01]\d|2[0-3])(:[0-5]\d){1,2})?$/;
+            var validTime = /^(2[0-3]|[01][0-9]):[0-5][0-9]$/;
+            var testDate = validDate.test(split[0]);
+            var testTime = validTime.test(split[1]);
+            if(testDate!=true || testTime!=true)
+            {
+                $('#lblTimeError').html("Please fill date and time according to format");
+            }
+            else
+            {
+                $('#lblTimeError').html("");
+            }
+        });
+        
+        $('.radioclick').click(function () {
+            var radiovalue = $('input[name=FinalView_Option]:checked').val();
+            if (radiovalue === "1" || radiovalue === "2") {
+                $('#clause1003').prop('checked', true);
+            }
+        })
+
+        $('#clause1003').click(function () {
+            if ($("#clause1003").prop('checked') == true) {
+                $('#finalviewOption').css('display', 'block')
+            }
+            else {
+                $('#finalviewOption').css('display', 'none')
+            }
+        })
+
+        $('.clickcls').click(function () {
+            return false;
+        })
+
+        $('.chattelclik').click(function () {
+            //var radiovalue = $('input[name=ChattelsCount]:checked').val();
+            var radiovalue = $(this).val();
+            var id = $(this).attr("data-id");
+           // if (radiovalue == "")
+           // {
+           //     var radiovalue = $("input[id="+id+"]:checkbox").val()
+           //     //$("#x").prop("checked", false);
+
+           //     $("input[id="+id+"]:checkbox").prop('checked', false);
+           // }
+           //else {
+                $('#' + id + '').prop('checked', true);
+            //}
+            debugger;
+        })
+        $('.Chattelschk').click(function () {
+            debugger;
+            $(this).prop('checked', $(this).prop("checked"));
+            var name = $(this).attr("data-role");
+            if ($(this).is(':checked'))
+            {
+                var id = $(this).attr("id");
+                
+                $("input[name=" + name + "][value=none]").prop('checked', true);
+            }
+            else
+            {
+                $("input[name=" + name + "][value=1]").prop('checked', false);
+                $("input[name=" + name + "][value=2]").prop('checked', false);
+                $("input[name=" + name + "][value=3]").prop('checked', false);
+                $("input[name=" + name + "][value=none]").prop('checked', false);
+            }
+            
+           
+            debugger;
+        })
+    })
+
+    function PurchasePriceFun(value) {
+
+        $('#PurchasePrice').val(Comma(value));
+        var textval = numToWords(value.replace(/,/g, ""));
+        $('#Price_InWords').val(textval);
+    }
+    function depositamt(value) {
+        $('#DepositAmt').val(Comma(value));
+        var textval = numToWords(value.replace(/,/g, ""));
+        $('#amt_InWords').val(textval);
+    }
+
+
+    function numToWords(number) {
+
+        //Validates the number input and makes it a string
+        if (typeof number === 'string') {
+            number = parseInt(number, 10);
+        }
+        if (typeof number === 'number' && isFinite(number)) {
+            number = number.toString(10);
+        } else {
+            return 'This is not a valid number';
+        }
+
+        //Creates an array with the number's digits and
+        //adds the necessary amount of 0 to make it fully
+        //divisible by 3
+        var digits = number.split('');
+        while (digits.length % 3 !== 0) {
+            digits.unshift('0');
+        }
+
+
+        //Groups the digits in groups of three
+        var digitsGroup = [];
+        var numberOfGroups = digits.length / 3;
+        for (var i = 0; i < numberOfGroups; i++) {
+            digitsGroup[i] = digits.splice(0, 3);
+        }
+        console.log(digitsGroup); //debug
+
+        //Change the group's numerical values to text
+        var digitsGroupLen = digitsGroup.length;
+        var numTxt = [
+            [null, 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'], //hundreds
+            [null, 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'], //tens
+            [null, 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'] //ones
+        ];
+        var tenthsDifferent = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+
+        // j maps the groups in the digitsGroup
+        // k maps the element's position in the group to the numTxt equivalent
+        // k values: 0 = hundreds, 1 = tens, 2 = ones
+        for (var j = 0; j < digitsGroupLen; j++) {
+            for (var k = 0; k < 3; k++) {
+                var currentValue = digitsGroup[j][k];
+                digitsGroup[j][k] = numTxt[k][currentValue];
+                if (k === 0 && currentValue !== '0') { // !==0 avoids creating a string "null hundred"
+                    digitsGroup[j][k] += ' hundred ';
+                } else if (k === 1 && currentValue === '1') { //Changes the value in the tens place and erases the value in the ones place
+                    digitsGroup[j][k] = tenthsDifferent[digitsGroup[j][2]];
+                    digitsGroup[j][2] = 0; //Sets to null. Because it sets the next k to be evaluated, setting this to null doesn't work.
+                }
+            }
+        }
+
+        console.log(digitsGroup); //debug
+
+        //Adds '-' for gramar, cleans all null values, joins the group's elements into a string
+        for (var l = 0; l < digitsGroupLen; l++) {
+            if (digitsGroup[l][1] && digitsGroup[l][2]) {
+                digitsGroup[l][1] += '-';
+            }
+            digitsGroup[l].filter(function (e) { return e !== null });
+            digitsGroup[l] = digitsGroup[l].join('');
+        }
+
+        console.log(digitsGroup); //debug
+
+        //Adds thousand, millions, billion and etc to the respective string.
+        var posfix = [null, 'thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'sextillion'];
+        if (digitsGroupLen > 1) {
+            var posfixRange = posfix.splice(0, digitsGroupLen).reverse();
+            for (var m = 0; m < digitsGroupLen - 1; m++) { //'-1' prevents adding a null posfix to the last group
+                if (digitsGroup[m]) {
+                    digitsGroup[m] += ' ' + posfixRange[m];
+                }
+            }
+        }
+
+        console.log(digitsGroup); //debug
+
+        //Joins all the string into one and returns it
+        return digitsGroup.join(' ');
+
+    } //End of numToWords function
+    function showText() {
+        var inputValue = input.value;
+        var hold = numToWords(inputValue);
+        output.innerHTML = hold;
+    }
+    var button = document.getElementById('changeText');
+    var output = document.getElementById('output');
+    var input = document.getElementById('numinput');
+    input.addEventListener('input', showText);
+
+    function Comma(Num) { //function to add commas to textboxes
+        Num += '';
+        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+        x = Num.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1))
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        return x1 + x2;
+    }
+</script>

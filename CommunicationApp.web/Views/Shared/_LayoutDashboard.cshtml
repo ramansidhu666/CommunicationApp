@@ -1,0 +1,435 @@
+﻿@using CommunicationApp.Models
+
+<!DOCTYPE html>
+<!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]>       <html class="ie ie10"><!-->
+<html class="">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - CommunicationApp</title>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
+    <!-- Favicon -->
+    <!-- WEB FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css" />
+
+    <!-- CORE CSS -->
+    <link href="~/assets/css/essentials.css" rel="stylesheet" />
+    <!-- DATE PICKER -->
+    <link href="~/assets/css/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="~/assets/js/scripts.js"></script>
+    <link href="~/assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/assets/css/animate.css" rel="stylesheet" />
+    <link href="~/assets/css/layout.css" rel="stylesheet" />
+    <link href="~/assets/css/custom.css" rel="stylesheet" />
+    <link href="~/assets/flat/green.css" rel="stylesheet" rel="stylesheet" />
+    <link href="~/assets/css/floatexamples.css" rel="stylesheet" />
+    <link href="~/assets/css/sky-forms.css" rel="stylesheet" type="text/css" />
+    <link href="~/chosen_v1.4.0/docsupport/prism.css" rel="stylesheet" />
+    <link href="~/chosen_v1.4.0/chosen.css" rel="stylesheet" />
+    <link href="~/assets/css/thumbelina.css" rel="stylesheet" />
+</head>
+<!---->
+<body class="nav-md">
+
+    <div class="container body">
+        <div class="main_container">
+
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="/home/welcomehome" class="site_title"><img src="~/images/CommunicationAppLogo.png" /></a>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <!-- menu prile quick info -->
+                    <div class="profile">
+                        <div class="profile_pic">
+
+                            @if (HttpContext.Current.Session["AdminPhoto"] != "")
+                            {
+                                //<img src="~/images/profile-bg.png" alt=" ..." class="img-circle profile_img">
+                                <img src="@HttpContext.Current.Session["adminphoto"]" alt=" ..." class="img-circle profile_img">
+                            }
+                            else
+                            {
+                                <img src="~/images/profile-bg.png" alt=" ..." class="img-circle profile_img">
+                            }
+                        </div>
+                        <div class="profile_info">
+                            <h2> @HttpContext.Current.Session["FullUserName"]</h2>
+                        </div>
+                    </div>
+                    <!-- /menu prile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        @{
+                            try
+                            {
+
+                                //if ((HttpContext.Current.Session["CompanyID"] != null) && (Convert.ToInt16(HttpContext.Current.Session["CompanyID"]) != 0))
+                                //{
+                                <div class="menu_section">
+
+                                    <ul class="nav side-menu">
+                                        @{List<CommunicationApp.Models.RoleDetailModel> _lst = Session["UserPermission"] as List<CommunicationApp.Models.RoleDetailModel>;
+
+
+                                        if ((_lst.Where(z => z.form.ControllerName.ToLower() == "user").Select(z => z.IsView).FirstOrDefault())
+                                        || (_lst.Where(z => z.form.ControllerName.ToLower() == "role").Select(z => z.IsView).FirstOrDefault())
+                                        || (_lst.Where(z => z.form.ControllerName.ToLower() == "assginrole").Select(z => z.IsView).FirstOrDefault())
+                                         || (_lst.Where(z => z.form.ControllerName.ToLower() == "admin").Select(z => z.IsView).FirstOrDefault()))
+                                        {
+                                            if (HttpContext.Current.Session["UserName"].ToString() == "SuperAdmin")
+                                            {
+                                                <li>
+                                                    <a href="#" onclick="location.href='@Url.Action("Index", "admin")'"> Admins <span class=""></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" onclick="location.href='@Url.Action("Index", "Category")'"> Category <span class=""></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" onclick="location.href='@Url.Action("Index", "SubCategory")'"> SubCategory <span class=""></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" onclick="location.href='@Url.Action("Index", "Supplier")'"> Supplier <span class=""></span></a>
+                                                </li>
+
+                                            }
+                                            else
+                                            {
+
+                                                if (Convert.ToInt32(HttpContext.Current.Session["UserId"]) == 0)
+                                                {
+                                                    <li>
+                                                        <a href="#" onclick="location.href='@Url.Action("Index", "admin")'"> Admins <span class=""></span></a>
+                                                    </li>
+                                                }
+
+                                                if (Convert.ToInt32(HttpContext.Current.Session["PendingPropertyCount"]) == 0)
+                                                {
+                                                    <li>
+                                                        <a onclick="location.href = '@Url.Action("WelcomeHome", "home", new { id = Convert.ToInt32(HttpContext.Current.Session["CustomerId"]) })'" href="#">Properties<span id="propertyspanid">&nbsp;</span></a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a onclick="location.href = '@Url.Action("WelcomeHome", "home", new { id = Convert.ToInt32(HttpContext.Current.Session["CustomerId"]) })'" href="#">Properties<span id="propertyspanid" class="notifiction">@HttpContext.Current.Session["PendingPropertyCount"].ToString()</span></a>
+                                                    </li>
+                                                }
+
+                                                if (Convert.ToInt32(HttpContext.Current.Session["PendingAgentCount"]) == 0)
+                                                {
+                                                    <li>
+                                                        <a onclick="location.href = '@Url.Action("AgentList", "Property")'" href="#">Open House<span id="Agentspanid">&nbsp;</span></a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a onclick="location.href = '@Url.Action("AgentList", "Property")'" href="#">Open House<span id="Agentspanid" class="notifiction">@HttpContext.Current.Session["PendingAgentCount"].ToString()</span></a>
+                                                    </li>
+                                                }
+                                                if (Convert.ToInt32(HttpContext.Current.Session["PendingUserCount"]) == 0)
+                                                {
+                                                    <li>
+                                                        <a onclick="location.href = '@Url.Action("CustomerList", "Property")'" href="#">Users <span id="Agentspanid">&nbsp;</span></a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a onclick="location.href = '@Url.Action("CustomerList", "Property")'" href="#">Users <span id="Agentspanid" class="notifiction">@HttpContext.Current.Session["PendingUserCount"].ToString()</span></a>
+                                                    </li>
+                                                }
+
+
+                                                <li>
+                                                    <a onclick="location.href = '@Url.Action("index", "Event")'" href="#">Calendar<span>&nbsp;</span></a>
+                                                </li>
+                                                <li>
+                                                    <a onclick="location.href = '@Url.Action("Index", "Tip")'" href="#">Tip of the day<span>&nbsp;</span></a>
+                                                </li>
+                                                <li>
+                                                    <a onclick="location.href = '@Url.Action("Index", "OfficeLocation")'" href="#">Office Locations<span>&nbsp;</span></a>
+                                                </li>
+                                                <li>
+                                                    <a onclick="location.href = '@Url.Action("Index", "AdminStaff")'" href="#">Admin Staff<span>&nbsp;</span></a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#" onclick="location.href='@Url.Action("Index", "Supplier")'"> Supplier <span></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" onclick="location.href='@Url.Action("Index", "Message")'"> Messages <span></span></a>
+                                                </li>
+                                            
+                                            
+                                                if (Convert.ToInt32(HttpContext.Current.Session["NewRiskForm"]) == 0)
+                                                {
+                                                    <li>
+                                                        <a onclick="location.href = '@Url.Action("index", "Brokerage")'" href="#">Risk assessment forms<span>&nbsp;</span></a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a onclick="location.href = '@Url.Action("index", "Brokerage")'" href="#">Risk assessment forms <span id="Agentspanid" class="notifiction">@HttpContext.Current.Session["NewRiskForm"].ToString()</span></a>
+                                                    </li>
+                                                }
+                                            
+                                             
+                                                <li>
+                                                    <a onclick="location.href = '@Url.Action("BannerDetail", "Admin", new { id = Convert.ToInt32(HttpContext.Current.Session["CustomerId"]) })'" href="#">Banners<span>&nbsp;</span></a>
+                                                </li>
+                                                <li>
+                                                    <a onclick="location.href = '@Url.Action("FeedBackList", "Property")'" href="#">FeedBack<span>&nbsp;</span></a>
+                                                </li>
+                                                <li>
+                                                    <a onclick="location.href = '@Url.Action("AppLikes", "User")'" href="#">App Likes<span>&nbsp;</span></a>
+                                                </li>
+                                                <li>
+                                                    <a onclick="location.href = '@Url.Action("ActiveUsers", "User")'" href="#">Active Users<span>&nbsp;</span></a>
+                                                </li>
+                                                 <li>
+                                                    <a onclick="location.href = '@Url.Action("Brokerage", "AdminBrokerage", new { CustomerId =Convert.ToInt64( Session["UserId"]) })'" href="#">Brokerage List<span>&nbsp;</span></a>
+                                                </li>
+                                                <li>
+                                                    <a onclick="location.href = '@Url.Action("newsletterlist", "NewsLetter")'" href="#">News Letter<span>&nbsp;</span></a>
+                                                </li>
+                                                <li>
+                                                    <a onclick="location.href = '@Url.Action("LogOff", "account")'" href="#">Logout<span>&nbsp;</span></a>
+                                                </li>
+
+
+                                            }
+
+                                        }
+
+                                        }
+                                    </ul>
+                                </div>
+
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+                        }
+
+
+
+
+                    </div>
+
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+
+                <div class="nav_menu">
+                    <nav class="" role="navigation">
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    Welcome,   @HttpContext.Current.Session["FullUserName"]
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
+
+
+                                    @{
+                                        try
+                                        {
+                                            if ((HttpContext.Current.Session["CompanyID"] != null) && (Convert.ToInt32(HttpContext.Current.Session["CompanyID"]) != 0))
+                                            {
+                                                @*<li><a href="#" onclick="location.href='@Url.Action("ChangePassword", "Account")'"><i class="fa fa-unlock-alt setting_icon_offset"></i><span>Change Password</span></a></li>*@
+                                                <li class="divider setting_divider_margin"></li>
+                                            }
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                        }
+                                    }
+                                    <li>
+                                        <a href="#" onclick="location.href='@Url.Action("index", "Admin")'"><i class="fa fa-user pull-right"></i> Back To Admin</a>
+
+                                    </li>
+                                    <li>
+                                        <a href="#" onclick="location.href='@Url.Action("Edit", "Customer", new { id = Convert.ToInt64(HttpContext.Current.Session["CustomerID"]) })'"><i class="fa fa-user pull-right"></i> Edit Profile</a>
+
+                                    </li>
+                                    <li>
+                                        <a href="#" onclick="location.href='@Url.Action("LogOff", "Account")'"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li role="presentation" class="dropdown">
+                                <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                                    @*<i class="fa fa-envelope-o"></i>
+                                        <span class="badge bg-green">6</span>*@
+                                </a>
+                                <ul id="menu1" class="dropdown-menu list-unstyled msg_list animated fadeInDown" role="menu">
+                                    <li>
+                                        <a>
+                                            <span class="image">
+                                                <img src="images/img.jpg" alt="Profile Image" />
+                                            </span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <span class="image">
+                                                <img src="images/img.jpg" alt="Profile Image" />
+                                            </span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <span class="image">
+                                                <img src="images/img.jpg" alt="Profile Image" />
+                                            </span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <span class="image">
+                                                <img src="images/img.jpg" alt="Profile Image" />
+                                            </span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="text-center">
+                                            <a>
+                                                <strong><a href="inbox.html">See All Alerts</strong>
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+
+
+
+            </div>
+
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main">
+
+                <!-- top tiles -->
+                <!-- /top tiles -->
+                <div id="body">
+                    @RenderBody()
+                </div>
+
+                <!-- Delete div -->
+                <!-- End Delete div -->
+                <!-- footer content -->
+
+                <footer>
+                    <div class="">
+                        <p class="pull-right">
+                            @*<span class="lead"> Brand Budz</span>*@
+                        </p>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
+            </div>
+            <!-- /page content -->
+
+        </div>
+
+
+
+    </div>
+
+    <div id="custom_notifications" class="custom-notifications dsp_none">
+        <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group"></ul>
+        <div class="clearfix"></div>
+        <div id="notif-group" class="tabbed_notifications"></div>
+    </div>
+
+
+    <script src="~/assets/CommunicationApp/js/bootstrap.min.js"></script>
+
+
+    <!-- gauge js -->
+    <link href="~/assets/CommunicationApp/css/custom.css" rel="stylesheet" />
+
+    <script src="~/assets/CommunicationApp/js/nicescroll/jquery.nicescroll.min.js"></script>
+    <!-- icheck -->
+    <script src="~/assets/CommunicationApp/js/icheck/icheck.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/jquery.tablesorter.pager.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/jquery.tablesorter.min.js"></script>
+    <script src="~/assets/CommunicationApp/js/custom.js"></script>
+    <!-- flot js -->
+    <!--[if lte IE 8]><script type="text/javascript" src="js/excanvas.min.js"></script><![endif]-->
+    <script type="text/javascript" src="~/assets/CommunicationApp/js/flot/jquery.flot.js"></script>
+    <script type="text/javascript" src="~/assets/CommunicationApp/js/flot/jquery.flot.pie.js"></script>
+    <script type="text/javascript" src="~/assets/CommunicationApp/js/flot/jquery.flot.orderBars.js"></script>
+    <script type="text/javascript" src="~/assets/CommunicationApp/js/flot/jquery.flot.spline.js"></script>
+    <script type="text/javascript" src="~/assets/CommunicationApp/js/flot/jquery.flot.stack.js"></script>
+    <script type="text/javascript" src="~/assets/CommunicationApp/js/flot/curvedLines.js"></script>
+    <script type="text/javascript" src="~/assets/CommunicationApp/js/flot/jquery.flot.resize.js"></script>
+    <script src="~/assets/js/scripts.js"></script>
+
+    <script src="~/Scripts/jquery-ui.unobtrusive-2.2.0.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/chosen_v1.4.0/chosen.jquery.js"></script>
+    <script src="~/chosen_v1.4.0/docsupport/prism.js"></script>
+    <script src="~/Scripts/thumbelina.js"></script>
+    <!-- /footer content -->
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

@@ -1,0 +1,305 @@
+﻿@model CommunicationApp.Web.Models.BrokeragerModel
+@{
+    ViewBag.Title = "Brokerage";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>communication app</title>
+    <!-- Bootstrap -->
+    
+    <link href="~/assets/PdfJs&CSS/css/bootstrap.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/font.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/font-awesome.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/style.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/media-queries.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+    @using (Html.BeginForm("Brokerage", "Brokerage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div id="DivHtml" class="container">
+            <div class="com_form_header_section">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="left_logo"> <img src="~/assets/PdfJs&CSS/images/logo1.jpg" alt="" title="" /> </div>
+                    </div>
+                    <div class="col-md-5 col-sm-5">
+                        <div class="com_form_heading">
+                            <h2>Risk Assessment Form</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <div class="right_logo"> <img src="~/assets/PdfJs&CSS/images/logo2.jpg" alt="" title="" /> </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                        <div class="com_form_line"> <img src="~/assets/PdfJs&CSS/images/form_headline.jpg" alt="" title="" /> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="com_form_bg">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="com_form_sect">
+                            <h2>Part 1</h2>
+                            <p>
+                                The purpose of this form is to assist you in assessing and documenting the threats and vulnerabilities to money
+                                laundering and terrorist financing to which your brokerage may be exposed <strong>as required by law</strong>. This form must be
+                                completed at least once every two years and kept on file for five years
+                            </p>
+                            <div class="com_form_box">
+                                <div class="form-group">
+                                    <label for="inputEmail" class="control-label col-md-2">Date:</label>
+                                    <div class="col-md-10">
+                                        @*@Html.DisplayFor(model => Model.BrokerageDate, new { @class = "form-control" })*@
+                                        <input type="text" id="BrokerageDate" name="BrokerageDate" class="form-control"  />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="com_form_box">
+                                <div class="form-group">
+                                    <label for="inputEmail" class="control-label col-md-2">Office:</label>
+                                    <div class="col-md-10">
+                                        @Html.DisplayFor(model => Model.Office, new { @class = "form-control" })
+                                        @*<input type="text" class="form-control" id="inputEmail">*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="com_form_box">
+                                <div class="form-group">
+                                    <label for="inputEmail" class="control-label col-md-2">Completed by:</label>
+                                    <div class="col-md-10">
+                                        @Html.DisplayFor(model => Model.Completedby, new { @class = "form-control" })
+                                        @*<input type="text" class="form-control" id="inputEmail">*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="com_form_box">
+                                <div class="form-group">
+                                    <label for="inputEmail" class="control-label col-md-2">Broker Verification: <span>(Signature)</span></label>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(model => Model.BrokerVerification, new { @class = "form-control" })
+                                        @*<input type="text" class="form-control" id="inputEmail">*@
+                                    </div>
+                                    <label for="inputEmail" class="control-label col-md-1"><span>(Date)</span></label>
+                                    <div class="col-md-3">
+                                        @Html.DisplayFor(model => Model.VerificationDate, new { @class = "form-control" })
+                                        @*<input type="text" class="form-control" id="inputEmail">*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="com_form_bg">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="com_form_sect">
+                            <h2>Part 2</h2>
+                            <p>
+                                The following checklist provides examples to facilitate your risk assessment. It should not be considered an
+                                exhaustive list. You can customize this checklist if you feel that this is appropriate in order to properly assess
+                                your brokerage's risks related to money laundering and terrorist financing.
+                            </p>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="table-responsive">
+                                        <table summary="This table shows how to create responsive tables using Bootstrap's default functionality" class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:40%;"></th>
+                                                    <th style="width:10%;">Status</th>
+
+                                                </tr>
+                                            </thead>
+                                            @Html.EditorFor(model => model.PDFDetailModelModelList)
+
+
+                                        </table>
+
+
+                                    </div>
+
+                                    <!--end of .table-responsive-->
+                                    <div class="bottom_section">
+                                        <div class="un_box">
+                                            <h6> 1) UN: </h6>
+                                            <p>http://www.un.org/sc/committees/index.shtml<br /></p>
+                                        </div>
+                                        <div class="un_box">
+                                            <h6> 2) Canada: </h6>
+                                            <p>http://www.un.org/sc/committees/index.shtml<br /></p>
+                                        </div>
+                                        <div class="un_box">
+                                            <h6> 3) UN: </h6>
+                                            <p>http://www.un.org/sc/committees/index.shtml<br /></p>
+                                        </div>
+                                        <div class="un_box">
+                                            <h6> 4) UN: </h6>
+                                            <p>http://www.un.org/sc/committees/index.shtml<br /></p>
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="com_form_bg">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="com_form_sect">
+                            <h2>Part 3</h2>
+                            <p>
+                                Based on all of your responses in Part 2, and any other factor that you think may be relevant, rank your brokerage’s
+                                overall risk of a money laundering offence or a terrorist financing offence and explain how you arrived at this
+                                rationale in the space below.
+                            </p>
+                            <p>
+                                <b>
+                                    For greater clarity, if you are completing this form as part of a mandatory two year review, you are required to
+                                    explain the rationale used to determine your brokerage’s risk level during this review even if your risk level
+                                    has not changed.
+                                </b>
+                            </p>
+                            <p>Attach additional pages if necessary.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="com_form_bg">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+
+                        <div class="com_form_sect">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="table-responsive">
+                                            <table summary="This table shows how to create responsive tables using Bootstrap's default functionality" class="table table-bordered table-hover">
+
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:40%;">@Html.LabelFor(c => c.BrokerageOverallRiskLevel)</th>
+
+                                                        <th style="width:10%;">Type</th>
+
+
+
+
+                                                    </tr>
+                                                </thead>
+                                                <tr>
+                                                    <td></td>
+                                                    @{
+        if (Model.BrokerageOverallRiskLevel == "1")
+        {
+            <td>
+                <div class="com_form_hding_chkbox">
+                    Medium
+                </div>
+            </td>
+        }
+        else if (Model.BrokerageOverallRiskLevel == "2")
+        {
+
+            <td>
+                <div class="com_form_hding_chkbox">
+                    Low
+                </div>
+            </td>
+        }
+        else if (Model.BrokerageOverallRiskLevel == "3")
+        {
+
+            <td>
+                <div class="com_form_hding_chkbox">
+                    High
+                </div>
+            </td>
+        }
+                                                    }
+
+
+
+                                                </tr>
+                                            </table>
+
+
+                                        </div>
+
+                                        <div class="com_form_box">
+                                            <div class="form-group">
+                                                <label for="inputEmail" class="control-label col-md-2">Explanation:</label>
+                                                <div class="col-md-11">
+                                                    @Html.TextAreaFor(model => Model.Explanation, new { @class = "form-control", @style = "height:300px; width:900px" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @*<div>
+                                                <button type="submit" class="btn btn-default">Save</button>
+                                            </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <h2>Part 4</h2>
+                            <h3>Risk Mitigation Strategy</h3>
+                            <p>
+                                You are required to develop written Proceeds of Crime (Money Laundering) and Terrorist Financing Act compliance policies and
+                                procedures. CREA has prepared an Office Compliance Manual to use as a reference tool to help you get started. It is available on
+                                REALTOR Link®. If you incorporate the Office Compliance Manual into your compliance policies and procedures, you must tailor it
+                                to reflect the nature, size and complexity of your operations.
+                            </p>
+                            <p>
+                                If you determined in Part 3 that your brokerage overall risk level is high, you must consult and apply the section of your compliance
+                                policies and procedures relating to mitigating high risks. This means if the overall risk level is high, your Compliance Manual must
+                                specifically address any areas that place your brokerage at high risk for money laundering and terrorist financing by explaining how
+                                your brokerage will mitigate these risks.
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <script src="~/assets/js/jquery-1.11.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.chosen-select').chosen({ no_results_text: 'Oops, nothing found!' });
+
+
+        })
+
+    </script>
+</body>
+
+</html>

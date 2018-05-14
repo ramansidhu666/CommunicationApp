@@ -1,0 +1,88 @@
+
+@font-face {
+    font-family: 'oswaldbook';
+    src: url('../fonts/oswald-regular-webfont.eot');
+    src: url('../fonts/oswald-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/oswald-regular-webfont.woff') format('woff'),
+         url('../fonts/oswald-regular-webfont.ttf') format('truetype'),
+         url('../fonts/oswald-regular-webfont.svg#oswaldbook') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'MyriadProRegular';
+    src: url('../fonts/myriadpro-regular.eot');
+    src: url('../fonts/myriadpro-regular.eot') format('embedded-opentype'),
+         url('../font/smyriadpro-regular.woff') format('woff'),
+         url('../fonts/myriadpro-regular.ttf') format('truetype'),
+         url('../fonts/myriadpro-regular.svg#MyriadProRegular') format('svg');
+}
+
+
+@font-face {
+	font-family: 'futura_bkbook';
+	src: url('../fonts/ftrabk__-webfont.eot');
+	src: url('../fonts/ftrabk__-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/ftrabk__-webfont.woff') format('woff'), url('../fonts/ftrabk__-webfont.ttf') format('truetype'), url('../fonts/ftrabk__-webfont.svg#futura_bkbook') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+    font-family: 'open_sansbold';
+    src: url('../fonts/opensans-bold-webfont.eot');
+    src: url('../fonts/opensans-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/opensans-bold-webfont.woff') format('woff'),
+         url('../fonts/opensans-bold-webfont.ttf') format('truetype'),
+         url('../fonts/opensans-bold-webfont.svg#open_sansbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'open_sansregular';
+    src: url('../fonts/opensans-regular-webfont.eot');
+    src: url('../fonts/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/opensans-regular-webfont.woff') format('woff'),
+         url('../fonts/opensans-regular-webfont.ttf') format('truetype'),
+         url('../fonts/opensans-regular-webfont.svg#open_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+	font-family:'Bebas-Regular';
+	src: url('../fonts/Bebas_gdi.eot');
+	src: url('../fonts/Bebas_gdi.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/Bebas_gdi.woff') format('woff'),
+		url('../fonts/Bebas_gdi.ttf') format('truetype'),
+		url('../fonts/Bebas_gdi.svg#Bebas-Regular') format('svg');
+	font-weight: 400;
+	font-style: normal;
+	font-stretch: normal;
+	unicode-range: U+0020-007E;
+}
+@font-face {
+    font-family: 'robotoregular';
+    src: url('../fonts/roboto-regular-webfont.eot');
+    src: url('../fonts/roboto-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto-regular-webfont.woff2') format('woff2'),
+         url('../fonts/roboto-regular-webfont.woff') format('woff'),
+         url('../fonts/roboto-regular-webfont.ttf') format('truetype'),
+         url('../fonts/roboto-regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'roboto_condensedregular';
+    src: url('../fonts/robotocondensed-regular-webfont.eot');
+    src: url('../fonts/robotocondensed-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/robotocondensed-regular-webfont.woff2') format('woff2'),
+         url('../fonts/robotocondensed-regular-webfont.woff') format('woff'),
+         url('../fonts/robotocondensed-regular-webfont.ttf') format('truetype'),
+         url('../fonts/robotocondensed-regular-webfont.svg#roboto_condensedregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

@@ -1,0 +1,56 @@
+﻿@model CommunicationApp.Web.Models.BrokeragerModel
+@{
+    ViewBag.Title = "Brokerage";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>communication app</title>
+    <!-- Bootstrap -->
+
+    <link href="~/assets/PdfJs&CSS/css/bootstrap.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/font.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/font-awesome.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/style.css" rel="stylesheet">
+    <link href="~/assets/PdfJs&CSS/css/media-queries.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+    
+        <div id="DivHtml" class="container">
+   
+            <div class="com_form_bg">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="com_form_sect">
+                            <p>
+                                Please click on the below link or copy it and use it on browser for watches the result of currently saved data.
+                            </p>
+
+                            <h2><a href="@Html.DisplayFor(model => Model.PageUrl)">Click here</a></h2>                          
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    }
+
+</body>
+
+</html>

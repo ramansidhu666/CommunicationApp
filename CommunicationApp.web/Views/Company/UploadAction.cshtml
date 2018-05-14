@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "UploadAction";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+@*<script src="~/assets/plugins/jquery-2.1.1.min.js"></script>
+<link href="~/FileUpload/uploadfile.css" rel="stylesheet" />
+<script src="~/FileUpload/jquery.uploadfile.min.js"></script>*@
+
+
+Scroll Issue:
+
+<div id="mulitplefileuploader">Upload</div>
+<div id="status"></div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var settings = {
+            url: "/Company/UploadFiles",
+            dragDrop: true,
+            fileName: "files",
+            allowedTypes: "jpg,png,gif,doc,pdf,zip",
+            returnType: "json",
+            onSuccess: function (files, data, xhr) {
+                // alert((data));
+            },
+            showDelete: true,
+            deleteCallback: function (data, pd) {
+                for (var i = 0; i < data.length; i++) {
+                    $.post("/Company/DeleteFiles", { FileName: data[i] },
+                    function (resp, textStatus, jqXHR) {
+                        //Show Message
+                        $("#status").append("<div>File Deleted</div>");
+                    });
+                }
+                pd.statusbar.hide(); //You choice to hide/not.
+
+            }
+        }
+        var uploadObj = $("#mulitplefileuploader").uploadFile(settings);
+    });
+</script>

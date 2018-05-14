@@ -1,0 +1,36 @@
+ /** Table Sorting structure **/
+#mytable {
+    width: 100%;
+}
+
+#mytable thead {
+    cursor: pointer;
+    background: #CE8C91;
+    text-align: left;
+}
+
+#mytable thead tr th {
+    font-weight: bold;
+}
+
+#mytable thead tr th span {
+    padding-right: 20px;
+    background-repeat: no-repeat;
+    background-position: 100% 100%;
+}
+
+#mytable thead tr th.headerSortUp span {
+    background-image: url('../images/sorting/up-arrow.png');
+}
+
+#mytable thead tr th.headerSortDown span {
+    background-image: url('../images/sorting/down-arrow.png');
+}
+.pagedisplay {
+    width:50px !important;
+    opacity:0.5;
+    pointer-events:none;
+}
+.pagesize {
+    width:60px !important;
+}

@@ -1,0 +1,114 @@
+﻿@model IEnumerable< CommunicationApp.Web.Models.BrokerageCustomer>
+
+
+@{
+    ViewBag.Title = "Properties";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<script type="text/javascript">
+    var id = 0;
+    function updateid(pid) {
+        id = pid;
+    }
+    function deleteme() {
+        debugger;
+        window.location = "/property/Delete?id=" + id;
+    }
+
+    $(document).ready(function () {
+        $('input[name="StartDate"]').daterangepicker(
+           {
+               singleDatePicker: true,
+               format: 'MM/DD/YYYY',
+               startDate: '@DateTime.Now.ToString("MM/dd/yyyy")' //'2015/01/01'
+           },
+           function (start, end, label) {
+               //alert('A date range was chosen: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+           }
+       );
+        $('input[name="EndDate"]').daterangepicker(
+          {
+              singleDatePicker: true,
+              format: 'MM/DD/YYYY',
+              //startDate: '2015/01/01'
+              startDate: '@DateTime.Now.ToString("MM/dd/yyyy")'
+          },
+          function (start, end, label) {
+              //alert('A date range was chosen: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+          }
+      );
+        @*$('#UserName').val(@Model.UserName);
+        $('#StartDate').val(@Model.StartDate);
+        $('#EndDate').val(@Model.EndDate);*@
+    });
+
+
+</script>
+
+
+
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+
+@using (Html.BeginForm("index", "home"))
+{
+    <div class="row">
+        <div class="col-lg-12">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col col-md-1">
+                <b>Name</b>
+            </div>
+            <div class="col col-md-2">
+                @Html.TextBox("UserName", null, new { @class = " col-md-12", @style = "height: 34px;" })
+            </div>
+
+            <div class="col col-md-1">
+                <b>Treb Id</b>
+            </div>
+            <div class="col col-md-2">
+                @Html.TextBox("TrebId", null, new { @class = " col-md-12", @style = "height: 34px;" })
+            </div>
+            <div class="col col-md-1">
+                <b>Property Type</b>
+            </div>
+            <div class="col col-md-3">
+                @*@Html.DropDownList("PropertyType", (SelectList)ViewBag.PropertyType, "-- Select Property Type --", new { @class = "chosen-select" })*@
+            </div>
+
+            <div class="col col-md-2">
+                <input type="submit" value="Search" data-id="search" class="bigButton action" />
+            </div>
+        </div>
+    </div>
+
+}
+
+@{
+    if (Model.ToList().Count == 0)
+    {
+        TempData["Message"] = "No record found .";
+
+    }
+    else
+    {
+        Html.RenderAction("Paging", "Base");
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+

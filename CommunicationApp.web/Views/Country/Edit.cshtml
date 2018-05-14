@@ -1,0 +1,142 @@
+﻿@model CommunicationApp.Models.CountryModel
+
+@{
+    ViewBag.Title = "Country";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+
+<h2 class="text-center">Country</h2>
+
+@using (Html.BeginForm("Edit", "Country", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+   
+     <div class="row">
+        <div class="col-md-12">
+
+            <div class="sky-form boxed margin-top10">
+               
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.CountryID)
+                @Html.HiddenFor(model=>model.CountryFlag)
+                <fieldset>
+
+                    <div class="row ">
+                        <section class="col col-md-4">
+                            @Html.LabelForRequired(model => model.CountryName)
+                            <label class="input">
+                                @Html.EditorFor(model => model.CountryName)
+                                @Html.ValidationMessageFor(model => model.CountryName)
+                            </label>
+                        </section>
+                        <section class="col col-md-4">
+                            @Html.LabelForRequired(model => model.CurrencyName)
+                            <label class="input">
+                                @Html.EditorFor(model => model.CurrencyName)
+                                @Html.ValidationMessageFor(model => model.CurrencyName)
+                            </label>
+                        </section>
+                         
+                    </div>
+                   
+                    <div class="row">
+                        <section class="col col-md-4">
+                            @Html.LabelForRequired(model => model.CurrencyCode)
+                            <label class="input">
+                                @Html.EditorFor(model => model.CurrencyCode)
+                                @Html.ValidationMessageFor(model => model.CurrencyCode)
+                            </label>
+
+                        </section>
+                        <section class="col col-md-4">
+                            @Html.LabelForRequired(model => model.CurrrencySymbol)
+                            <label class="input">
+                                @Html.EditorFor(model => model.CurrrencySymbol)
+                                @Html.ValidationMessageFor(model => model.CurrrencySymbol)
+                            </label>
+
+                        </section>
+                        
+                    </div>
+                    
+                    <div class="row">
+                        <section class="col col-md-4">
+                            @Html.LabelForRequired(model => model.ISOAlpha2)
+                            <label class="input">
+                                @Html.EditorFor(model => model.ISOAlpha2)
+                                @Html.ValidationMessageFor(model => model.ISOAlpha2)
+                            </label>
+
+                        </section>
+                        <section class="col col-md-4">
+                            @Html.LabelForRequired(model => model.ISOAlpha3)
+                            <label class="input">
+                                @Html.EditorFor(model => model.ISOAlpha3)
+                                @Html.ValidationMessageFor(model => model.ISOAlpha3)
+                            </label>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                       
+                        <section class="col col-md-4">
+                            @Html.LabelForRequired(model => model.SubUnitName)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.SubUnitName, new { @placeholder = "like $=>cent" })
+                                @Html.ValidationMessageFor(model => model.SubUnitName)
+                            </label>
+
+                        </section>
+                        <section class="col col-md-4">
+                            @Html.LabelForRequired(model => model.SubUnitValue)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.SubUnitValue, new { @placeholder = "like $=cent=100" })
+                                @Html.ValidationMessageFor(model => model.SubUnitValue)
+                            </label>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        
+                        <section class="col col-md-4">
+                            @Html.LabelForRequired(model => model.ISONumeric)
+                            <label class="input">
+                                @Html.EditorFor(model => model.ISONumeric)
+                                @Html.ValidationMessageFor(model => model.ISONumeric)
+                            </label>
+
+                        </section>
+                        <section class="col col-md-4">
+                            <label>CountryFlag</label>
+                            @*@Html.LabelForRequired(model => model.CountryFlag)*@
+                            <label class="input input-file" for="fileToUpload">
+                                <div class="button"><input type="file" name="file" id="fileToUpload">Browse</div><input type="text" readonly="">
+                                <span style="color:red;"></span><span class="field-validation-error" id="spanfile"></span>
+                            </label>
+                        </section> 
+                        
+                    </div>
+            <div class="row">
+                <section class="col col-md-4">
+                    @Html.LabelForRequired(model => model.IsActive)
+                    <label class="check-square padding-top30">
+                        @Html.EditorFor(model => model.IsActive)
+                        @Html.ValidationMessageFor(model => model.IsActive)
+                    </label>
+
+                </section>
+            </div>
+
+                </fieldset>
+                <footer>
+                    <button type="submit" value="update" class="bigButton" id="btn">Update</button>
+                </footer>
+            </div>
+        </div>
+    </div> 
+   
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

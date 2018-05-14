@@ -1,0 +1,727 @@
+﻿@{
+    
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(
+		function () {
+		    $('.clickMe').click(function () {
+		        "use strict";
+		        $(this).hide();
+		        $('#' + $(this).attr('for'))
+                                .val($(this).text())
+                                .toggleClass("form-control")
+                                .show()
+                                .focus();
+		    });
+
+		    $('.blur').blur(function () {
+		        "use strict";
+		        $(this)
+                    .hide()
+                    .toggleClass("form-control");
+		        var myid = (this).id;
+		        $('span[for=' + myid + ']')
+                    .text($(this).val())
+                    .show();
+		    });
+
+		    $('.chosen-select').chosen({ no_results_text: 'Oops, nothing found!' });
+		    $('#All').click(function () {
+		        if ($('#SelectedCustomer_chosen').hasClass('DivCover')) {
+		            $('#SelectedCustomer_chosen').removeClass('DivCover');
+		        } else {
+		            $('#SelectedCustomer_chosen').removeClass('DivCover');
+		            $('#SelectedCustomer_chosen').addClass('DivCover');
+		        }
+
+		    });
+		    $('#SelectedCustomer_chosen').click(function () {
+
+		        $('#All').attr("disabled", true);
+		    });
+		}
+	);
+</script>
+
+
+
+
+
+<style>
+    [contentEditable=true]:empty:not(:focus):before {
+        content: attr(data-ph);
+    }
+
+    #hover-content {
+        display: none;
+    }
+
+
+
+    #logo_img:hover {
+        background-color: #e5e0e0;
+        border-radius: 3px;
+        border-color: black;
+    }
+
+    #usr_img:hover {
+        background-color: #e5e0e0;
+        border-radius: 3px;
+        border-color: black;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+
+
+        $('#TemplateType').val('first_NwsLtr');
+        //$('#textarea2').redactor();
+
+        $("div.bhoechie-tab-menu>div.list-group>a").click(function (e) {
+            e.preventDefault();
+            $(this).siblings('a.active').removeClass("active");
+            $(this).addClass("active");
+            var index = $(this).index();
+            $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+            $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+        });
+
+        $('#userlogo').click(function () {            
+            Openmodel();
+        }
+        )
+        $('#userimg').click(function () {
+
+            OpenUsrImgmodel();
+        }
+       )
+
+        $('#slider3').Thumbelina({
+            orientation: 'vertical',         // Use vertical mode (default horizontal).
+            $bwdBut: $('#slider3 .top'),     // Selector to top button.
+            $fwdBut: $('#slider3 .bottom')   // Selector to bottom button.
+        });
+
+        $("#sliderclick li").click(function () {
+            var id = this.id;
+          
+            debugger;
+            if (id == "first_NwsLtr") {               
+                $('#TemplateType').val(id);
+                Show_FirstNwsLetter();
+            }
+            else if (id == "second_NwsLtr") {
+                Show_SecondNwsLetter();
+                $('#TemplateType').val(id);
+            }
+            else if (id == "thirld_NwsLtr") {
+                Show_ThirldNwsLetter();
+                $('#TemplateType').val(id);
+            }
+            else if (id == "fourth_NwsLtr") {                
+                Show_FourthNwsLetter();
+                $('#TemplateType').val(id);
+            }
+            else if (id == "fifth_NwsLtr") {                
+                Show_FifthNwsLetter();
+                $('#TemplateType').val(id);
+            }
+            else if (id == "sixth_NwsLtr") {                
+                Show_SixthNwsLetter();
+                $('#TemplateType').val(id);
+            }
+            
+        });
+
+    });
+
+    function printpreview() {
+
+        var b = document.getElementById('FirstLetter').innerHTML;
+        var yourDOCTYPE = "<!DOCTYPE html>"; // your doctype declaration
+        var printPreview = window.open('about:blank', 'print_preview', "resizable=yes,scrollbars=yes,status=yes");
+        var printDocument = printPreview.document;
+        printDocument.open();
+        printDocument.write(yourDOCTYPE +
+                   "<html> <div class='container'><div class='row'>" +
+                       b +
+                   "</div></div></html>");
+        printDocument.close();
+
+    }
+
+
+    function Show_FirstNwsLetter()
+    {
+        $('#FirstLetter').css('display', 'block')
+        Hide_SecondNwsLetter();
+        Hide_ThirldNwsLetter();
+        Hide_FourthNwsLetter();
+        Hide_FifthNwsLetter();
+        Hide_SixthNwsLetter();
+        //7
+        //8
+        //9
+        //10
+        //11
+        //12
+        //13
+        //14
+        //15
+        //16
+        //17
+        //18
+        //19
+        //20
+
+    }
+
+    function Hide_FirstNwsLetter()
+    {
+        $('#FirstLetter').css('display', 'None')
+    }
+
+    function Show_SecondNwsLetter()
+    {
+        $('#SecondLetter').css('display', 'block')
+        Hide_FirstNwsLetter();
+        Hide_ThirldNwsLetter();
+        Hide_FourthNwsLetter();
+        Hide_FifthNwsLetter();
+        Hide_SixthNwsLetter();
+        //7
+        //8
+        //9
+        //10
+        //11
+        //12
+        //13
+        //14
+        //15
+        //16
+        //17
+        //18
+        //19
+        //20
+    }
+
+    function Hide_SecondNwsLetter()
+    {
+        $('#SecondLetter').css('display', 'none')
+    }
+
+    function Show_ThirldNwsLetter()
+    {
+        $('#ThirldLetter').css('display', 'block')
+        Hide_FirstNwsLetter();
+        Hide_SecondNwsLetter();        
+        Hide_FourthNwsLetter();
+        Hide_FifthNwsLetter();
+        Hide_SixthNwsLetter();
+        
+        //7
+        //8
+        //9
+        //10
+        //11
+        //12
+        //13
+        //14
+        //15
+        //16
+        //17
+        //18
+        //19
+        //20
+    }
+
+    function Hide_ThirldNwsLetter()
+    {
+        $('#ThirldLetter').css('display', 'none')
+    }
+
+    function Show_FourthNwsLetter() {
+        debugger;
+        $('#FourthLetter').css('display', 'block')
+        Hide_FirstNwsLetter();
+        Hide_SecondNwsLetter();
+        Hide_ThirldNwsLetter();
+        Hide_FifthNwsLetter();
+        Hide_SixthNwsLetter();
+        //7
+        //8
+        //9
+        //10
+        //11
+        //12
+        //13
+        //14
+        //15
+        //16
+        //17
+        //18
+        //19
+        //20
+    }
+
+    function Hide_FourthNwsLetter() {
+        $('#FourthLetter').css('display', 'none')
+    }
+
+    function Show_FifthNwsLetter() {
+       
+        $('#FifthLetter').css('display', 'block')
+        Hide_FirstNwsLetter();
+        Hide_SecondNwsLetter();
+        Hide_ThirldNwsLetter();
+        Hide_FourthNwsLetter();
+        Hide_SixthNwsLetter();
+        //7
+        //8
+        //9
+        //10
+        //11
+        //12
+        //13
+        //14
+        //15
+        //16
+        //17
+        //18
+        //19
+        //20
+        
+    }
+
+    function Hide_FifthNwsLetter() {
+        $('#FifthLetter').css('display', 'none')
+    }
+
+    function Show_SixthNwsLetter() {
+
+        $('#SixthLetter').css('display', 'block')
+        Hide_FirstNwsLetter();
+        Hide_SecondNwsLetter();
+        Hide_ThirldNwsLetter();
+        Hide_FourthNwsLetter();
+        Hide_FifthNwsLetter();
+        //7
+        //8
+        //9
+        //10
+        //11
+        //12
+        //13
+        //14
+        //15
+        //16
+        //17
+        //18
+        //19
+        //20
+
+    }
+
+    function Hide_SixthNwsLetter() {
+        $('#SixthLetter').css('display', 'none')
+    }
+
+
+
+    //open User logo  model
+    function Openmodel() {
+
+        backdrop: 'static';
+        keyboard: false;
+        $('#myModal').click();
+        return false;
+    }
+    //end
+
+    //open User logo  model
+    function OpenUsrImgmodel() {
+        backdrop: 'static';
+        keyboard: false;
+        $('#myImgModal').click();
+        return false;
+    }
+    //end
+
+
+    function showLogopreview(input) {
+        debugger;
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#logoprvw').attr('src', e.target.result);
+                $('#myModal').click();
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function showUsrImgpreview(input) {
+        debugger;
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#imgprvw').attr('src', e.target.result);
+                $('#myImgModal').click();
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>
+@model CommunicationApp.Models.NewsletterModel
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+<div class="container">
+
+    <div class="row" id="row_div">
+        <div class="col-md-2">
+            <div id="slider3">
+                <div class="thumbelina-but vert top">&#708;</div>
+                <ul id="sliderclick">
+                    <li id="first_NwsLtr"><img src="~/images/thumb2.jpg"></li>
+                    <li id="second_NwsLtr"><img src="~/images/thumb3.jpg"></li>
+                    <li id="thirld_NwsLtr"><img src="~/images/thumb2.jpg"></li>
+                    <li id="fourth_NwsLtr"><img src="~/images/thumb3.jpg"></li>
+                    <li id="fifth_NwsLtr"><img src="~/images/thumb2.jpg"></li>
+                    <li id="sixth_NwsLtr"><img src="~/images/thumb3.jpg"></li>
+                </ul>
+
+                <div class="thumbelina-but vert bottom">&#709;</div>
+            </div>
+        </div>
+
+        @using (Html.BeginForm("SendNewsLetter", "NewsLetter", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(c => c.AdminLogo);
+            @Html.HiddenFor(c => c.AdminPhoto);
+            @Html.HiddenFor(c => c.TemplateType);
+            <div class="col-md-8">
+                
+                <div id="FirstLetter" class="newsltr_bg" >
+
+                    <div style="float:left; width:100%; background:#006f53; padding:8px;">
+                        <div style="float:left; width:100%;">
+                            <div style="float:left; width:100%; text-align:center; margin:8px 0;">
+                                <h2 style="float:left; text-align:center; width:100%; background-color:#eda320; color: #191919; font-family:'Times New Roman', Times, serif; font-style:italic; text-transform:uppercase; font-weight:bold; font-size:24px; padding:4px;">7 cheap and easy steps to a better open house</h2>
+                            </div>
+                            <div style="float:left; width:100%; text-align:center; margin:8px 0;">
+
+                                <p style="float:left; text-align:center; width:100%; color: white; font-size:17px; ">
+                                    Don't want your house to sit unsold in today's brutal housing market? A real-estate agent explains how to
+                                    make open houses more appealing to buyers and safer for sellers.
+                                </p>
+
+                            </div>
+                            <div style="float:left; width:100%; margin-top:3px; background-color:#f0f0f0; border-radius:12px; margin: 8px 0;">
+                                <div style="float:left; width:100%; margin:4px 0;">
+                                    <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="p1" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: #c90101; display: inline; font-size: 16px; font-weight: normal; margin: 0; ">1. Detail and de-clutter.</span></h3>
+                                    <input value="" type="text" id="p1" name="p1" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: #c90101; font-size: 16px; display: none; margin:0px; font-family: arial;" hidden>
+
+                                    <textarea id="PG1" class="txtarea" name="PG1" contenteditable="true" style="float: left; width: 100%;  font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 190px; border: 0px;color:black;background:none; margin: 4px 0 0;">
+                                        The first step in preparing for an open house is to ensure that your entire property is clean and de-cluttered, Combs says. The goal of an open house is to enable prospective buyers to envision themselves living there, and clutter and disorder prevent them from doing so. So sellers should detail their entire house room by room. Also, make sure that outdoor spaces are in tiptop condition. Combs encourage sellers to pay particular attention to the walkway leading up to their front door because "that's where the people are going to come in for your open house." As in other endeavors, first impressions are tremendously important to real estate.
+                                        You could always hire professionals — cleaners and landscapers — to take care of these chores. But with a little sweat, some cleaning supplies and gas for the lawn mower, homeowners can get their properties open-house ready at minimal cost.
+                                    </textarea>
+
+
+                                </div>
+                                <div style="float:left; width:100%; margin:4px 0;">
+
+                                    <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="p2" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: #c90101; display: inline; font-size: 16px; font-weight: normal; margin: 0; ">2. Fire up the oven.</span></h3>
+                                    <input value="" type="text" id="p2" name="p2" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: #c90101; font-size: 16px; display: none; margin:0px; font-family: arial;" hidden>
+
+                                    <textarea id="PG2" class="txtarea" name="PG2" contenteditable="true" style="float: left; width: 100%;  font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 110px; border: 0px;color:black;background:none; margin: 4px 0 0;">
+                                        While making sure that your home is free of offensive smells such as odors from pets and cigarettes, homeowners should consider injecting some more welcoming aromas into the air. "Smells like cinnamon and chocolate give you a feeling of home ... so, I wouldn't hesitate to throw some sweet rolls or brownies in the oven," Combs says. "What we're trying to do is psychologically have people believe they are at home and want to buy the house."
+                                    </textarea>
+
+                                </div>
+                                <div style="float:left; width:100%; margin:4px 0;">
+
+                                    <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="p3" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: #c90101; display: inline; font-size: 16px; font-weight: normal; margin: 0; ">3. Lighten up.</span></h3>
+                                    <input value="" type="text" id="p3" name="p3" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: #c90101; font-size: 16px; display: none; margin:0px; font-family: arial;" hidden>
+
+                                    <textarea id="PG3" class="txtarea" name="PG3" contenteditable="true" style="float: left; width: 100%;  font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 90px; border: 0px;color:black;background:none; margin: 4px 0 0;">
+                                        It's important that your home is well-lit for open-house day. "People love light, airy houses," Combs says. In addition, a slip and fall on a poorly lit basement step will make prospective buyers wonder if the home is safe. "Before your open house, make sure that all of your light bulbs are working," Combs says.
+                                    </textarea>
+                                </div>
+                                <div style="float:left; width:100%; margin:4px 0;">
+
+                                    <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="p4" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: #c90101; display: inline; font-size: 16px; font-weight: normal; margin: 0; ">4. Lock it up.</span></h3>
+                                    <input value="" type="text" id="p4" name="p4" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: #c90101; font-size: 16px; display: none; margin:0px; font-family: arial;" hidden>
+
+                                    <textarea id="PG4" class="txtarea" name="PG4" contenteditable="true" style="float: left; width: 100%;  font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 130px; border: 0px;color:black;background:none; margin: 4px 0 0;">
+                                        Unfortunately, there has been an increase in open-house-related thefts over the past couple of years, with thieves posing as potential buyers and then making off with homeowners' belongings, Combs says. The most commonly stolen items, according to Combs, are prescription drugs and small pieces of jewelry. To prevent theft, homeowners should store their valuables and prescription drugs in a safe place during the open house. "A lot of people don't think about taking the drugs out of their medicine cabinets," Combs says. "And I think that's really crucial today."
+                                    </textarea>
+                                </div>
+                                <div style="float:left; width:100%; margin:4px 0;">
+
+                                    <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="p5" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: #c90101; display: inline; font-size: 16px; font-weight: normal; margin: 0; ">5. Get rid of the pets.</span></h3>
+                                    <input value="" type="text" id="p5" name="p5" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: #c90101; font-size: 16px; display: none; margin:0px; font-family: arial;" hidden>
+
+                                    <textarea id="PG5" class="txtarea" name="PG5" contenteditable="true" style="float: left; width: 100%;  font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 110px; border: 0px;color:black;background:none; margin: 4px 0 0;">
+                                        Although you might be a dog lover, the potential buyers coming to see your home may not be. That doesn't mean they won't be interested in purchasing the house, only that you should remove your pets — and pet-related items such as crates and water bowls — from the property during the open house. In addition to turning off certain buyers, pets can be a distraction, Combs says. "People come through a house [because] they want to see the house and not be distracted by [a pet]."
+                                    </textarea>
+                                </div>
+                                <div style="float:left; width:100%; margin:4px 0;">
+
+                                    <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="p6" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: #c90101; display: inline; font-size: 16px; font-weight: normal; margin: 0; ">6. Make yourself disappear.</span></h3>
+                                    <input value="" type="text" id="p6" name="p6" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: #c90101; font-size: 16px; display: none; margin:0px; font-family: arial;" hidden>
+
+                                    <textarea id="PG6" class="txtarea" name="PG6" contenteditable="true" style="float: left; width: 100%;  font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 105px; border: 0px;color:black;background:none; margin: 4px 0 0;">
+                                        Homeowners should be away from the property during the open house. Potential buyers can feel like they are imposing if the owners remain in the property, which makes it much more difficult for them to envision themselves living there. "It's very disconcerting ... when the owner stays there," Combs says. "The buyers are very uncomfortable." So make arrangements to spend the day someplace else.
+                                    </textarea>
+                                </div>
+                                <div style="float:left; width:100%; margin:4px 0;">
+
+                                    <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="p7" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: #c90101; display: inline; font-size: 16px; font-weight: normal; margin: 0; ">7. Sell the neighborhood</span></h3>
+                                    <input value="" type="text" id="p7" name="p7" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: #c90101; font-size: 16px; display: none; margin:0px; font-family: arial;" hidden>
+
+                                    <textarea id="PG7" class="txtarea" name="PG7" contenteditable="true" style="float: left; width: 100%;  font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 130px; border: 0px;color:black;background:none; margin: 4px 0 0;">
+                                        While potential buyers will certainly want to see what your house is like, they will have other questions as well. "I get this all the time: [potential buyers have] a young 3-year-old, and [they] want to know if there are babysitter-aged kids in the neighborhood and they want to know if there are other kids for them to play with," Combs says. Sellers should gather pertinent information about the neighborhood, school system and utility bills and pass it along to their agent. (Or, if they aren't using an agent, then directly to the buyers themselves
+                                    </textarea>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div style="float:left; width:100%; background-color:#f0f0f0; padding:8px 0; border-radius:12px;">
+                            <div style="float:left; width:25%; padding:6px;">
+                                <img src="@Model.AdminPhoto" style="width:150px;" alt="" title="" />
+                            </div>
+                            <div style="float:left; width:50%; padding:6px; text-align:center;">
+                                <h2 style="float:left; width:100%; font-size:20px; font-family:Arial, Helvetica, sans-serif; font-weight:bold; color:#202020; text-align:center; margin:6px 0 0;">Ajay Shah</h2>
+                                <div style="float:left; width:100%; margin:9px 0 0;">
+                                    <p style="float:left; width:100%; font-size:15px; font-family:Arial, Helvetica, sans-serif; color:#202020; margin: 0px;">P: 416-747-9777</p>
+                                    <p style="float:left; width:100%; font-size:15px; font-family:Arial, Helvetica, sans-serif; color:#202020; margin:0;">homekey123@yahoo.ca | www.homelifemiracle.com</p>
+                                    <p style="float:left; width:100%; font-size:15px; font-family:Arial, Helvetica, sans-serif; color:#202020; margin:0;">HomeLife/Miracle Realty Ltd., Brokerage*</p>
+                                    <p style="float:left; width:100%; font-size:15px; font-family:Arial, Helvetica, sans-serif; color:#202020; margin:0;">5010 Steeles Avenue West , Suite 11A , Toronto, Ontario, M9V 5C6</p>
+                                </div>
+                            </div>
+                            <div style="float:left; width:25%; padding:6px;">
+                                <img src="@Model.AdminLogo" style="width:150px;" alt="" title="" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="SecondLetter" class="newsltr_bg" style="display:none">
+                    <div style="float:left; width:100%; background:#006f53; padding:8px;">
+                        <div style="float:left; width:100%;">
+                            <div style="float:left; width:100%; text-align:center; margin:8px 0;">
+                                <h2 style="float: left; text-align: center; width: 100%; color: #191919; font-family: 'Times New Roman', Times, serif; font-style: italic; margin: 0px; letter-spacing: 1px; font-weight: bold; background: #eda320; font-size: 22px; padding: 4px; ">
+                                    5 Tips for Getting Involved in community to improve your Real Estate Business
+                                </h2>
+                            </div>
+                            <div style="float:left; width:100%; margin:8px 0;">
+                                <img src="~/images/new_img1.jpg" alt="" title="" style="float: left; width: 100%; border: 8px solid #eda320; " />
+                            </div>
+                            <div style="float:left; width:100%; margin:8px 0;">
+
+
+
+                                <h3 style="margin: 3px 0px 0px; float: left; width: 100%; text-align: center; color: white;"><span class="label label-default clickMe" for="pp6" style="background: transparent none repeat scroll 0px 0px; border: 0px none; border-radius: 0px; display: inline; font-weight: bold; margin: 0px; color: white; font-family: times new roman; font-style: italic; font-size: 26px; ">Community Involvement Suggestions for Realtor</span></h3>
+                                <input value="" type="text" id="pp6" maxlength="50" name="pp6" class="blur" style=" background: transparent none repeat scroll 0px 0px; border: 0px none; border-radius: 0px; display: none; font-weight: bold; margin: 0px; color: white; font-family: times new roman; font-style: italic; font-size: 26px;text-align:center;" hidden>
+
+                                <textarea id="PPG6" class="txtarea" name="PPG6" contenteditable="true" style="float: left; white-space: pre-line; width: 100%; color: white; font-size: 14px; text-align: justify; margin: 7px 0; background: #006F53;">
+                                    One excellent way to market any real estate business is through networking. And how do we network efficiently? By becoming involved with our community! Participating in local activities not only helps promote not only your company name but your personal name also, it can also leave a client feeling great for giving back to a supportive community. Community service gives you the chance to network with other professionals and potential buyers or sellers.
+                                </textarea>
+                            </div>
+                            <div style="float:left; width:100%; margin-top:3px; background-color:#f0f0f0; border-radius:12px; margin: 8px 0;">
+                                <div style="float:left; width:100%; margin:4px 0;">
+                                    <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="pp1" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: black; display: inline; font-size: 16px; font-weight: bold; margin: 0; ">1. Finding an area of volunteer service</span></h3>
+
+                                    <input value="" type="text" id="pp1" name="pp1" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: black; font-size: 16px; display: none; margin: 0px; font-family: arial;" hidden>
+
+                                    <textarea id="PPG1" class="txtarea" name="PPG1" contenteditable="true" style="float: left; width: 100%; font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 110px; border: 0px; color: #3b3b3b; background: none; margin: 4px 0 0;">
+                                        Find an area of service that you think is fulfilling your networking needs. You may be interested working with elderly, first immigrants, food banks or religious group.  Look for ways to work with issues that personal meaning for you or you care about. Working with volunteering work with such organization gives you an ample opportunity to connect with new people that you never meet them before.
+                                    </textarea>
+
+
+                                </div>
+                                <div style="float:left; width:100%; margin:4px 0;">
+
+
+                                    <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="pp2" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: black; display: inline; font-size: 16px; font-weight: bold; margin: 0; ">2. Volunteer Time or Space</span></h3>
+                                    <input value="" type="text" id="pp2" name="pp2" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: black; font-size: 16px; display: none; margin: 0px; font-family: arial;" hidden>
+
+                                    <textarea id="PPG2" class="txtarea" name="PPG2" contenteditable="true" style="float: left; width: 100%; font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 110px; border: 0px; color: #3b3b3b; background: none; margin: 4px 0 0;">
+                                        It doesn't take much space for a small group to meet. Consider volunteering your facilities to local clubs or related organizations. For example, if you sell comic books or other collectibles, loan your space to the local collectors club for their monthly meetings. If you don't have the space, give of your time. If you sell books, offer to read to pre-schoolers at the library's story time. Besides getting the personal satisfaction of helping others, you'll be interacting with a few potential customers.
+
+                                    </textarea>
+
+                                </div>
+                                <div style="float:left; width:100%; margin:4px 0;">
+
+                                    <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="pp3" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: black; display: inline; font-size: 16px; font-weight: bold; margin: 0; ">3. Teach a Class</span></h3>
+                                    <input value="" type="text" id="pp3" name="pp3" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: black; font-size: 16px; display: none; margin: 0px; font-family: arial;" hidden>
+
+                                    <textarea id="PPG3" class="txtarea" name="PPG3" contenteditable="true" style="float: left; width: 100%; font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 110px; border: 0px; color: #3b3b3b; background: none; margin: 4px 0 0;">
+                                        Most Realtors are experts about the products they sell and have a wealth of information to share. Check with the local college, community organization, religious place and library about teaching a class in your expertise like buy-sale home information, mortgage, or investing in real-estate. Many large hardware retailers have used this idea with free weekend how-to sessions and become a successful.
+                                    </textarea>
+                                </div>
+                                <div style="float:left; width:100%; margin:4px 0;">
+
+                                    <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="pp4" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: black; display: inline; font-size: 16px; font-weight: bold; margin: 0; ">4. Host or Sponsor an Event.</span></h3>
+                                    <input value="" type="text" id="pp4" name="pp4" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: black; font-size: 16px; display: none; margin: 0px; font-family: arial;" hidden>
+
+                                    <textarea id="PPG4" class="txtarea" name="PPG4" contenteditable="true" style="float: left; width: 100%; font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 110px; border: 0px; color: #3b3b3b; background: none; margin: 4px 0 0;">
+                                        Whether it's the Relay for Life, Red Ribbon Week or some other local program, most communities have at least one large event in need of sponsors. Read the local newspaper for upcoming events. Can't find a local event that fits your business? Than Host your own.  All it takes is a little planning, support from your suppliers and favorable media coverage and you have the makings of a wonderful marketing opportunity and a great community event.
+
+                                    </textarea>
+                                </div>
+                                <div style="float:left; width:100%; margin:4px 0;">
+
+
+                                    <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="pp5" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: black; display: inline; font-size: 16px; font-weight: bold; margin: 0; "> 5. Adopt a Project</span></h3>
+                                    <input value="" type="text" id="pp5" name="pp5" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: black; font-size: 16px; display: none; margin: 0px; font-family: arial;" hidden>
+
+                                    <textarea id="PPG5" class="txtarea" name="PPG5" contenteditable="true" style="float: left; width: 100%;  font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 100px; border: 0px;color:#3b3b3b;background:none; margin: 4px 0 0;">
+                                        Once you start looking for an organization to become involved with, you will probably find your community has many projects, big and small, that could use your hands-on help. Don't forget to contact the media outlets for additional exposure.
+                                    </textarea>
+                                </div>
+
+
+                            </div>
+                            <div style="float:left; width:100%;">
+                                <p style="float:left; width:100%; color:white; text-align:center;">Designed by Only4Agents</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div id="ThirldLetter" class="newsltr_bg" style="display:none">
+                    <div style="float:left; width:100%; background-color:#231f20; border-bottom:8px solid #eda320; padding:6px 0;">
+                        <img src="~/NewsLetterImages/Thirld_1_newsltr.jpg" style="width:100%;" />
+                        <img src="~/NewsLetterImages/Thirld_2_newsltr.jpg" style="width:100%;" />
+                    </div>
+                    
+                </div>
+                <div id="FourthLetter" class="newsltr_bg" style="display:none">
+                    <div style="float:left; width:100%; background-color:#231f20; border-bottom:8px solid #eda320; padding:6px 0;">
+                        <img src="~/NewsLetterImages/Fourth_newsltr.jpg" style="width:100%;" />
+                    </div>
+                </div>
+                <div id="FifthLetter" class="newsltr_bg" style="display:none">
+                    <div style="float:left; width:100%; background-color:#231f20; border-bottom:8px solid #eda320; padding:6px 0;">
+                        <img src="~/NewsLetterImages/Fifth_newsltr.jpg" style="width:100%;" />
+                    </div>
+                    
+                </div>
+                <div id="SixthLetter" class="newsltr_bg" style="display:none">
+                    <div style="float:left; width:100%; background-color:#231f20; border-bottom:8px solid #eda320; padding:6px 0;">
+                        <img src="~/NewsLetterImages/Sixth_1_newsltr.jpg" style="width:100%;" />
+                        <img src="~/NewsLetterImages/Sixth_2_newsltr.jpg" style="width:100%;" />
+                    </div>
+
+                </div>
+            </div>
+    <div class="col-md-2">
+
+
+        <div class="newsletter_right_sect">
+            <h2>@Html.LabelFor(model => model.SelectedCustomer)</h2>
+            <div class="customer_sctttt">
+                @Html.ListBoxFor(m => m.SelectedCustomer, (IEnumerable<SelectListItem>)ViewBag.Customerlist, new { @class = "chosen-select", data_placeholder = "Select Users" })
+            </div>
+        </div>
+
+        <div id="AllDiv">
+
+            @Html.CheckBoxFor(model => model.All)
+            <label>All</label>
+
+        </div>
+
+    </div>
+
+
+            <div class="bottom_button_section_newsltr">
+                <input id="submitmodalpopup" type="submit" value="Send" />
+            </div>
+
+
+            <button id="myModal" type="button" style="visibility: hidden" class="btn btn-info btn-lg" data-toggle="modal" data-target="#favouriteProperties" data-backdrop="static" data-keyboard="false">Open Modal</button>
+
+            <!--logo image Modal -->
+            <div class="modal fade" id="favouriteProperties" role="dialog">
+                <div class="modal-dialog modl_bgg">
+
+                    <!-- Modal content-->
+                    <div class="modal-content new_pop">
+                        <div class="modal-header mdl_hdrrr">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 id="popupheading" class="modal-title modl_hdng">Upload logo</h4>
+                        </div>
+                        <div class="modal-body modl_bg">
+
+                            <ul class="list_to_row">
+                                <li class="cell" style="width: 75px">Browse</li>
+                                <li class="cell">
+                                    <input type="file" id="file" name="Logofile" onchange="showLogopreview(this)" />
+                                    
+                                 </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                            <div class="modal_button_area">
+
+                                <button type="button" id="closefav" class="btn btn-default mdl_cls_btn" data-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Trigger the User Image modal with a button -->
+            <button id="myImgModal" type="button" style="visibility: hidden" class="btn btn-info btn-lg" data-toggle="modal" data-target="#UserImageDiv" data-backdrop="static" data-keyboard="false">Open Modal</button>
+
+            <!--User image Modal -->
+            <div class="modal fade" id="UserImageDiv" role="dialog">
+                <div class="modal-dialog modl_bgg">
+
+                    <!-- User Modal content-->
+                    <div class="modal-content new_pop">
+                        <div class="modal-header mdl_hdrrr">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 id="popupheading" class="modal-title modl_hdng">Upload User Image</h4>
+                        </div>
+                        <div class="modal-body modl_bg">
+
+                            <ul class="list_to_row">
+                                <li class="cell" style="width: 75px;">Browse</li>
+                                <li class="cell">
+                                    <input type="file" id="file" name="Imgfile" onchange="showUsrImgpreview(this)" />
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                            <div class="modal_button_area">
+
+                                <button type="button" id="closefav" class="btn btn-default mdl_cls_btn" data-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+              
+
+    
+
+        }
+</div>
+</div>

@@ -1,0 +1,199 @@
+﻿@model CommunicationApp.Models.OfficeLocationModel
+@{
+    ViewBag.Title = "CreateOfficeLocation";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$('#btnSubmit').click(function () {
+        //    if ($('#fileToUpload').val() == "") {
+        //        if ($('#LogoPath').val() == "") {
+        //            $("#spanfile").html("Please upload file");
+        //            return false;
+        //        }
+        //    }
+        //    else {
+        //        return checkfile();
+        //    }
+        //});
+
+        //get file path from client system
+        function getNameFromPath(strFilepath) {
+
+            var objRE = new RegExp(/([^\/\\]+)$/);
+            var strName = objRE.exec(strFilepath);
+
+            if (strName == null) {
+                return null;
+            }
+            else {
+                return strName[0];
+            }
+
+        }
+        //get file size
+        function GetFileSize(fileid) {
+            try {
+                var fileSize = 0;
+                // Detecting IE
+                var isIE = false;
+                if ($('html').is('.ie ie7, .ie ie8, .ie ie9, .ie ie10')) {
+                    isIE = true;
+                    //alert("IE");
+                }
+
+                if (isIE) {
+                    //before making an object of ActiveXObject,
+                    //please make sure ActiveX is enabled in your IE browser
+                    var objFSO = new ActiveXObject("Scripting.FileSystemObject"); var filePath = $("#" + fileid)[0].value;
+                    var objFile = objFSO.getFile(filePath);
+                    var fileSize = objFile.size; //size in kb
+                    fileSize = fileSize / 1048576; //size in mb
+                }
+                    //for FF, Safari, Opeara and Others
+                else {
+                    fileSize = $("#" + fileid)[0].files[0].size //size in kb
+                    fileSize = fileSize / 1048576; //size in mb
+                }
+
+                // alert("Uploaded File Size is" + fileSize + "MB");
+                return fileSize;
+            }
+            catch (e) {
+                alert("Error is :" + e);
+            }
+        }
+        function checkfile() {
+            var file = getNameFromPath($("#fileToUpload").val());
+            if (file != null) {
+                var extension = file.substr((file.lastIndexOf('.') + 1));
+                //alert(extension);
+                switch (extension) {
+                    case 'jpg':
+                    case 'png':
+                        flag = true;
+                        break;
+                    default:
+                        flag = false;
+                }
+            }
+            if (flag == false) {
+                $("#spanfile").html("You can upload only jpg, png extension file");
+                return false;
+
+            }
+            else {
+                var size = GetFileSize('fileToUpload');
+                if (size > 3) {
+                    $("#spanfile").html("You can upload file up to 3 MB");
+                    return false;
+                }
+                else {
+                    $("#spanfile").html("");
+                }
+            }
+        }
+        $(function () {
+            $("#fileToUpload").change(function () {
+                checkfile();
+            });
+
+        });
+
+    });
+
+
+    function showimagepreview(input) {
+        debugger;
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#imgprvw').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+@using (Html.BeginForm("Create", "OfficeLocation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(Model=>Model.CompanyId)
+
+     <div class="row">
+        <div class="col-md-12">
+            <div class="sky-form boxed margin-top10">
+                <header>Office Location</header>
+                @Html.ValidationSummary(true)
+                <fieldset>
+                    <div class="row">
+
+                        <section class="col col-md-4">
+                            @Html.LabelForRequired(model => model.OfficeAddress)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.OfficeAddress)
+                                @Html.ValidationMessageFor(model => model.OfficeAddress)
+                            </label>
+                        </section>
+
+                    </div>
+                    <div class="row">
+                        <section class="col col-md-4">
+                            @Html.LabelForRequired(model => model.City)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.City)
+                                @Html.ValidationMessageFor(model => model.City)
+                            </label>
+                        </section>
+
+                    </div>
+                    <div class="row">
+                        <section class="col col-md-4">
+
+                            @Html.LabelForRequired(model => model.TelephoneNo)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.TelephoneNo, new { @placeholder="123-123-1234"})
+                                @Html.ValidationMessageFor(model => model.TelephoneNo)
+                            </label>
+                        </section>
+                        </div>
+                        <div class="row">
+
+                            <section class="col col-lg-4">
+                                @Html.LabelForRequired(model => model.Fax)
+                                <label class="input">
+                                    @Html.TextBoxFor(model => model.Fax, new { @placeholder = "123-123-1234" })
+                                    @Html.ValidationMessageFor(model => model.Fax)
+                                </label>
+                            </section>
+                            <section class="col col-lg-8"></section>
+                        </div>
+                        <div class="row">
+                            <section class="col col-lg-4">
+
+                                @Html.LabelForRequired(model => model.Email)
+                                <label class="input">
+                                    @Html.TextBoxFor(model => model.Email)
+                                    @Html.ValidationMessageFor(model => model.Email)
+                                </label>
+                            </section>
+                            <section class="col col-lg-6"></section>
+                        </div>
+                    
+
+</fieldset>
+                <footer>
+                    <input type="submit" value="Save" class="bigButton"  />
+                </footer>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+

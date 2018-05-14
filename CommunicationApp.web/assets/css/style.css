@@ -1,0 +1,156 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+html, body, address, blockquote, div, dl, form, h1, h2, h3, h4, h5, h6, ol, p, pre, table, ul, dd, dt, li, tbody, td, tfoot, th, thead, tr, button, del, ins, map, object, a, abbr, acronym, b, bdo, big, br, cite, code, dfn, em, i, img, kbd, q, samp, small, span, strong, sub, sup, tt, var, legend, fieldset, p {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+a, input, select, textarea {
+	outline: none;
+	margin: 0;
+	padding: 0;
+}
+img, fieldset {
+	border: 0;
+}
+a {
+	outline: none;
+	border: none;
+}
+img {
+	max-width: 100%;
+	height: auto;
+	width: auto\9;
+	vertical-align: middle;
+	border: none;
+	outline: none;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+div, h1, h2, h3, h4, span, p, input, form, img, hr, img, a {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+.clear {
+	clear: both;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.form_bg
+{
+	float:left;
+	width:100%;
+}
+.form_box
+{
+	float:left;
+	width:100%;
+	margin:5px 0;
+}
+.form_box2
+{
+	float:left;
+	width:100%;
+	margin:5px 0;
+}
+.form_bg h2
+{
+	float:left;
+	width:100%;
+	 font-family: 'open_sansbold';
+	 font-size:24px;
+	 text-align:center;
+	 color:#242424;
+	 margin:6px 0;
+}
+.form_box h2
+{
+	float:left;
+	width:100%;
+	 font-family: 'open_sansbold';
+	 font-size:18px;
+	 text-align:center;
+	 color:#242424;
+	 margin:6px 0;
+	 border-bottom:1px solid;
+}
+.form_box p
+{
+	float:left;
+	width:100%;
+	   font-family: 'open_sansbold';
+	 font-size:16px;
+	 color:#242424;
+	 margin:3px 0;
+}
+
+.form_box .form-control
+{
+	float:left;
+	width:70% !important;
+}
+.form_box label
+{
+	float:left;
+	margin:7px 0px 0 0;
+	width:30%;
+}
+.form_box2 label
+{
+	float:left;
+	margin:7px 0px 0 0;
+	width:50%;
+}
+.form_box .checkbox {
+    margin: 0px !important;
+    float: left;
+    width: 50%;
+}
+.borer_style
+{
+	border-color: -moz-use-text-color -moz-use-text-color #878686!important;
+    border-radius: 0 !important;
+    border-style: none none dotted !important;
+    border-width: medium medium 2px !important;
+    box-shadow: none;
+}
+.full_wdth_chk 
+{
+	width:100% !important;
+}
+.full_wdth_chk label
+{
+	width:100% !important;
+}
+.full_wdth_chk span {
+    margin-top: 5px;
+    float: left;
+}
+.fnt_wght
+{
+	font-weight:normal;
+}
+.chattelcount {
+    float: left;
+    margin: 7px 0;
+    width: 30%;
+}
+.field-validation-error
+{
+    color: red;
+    float:left;
+    width:100%;
+    margin:4px 0 0;
+}
+.required {
+    color: red;
+}

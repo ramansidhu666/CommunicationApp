@@ -1,0 +1,175 @@
+﻿@model CommunicationApp.Models.EventModel
+
+@{
+    ViewBag.Title = "Event";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+
+<script type="text/javascript" src="~/assets/plugins/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery-ui-1.10.4.min.js"></script>
+<link href="~/Timepicker1/src/jquery.ptTimeSelect.css" rel="stylesheet" />
+<script src="~/Timepicker1/src/jquery.ptTimeSelect.js"></script>
+<script type="text/javascript">
+    var todayDate = new Date();
+    $(document).ready(function () {
+
+        $('.chosen-select').chosen({ no_results_text: 'Oops, nothing found!' });
+       
+
+
+        $('input[name="EventDate"]').daterangepicker(
+         {
+             singleDatePicker: true,
+             format: 'MM/DD/YYYY',
+             startDate: todayDate,
+             minDate: todayDate
+             
+         },
+         function (start, end, label) {
+             
+         }
+
+
+     );
+ 
+       
+        $('#All').click(function () {
+            if ($('#SelectedCustomer_chosen').hasClass('DivCover')) {
+                $('#SelectedCustomer_chosen').removeClass('DivCover');
+            } else {
+                $('#SelectedCustomer_chosen').removeClass('DivCover');
+                $('#SelectedCustomer_chosen').addClass('DivCover');
+            }
+
+        });
+
+       
+        $('#sample1 input').ptTimeSelect();
+
+    });
+    function showimagepreview(input) {
+        debugger;
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#imgprvw').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+
+</script>
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+@using (Html.BeginForm("Create", "Event", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+
+    @Html.HiddenFor(model => model.CustomerId)
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="sky-form boxed margin-top10">
+                <header>Event</header>
+                @*@Html.ValidationSummary(true)*@
+                <fieldset>
+                    <div class="row">
+                        <section class="col col-md-3">
+                            @*<label for="PhotoPath" class="label-required">Photo<span class="required">*</span></label>*@
+                           
+                                <img id="imgprvw" alt="Avatar" src="" height="120" width="120" />
+                            
+                            Upload Event Image
+                            <input type="file" name="file" id="ImageUpload" onchange="showimagepreview(this)" />
+                            @*<label for="fileToUpload" class="input input-file">
+                                </label>*@
+                        </section>
+
+                        <section style="display:none" class="col col-md-4">
+                            <div class="button"><input type="file" id="fileToUpload" onchange="this.parentNode.nextSibling.value = this.value" name="file">Browse</div>
+                            <span style="color:red;"></span><span id="spanfile" class="field-validation-error"></span>
+                        </section>
+
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-md-3">
+
+                            @Html.LabelForRequired(model => model.EventDate)
+                            <label class="input">
+                                @*@Html.TextBox("EventDate", null, new { @class = " col-md-12", @style = "height: 34px;" })*@
+                                <input type="text" id="EventDate" name="EventDate" class="form-control" required="true" />
+                                @Html.ValidationMessageFor(model => model.EventDate)
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row" id="sample1">
+                        <section class="col col-md-3">
+
+                            @Html.LabelForRequired(model => model.StartTime)
+                            <label class="input">
+                                @Html.TextBoxFor(model => Model.StartTime, null, new { @class = " col-md-12", @style = "height: 34px;", @required="true" })
+                                @*<input name="startTime" value="" class="form-control col-md-7 col-xs-12" id="startTime" />*@
+                                @Html.ValidationMessageFor(model => model.StartTime)
+                            </label>
+                        </section>
+                    </div>
+                 
+                    <div class="row">
+                        <section class="col col-md-3">
+                            @Html.LabelForRequired(model => model.EventName)
+                            <label class="input">
+                                @Html.TextBoxFor(model => model.EventName, null, new { @required = "true" })
+                                @Html.ValidationMessageFor(model => model.EventName)
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row">
+
+                        <section class="col col-md-3">
+                            @Html.LabelFor(model => model.SelectedCustomer)
+                            <label class="input">
+                                @Html.ListBoxFor(m => m.SelectedCustomer, Model.CustomersList, new { @class = "chosen-select", data_placeholder = "Select Uses" })
+                            </label>
+                            
+                                   
+                               
+                        </section>
+
+                    </div>
+                    <div id="AllDiv">
+                        
+                        @Html.CheckBoxFor(model => model.All)
+                        <label>All</label>
+                        @*<span><input type="checkbox" id="checkallTask" /> All</span>*@
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-md-6">
+
+                            @Html.LabelForRequired(model => model.EventDescription)
+                            <label class="textarea">
+                                @Html.TextAreaFor(model => model.EventDescription, new { @required = "true" })
+                                @Html.ValidationMessageFor(model => model.EventDescription)
+                            </label>
+                        </section>
+                    </div>
+
+                </fieldset>
+                <footer>
+                    <input type="submit" value="Save Event" class="bigButton" id="btnSubmit" />
+                </footer>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "index")
+</div>
+

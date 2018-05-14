@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationApp", "CommunicationApp.web\CommunicationApp.csproj", "{FF632BA0-AE9E-4A0F-9281-30407CC1D7C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationApp.Services", "CommunicationApp.services\CommunicationApp.Services.csproj", "{D62AF6D5-A496-4524-AF51-3CE112A8182D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationApp.Data", "CommunicationApp.data\CommunicationApp.Data.csproj", "{93F8B20E-595C-4135-A481-86836C2822E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationApp.Core", "CommunicationApp.core\CommunicationApp.Core.csproj", "{D708F1AF-8F41-4815-80FE-E9EC4ED8EED6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationApp.Entity", "CommunicationApp.Entity\CommunicationApp.Entity.csproj", "{659D8433-FF51-4BFB-8249-1E68B1A090D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1E82050C-2CB5-47BE-BD89-0E07D696C84D}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF632BA0-AE9E-4A0F-9281-30407CC1D7C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF632BA0-AE9E-4A0F-9281-30407CC1D7C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF632BA0-AE9E-4A0F-9281-30407CC1D7C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF632BA0-AE9E-4A0F-9281-30407CC1D7C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D62AF6D5-A496-4524-AF51-3CE112A8182D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D62AF6D5-A496-4524-AF51-3CE112A8182D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D62AF6D5-A496-4524-AF51-3CE112A8182D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D62AF6D5-A496-4524-AF51-3CE112A8182D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93F8B20E-595C-4135-A481-86836C2822E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93F8B20E-595C-4135-A481-86836C2822E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93F8B20E-595C-4135-A481-86836C2822E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93F8B20E-595C-4135-A481-86836C2822E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D708F1AF-8F41-4815-80FE-E9EC4ED8EED6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D708F1AF-8F41-4815-80FE-E9EC4ED8EED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D708F1AF-8F41-4815-80FE-E9EC4ED8EED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D708F1AF-8F41-4815-80FE-E9EC4ED8EED6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{659D8433-FF51-4BFB-8249-1E68B1A090D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{659D8433-FF51-4BFB-8249-1E68B1A090D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{659D8433-FF51-4BFB-8249-1E68B1A090D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{659D8433-FF51-4BFB-8249-1E68B1A090D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

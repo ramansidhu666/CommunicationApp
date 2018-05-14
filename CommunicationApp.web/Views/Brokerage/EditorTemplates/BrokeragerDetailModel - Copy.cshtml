@@ -1,0 +1,55 @@
+﻿@model CommunicationApp.Web.Models.BrokeragerDetailModel
+
+@Html.HiddenFor(model => model.BrokerageServices)
+@Html.HiddenFor(model => model.BrokerageId)
+@Html.HiddenFor(model => model.BrokerageServicesId)
+
+@if (Model.ParentId == null)
+{
+    <tr style="background:#f1f1f2;">
+        <td colspan="7" style="border:0px;">@Model.BrokerageServices</td>
+    </tr>
+}
+@if (Model.ParentId != null)
+{
+    <tr>
+        <td>@Model.BrokerageServices</td>
+       
+        <td>
+            <div class="com_form_hding_chkbox">
+                @Html.RadioButtonFor(model => model.BrokerageValue, '1')
+              
+            </div>
+        </td>
+        <td>
+            <div class="com_form_hding_chkbox">
+                @Html.RadioButtonFor(model => model.BrokerageValue, '2')
+              
+            </div>
+        </td>
+        <td>
+            <div class="com_form_hding_chkbox">
+                @Html.RadioButtonFor(model => model.BrokerageValue, '3')
+               
+            </div>
+        </td>
+        <td>
+            <div class="com_form_hding_chkbox">
+                @Html.RadioButtonFor(model => model.BrokerageValue, '4')
+               
+            </div>
+        </td>
+        <td>
+            <div class="com_form_hding_chkbox">
+                @Html.RadioButtonFor(model => model.BrokerageValue, '5')
+               
+            </div>
+        </td>
+        <td>
+            <div class="com_form_hding_chkbox">
+                @Html.RadioButtonFor(model => model.BrokerageValue, '6', new { Checked = "checked" })
+             
+            </div>
+        </td>
+    </tr>
+}

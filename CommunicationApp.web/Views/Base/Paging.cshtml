@@ -1,0 +1,24 @@
+﻿<div class="row">
+    <div id="pager" class="pager">
+        <form>
+            <img src="~/assets/images/pagination/first.png" class="first" />
+            <img src="~/assets/images/pagination/prev.png" class="prev" />
+            <input type="text" class="pagedisplay" />
+            <img src="~/assets/images/pagination/next.png" class="next" />
+            <img src="~/assets/images/pagination/last.png" class="last" />
+            <select class="pagesize">
+                <option selected="selected" value="15">15</option>
+                <option value="25">25</option>
+                <option value="35">35</option>
+                <option value="45">45</option>
+            </select>
+        </form>
+    </div>
+</div>
+
+<script src=@Url.Content("~/Scripts/jquery-1.10.2.js")></script>
+<script type="text/javascript">
+    $(function () {
+        $('#mytable').tablesorter().tablesorterPager({ container: $("#pager") });
+    });
+</script>

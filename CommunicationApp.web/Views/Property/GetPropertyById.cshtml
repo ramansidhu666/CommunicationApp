@@ -1,0 +1,698 @@
+﻿@model  CommunicationApp.Web.Models.PropertyModel
+
+@{
+    ViewBag.Title = "Property";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+@{
+    string IsApprovedYes = "";
+    string IsApprovedNo = "";
+}
+@if (@Model.IsActive == true)
+{
+    IsApprovedYes = "checked";
+}
+else
+{
+    IsApprovedNo = "checked";
+}
+
+<script src="http://localhost:9092/assets/js/cropper.min.js"></script>
+<script src="http://localhost:9092/assets/js/main.js"></script>
+<script>
+    $(document).ready(function () {
+        var isEditable=true;
+        var $div = $('#RemarksDiv'), isEditable = $div.is('.editable');
+        $('#RemarksDiv').prop('contenteditable', !isEditable).toggleClass('editable')
+        $('input[type=radio][name=Approve]').on('change', function(){
+
+            $("#btnApproveModal").click();
+
+        });
+
+        $('#btnIsApprovedClose').click(function ()
+        {
+            debugger
+            $('#ApproveYes').prop('checked',false);
+            $('#ApproveNo').prop('checked',false);
+
+            @{
+                var ApproveNoStatus = "";
+                var ApprovYesStatus = "";
+                
+           }           
+            @if(@Model.IsActive==true)
+            {
+                ApprovYesStatus = "checked";
+                
+            }
+           else
+            {
+                ApproveNoStatus = "checked";
+
+             }
+            
+            $('#ApproveNo').prop('checked','@ApproveNoStatus');
+            $('#ApproveYes').prop('checked','@ApprovYesStatus');
+        });
+        $('#btnSubmit').click(function () {
+            debugger
+            bigButton
+            if ($('#fileToUpload').val() == "")
+            {
+                if ($('#LogoPath').val() == "")
+                {
+                    $("#spanfile").html("Please upload file");
+                    return false;
+                }
+            }
+            else {
+                debugger
+                return checkfile();
+            }
+        });
+
+        //get file path from client system
+        function getNameFromPath(strFilepath) {
+
+            var objRE = new RegExp(/([^\/\\]+)$/);
+            var strName = objRE.exec(strFilepath);
+
+            if (strName == null) {
+                return null;
+            }
+            else {
+                return strName[0];
+            }
+
+        }
+        //get file size
+        function GetFileSize(fileid) {
+            try {
+                var fileSize = 0;
+                // Detecting IE
+                var isIE = false;
+                if ($('html').is('.ie ie7, .ie ie8, .ie ie9, .ie ie10')) {
+                    isIE = true;
+                    //alert("IE");
+                }
+
+                if (isIE) {
+                    //before making an object of ActiveXObject,
+                    //please make sure ActiveX is enabled in your IE browser
+                    var objFSO = new ActiveXObject("Scripting.FileSystemObject"); var filePath = $("#" + fileid)[0].value;
+                    var objFile = objFSO.getFile(filePath);
+                    var fileSize = objFile.size; //size in kb
+                    fileSize = fileSize / 1048576; //size in mb
+                }
+                    //for FF, Safari, Opeara and Others
+                else {
+                    fileSize = $("#" + fileid)[0].files[0].size //size in kb
+                    fileSize = fileSize / 1048576; //size in mb
+                }
+
+                // alert("Uploaded File Size is" + fileSize + "MB");
+                return fileSize;
+            }
+            catch (e) {
+                alert("Error is :" + e);
+            }
+        }
+        function checkfile() {
+            debugger
+            var file = getNameFromPath($("#fileToUpload").val());
+            if (file != null) {
+                var extension = file.substr((file.lastIndexOf('.') + 1));
+                //alert(extension);
+                switch (extension) {
+                    case 'jpg':
+                    case 'png':
+                        flag = true;
+                        break;
+                    default:
+                        flag = false;
+                }
+            }
+            if (flag == false) {
+                $("#spanfile").html("You can upload only jpg, png extension file");
+                return false;
+
+            }
+            else {
+                var size = GetFileSize('fileToUpload');
+                if (size > 3) {
+                    $("#spanfile").html("You can upload file up to 3 MB");
+                    return false;
+                }
+                else {
+                    $("#spanfile").html("");
+                }
+            }
+            debugger
+            $.ajax({
+                type: 'POST',
+                url: '/Property/EditPropertyImage',
+                data: JSON.stringify({ PropertyId: PropertyId,File:file }),
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result != "") {
+                        $('#imgprvw').text("");
+                        $('#imgprvw').attr('src',result);
+                        window.location.href = '@Url.Action("GetPropertyById", "Property", new { id = @Model.PropertyId })';
+                    }
+                    else if (result == "choosecompany") {
+                        window.location.href = '@Url.Action("Company", "Home")';
+                    }
+
+
+                },
+                error: function () {
+                    $("#divProcessing").hide();
+                    $("#btnSecond").click();
+                    return false;
+                }
+            });
+
+        }
+        $(function () {
+            $("#fileToUpload").change(function () {
+                checkfile();
+            });
+
+        });
+
+      
+    
+
+
+
+        $('#remarksUpdate').click(function () {
+
+            debugger
+            var $div = $('#RemarksDiv'), isEditable = $div.is('.editable');
+            $('#RemarksDiv').prop('contenteditable', !isEditable).toggleClass('editable')
+            var PropertyId=@Model.PropertyId;
+            var Remarks=$('#RemarksDiv').val();
+            if(isEditable==true)
+            {
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '/Property/EditPropertyRemarks',
+                    data: JSON.stringify({ PropertyId: PropertyId,Remarks:Remarks }),
+                    contentType: 'application/json',
+                    success: function (result) {
+                        debugger;
+                        $('#RemarkModal').modal('toggle');
+                        if (result != "") {
+                            $('#RemarksDiv').text("");
+                            $('#RemarksDiv').text(result);
+                            isEditable=true;
+                            var $div = $('#RemarksDiv'), isEditable = $div.is('.editable');
+                            $('#RemarksDiv').prop('contenteditable', !isEditable).toggleClass('editable')
+                           
+                        }
+                        else if (result == "choosecompany") {
+                         
+                        }
+
+
+                    },
+                    error: function () {
+                        $("#divProcessing").hide();
+                        $("#btnSecond").click();
+                        return false;
+                    }
+                });
+            }
+
+        })
+        //$('#DeleteImageDiv').click(function () {
+
+        // })
+
+    });
+
+    function IsApproved()
+    {
+        debugger
+
+        var ChekedValue=$('input[type=radio][name=Approve]:checked').val();
+        var PropertyId= @Model.PropertyId;
+        $.ajax({
+            type: 'POST',
+            url: '/Home/UpdateProperty',
+            data: JSON.stringify({ PropertyId: PropertyId, IsCheked: ChekedValue}),
+            contentType: 'application/json',
+            success: function (result) {
+               
+                $('#ApproveModal').modal('toggle');
+               // window.location.href = '@Url.Action("getagentproperty", "property", new { id = @Model.PropertyId })';
+               
+            },
+            error: function () {
+                $("#divProcessing").hide();
+                $("#btnSecond").click();
+                return false;
+            }
+        });
+
+    }
+
+    function  DeleteImage( id)
+    {
+
+        debugger
+        //$('#DeleteImageDiv').click(function () {
+        $.ajax({
+            type: 'POST',
+            url:'@Url.Action("DeletePropertyImage")' ,
+            data: JSON.stringify({ id: id }),
+            contentType: 'application/json',
+            success: function (DeleteImageModel) {
+                debugger
+                $("#DeleteModal").attr('style','display:none;');
+
+                var NewImagePath = DeleteImageModel.NewImagePath;
+                var ImagePropertyId=DeleteImageModel.ImagePropertyId;
+                var DeletedImagePath= DeleteImageModel.DeletedImagePath;
+                var Noimage="/images/no-image-available.jpg";
+                $('#DivId-'+ImagePropertyId).empty();
+                $('#DivIconId-'+ImagePropertyId).empty();
+                $('#DivIconId-'+ImagePropertyId).removeClass('edit_in');
+                var Imgprevw=$('#imgprvw').attr('src');
+                if(Imgprevw!=null)
+                {
+
+                    if(Imgprevw==DeletedImagePath)
+                    {
+
+                        $('#imgprvw').attr('src',"")
+
+                    }
+
+                    if(NewImagePath!=null)
+                    {
+
+                        $('#imgprvw').attr('src',NewImagePath)
+                    }
+                    else
+                    {
+                        debugger
+                        $('#footer').css("display","none")
+                        $('#imgprvw').attr('src',Noimage)
+                    }
+
+                }
+
+            },
+            error: function () {
+                $("#divProcessing").hide();
+                $("#btnSecond").click();
+                return false;
+            }
+
+        });
+        debugger
+        $("#DeleteModal").attr('style','display:none;');
+        //})
+    }
+
+
+    function showimagepreview(input) {
+
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#prvwimg').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+    var id = 0;
+
+    function updateid(pid) {
+
+        id = pid;
+        $("#btnSecond").click();
+    }
+
+    var DeletedId=0;
+
+
+    function  DeleteProperty(Pid)
+    {
+        debugger
+        DeletedId=Pid;
+        //$("#btnDelteImageModal").click();
+    }
+    var UpdatePropertyId=0;
+    UpdateRemarks(PropertyId)
+    {
+        debugger;
+        UpdatePropertyId=PropertyId;
+    }
+
+
+
+
+ 
+</script>
+@{
+    Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = TempData["MessageBody"] });
+}
+
+<div class="row">
+
+    <div class="col-md-6 col-sm-6">
+
+        <figure class="product-view-image">
+            <!-- product image -->
+            @if ((@Model.PropertyImage != "") && (@Model.PropertyImage != null))
+            {
+                <img id="imgprvw" class="img-responsive" src="@Model.PropertyImage" data-propertyimageid="-1" width="620" height="620" alt="" />
+            }
+            @if (Model.PropertyPhotolist != null)
+            {
+                if (Model.PropertyPhotolist.Count() > 0)
+                {
+                    <section>
+                        <footer id="footer">
+                            @*<input type="submit" value="Update" class="bigButton" id="btnSubmit" />*@
+                            <a onclick="updateid(@Model.PropertyId);" style="color: #34C7F4" href="#"><i class="">Edit Image</i></a>
+                        </footer>
+                    </section>
+                }
+
+            }
+        </figure>
+
+    </div>
+
+    <div class="col-md-6 col-sm-6">
+
+        <h1 class="product-view-title">@Model.PropertyType</h1>
+
+        <p>
+
+            <h2>@Model.MLS</h2>
+        </p>
+
+        <hr class="half-margins" />
+
+        <span id="product-view-stock-info" class="shop-stock-info stock-yes">
+
+
+
+            @*<a href="@Url.Action("UpdateProperty", "Home", new { id = @Model.PropertyId })" class="@Colors"><i class="">@IsApproved</i> </a>*@
+            <label>Approve :</label>
+            <p>
+
+
+                <input type="radio" name="Approve" id="ApproveYes" @IsApprovedYes value="Yes"> Yes
+                <input type="radio" name="Approve" id="ApproveNo" @IsApprovedNo value="No"> <label style="margin-bottom:5px">No</label>
+            </p>
+
+            <!-- stock -->
+
+
+        </span><!-- /stock -->
+        <!-- see the bottom of the page for the script -->
+        <section class="product-view-colors">
+            @{
+                if (Model.PropertyPhotolist != null)
+                {
+                    foreach (var item in Model.PropertyPhotolist)
+                    {
+                        <div class="Property_img">
+
+                            <div id="DivId-@item.PropertyImageId">
+                                <a data-color="pink" data-stock="yes" data-id="@item.PropertyImageId" class="imageclass" data-src="@item.imagelist" href="#">
+                                    <img src="@item.imagelist" height="70" alt="" />
+
+                                </a>
+                            </div>
+                            @*<div id="DivIconId-@item.PropertyImageId" class="edit_in" data-toggle="modal" href="#myModal" onclick="DeleteImage(@item.PropertyImageId);">*@
+                            <div id="DivIconId-@item.PropertyImageId" class="edit_in" data-toggle="modal" onclick="DeleteProperty(@item.PropertyImageId);" href="#DeleteModal">
+
+                                <i class="fa fa-times"></i> <a href="#"></a>
+
+                            </div>
+                        </div>
+                    }
+
+                }
+            }
+
+
+
+        </section>
+
+        <form action="#" method="get" class="form-inline margin-top30 nopadding clearfix">
+            <div class="remarks_scttt">
+                <span>Remarks:</span>
+                <textarea class="text_in" maxlength="150" required="required" id="RemarksDiv"   style="width: 300px;" />@Model.Remark</textarea>      
+                @*<input class="btn-group pull-left product-opt-size" type="text" id="myText" value="@Model.Remark">*@
+              <p class="new_text"> </p>
+           <!-- /btn-group -->
+
+       </div>
+
+
+        </form>
+
+        <div>
+            <button id="RemarksBtn" data-toggle="modal" href="#RemarkModal" onclick="UpdateRemarks(@Model.PropertyId);" class=" bigButton action">Update Remarks</button>
+        </div>
+        <hr class="half-margins" />
+
+
+
+    </div>
+
+
+
+</div>
+<div class="dt-sc-tabs-frame-content" style="">
+    <div class="sky-form boxed margin-top10">
+        <header><b>General Information</b></header>
+        <br>
+        <div class="detail_left_Section_top" style="font-family:Arial">
+            <span id="MainContent_PropertyDetailsControl_lblSubTypeofhome"><b>Property Type:</b> @Model.PropertyType</span>
+            <br>
+            <span id="MainContent_PropertyDetailsControl_lblStorey"><b>Age:</b> @Model.Age</span><br>
+            <b>Basement:</b>
+            <span id="MainContent_PropertyDetailsControl_lblDirCrossSt">@Model.Basement</span>
+            <br>
+            <span id="MainContent_PropertyDetailsControl_lblLot"><b><b>Bedrooms:</b> @Model.Bedrooms </b> </span>
+            <br>
+            <b>MLS#:</b>
+            <span id="MainContent_PropertyDetailsControl_lblMLS1">@Model.MLS</span>
+
+        </div>
+
+        <div id="MainContent_PropertyDetailsControl_room" style="font-family:Arial">
+            <div class="detail_span" id="MainContent_PropertyDetailsControl_Fronting">
+                <span id="MainContent_PropertyDetailsControl_lblfronting"><b>Kitchen:</b> @Model.Kitchen</span>
+            </div>
+            <div class="detail_span">
+                <b>Price: </b>
+                <span id="MainContent_PropertyDetailsControl_lblroom">@Model.Price</span>
+                <br>
+                <b>LocationPrefered :</b>
+                <span id="MainContent_PropertyDetailsControl_lblBedroom">@Model.LocationPrefered :</span>
+                <br>
+                <b>Style :</b>
+                <span id="MainContent_PropertyDetailsControl_lblWashRooms">@Model.Style :</span><br>
+                <b>SideDoorEntrance :</b>
+                <span id="MainContent_PropertyDetailsControl_lblWashRooms">@Model.SideDoorEntrance :</span><br>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<a id="btnSecond" data-toggle="modal" style="color: #34C7F4; opacity: 0;" href="#myModal"><i class="">Show Modal</i></a>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Uplaod File</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            @using (Html.BeginForm("EditPropertyImage", "Property", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="modal-body">
+                    <div class="col-md-6 col-sm-6">
+
+                        <figure class="product-view-image">
+                            <!-- product image -->
+
+                            <img id="prvwimg" class="img-responsive" src="~/images/no-image-available.jpg" width="620" height="620" alt="" />
+
+
+                        </figure>
+
+
+
+
+
+                    </div>
+                    <input type="hidden" id="PropertyId" name="PropertyId" value="@Model.PropertyId" />
+                    <section class="col col-md-3">
+
+                        Upload Image
+                        <input type="file" name="file" id="ImageUpload" onchange="showimagepreview(this)" />
+
+                    </section>
+
+                    <section style="display:none" class="col col-md-4">
+                        <input type='file' name='file' id='file' />
+                        @*<div class="button"><input type="file" id="fileToUpload" onchange="this.parentNode.nextSibling.value = this.value" name="fileToUpload">Browse</div>*@
+                        <span style="color:red;"></span><span id="spanfile" class="field-validation-error"></span>
+                    </section>
+                </div>
+            <!-- /modal body -->
+
+                <div class="modal-footer" style="float:left">
+                    <!-- modal footer -->
+                    <button class="bigButton" data-dismiss="modal">Close</button>
+                    <button type="submit" class="bigButton" @*onclick="Uplaod();"*@>Upload</button>
+                </div><!-- /modal footer -->
+
+            }
+
+
+
+        </div>
+    </div>
+</div>
+
+<a id="btnApproveModal" data-toggle="modal" style="color: #34C7F4; opacity: 0;" href="#ApproveModal"><i class="">Show Modal</i></a>
+<div class="modal fade" id="ApproveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Approve</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <p> Are you sure? You want to change the status.</p>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button id="btnIsApprovedClose" class="bigButton" data-dismiss="modal">Close</button>
+                <button class="bigButton" onclick="IsApproved();">Ok</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+
+
+<a id="btnDelteImageModal" data-toggle="modal" style="color: #34C7F4; opacity: 0;" href="#DeleteModal"><i class="">Show Modal</i></a>
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Delete</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <p> Are you sure? You want to delete this Image.</p>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button id="btnIsApprovedClose" class="bigButton" data-dismiss="modal">Close</button>
+                <button class="bigButton" onclick="DeleteImage(DeletedId);">Ok</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+
+<a id="btnRamarkModal" data-toggle="modal" style="color: #34C7F4; opacity: 0;" href="#RemarkModal"><i class="">Show Modal</i></a>
+<div class="modal fade" id="RemarkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Remarks</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <p> Are you sure? You want to update this remarks.</p>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button id="btnIsApprovedClose" class="bigButton" data-dismiss="modal">Close</button>
+                <button class="bigButton" id="remarksUpdate" @*onclick="RemarksUpdate(UpdatePropertyId);"*@>Ok</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    /** CHANGE BIG IMAGE **/
+    //jQuery("#product-main-image").attr('src', jQuery(this).attr('data-src'));
+    jQuery("#imgprvw").attr('src', jQuery(this).attr('data-src'));
+    jQuery('section.product-view-colors a').bind("click", function (e) {
+        e.preventDefault();
+
+        /** Reset the selected thumbnail **/
+        jQuery('.product-view-colors a').removeClass('active');
+        jQuery(this).addClass('active');
+
+        /** add the color (value) to the hidden input, inside the form **/
+        jQuery("input#color").val(jQuery(this).attr('data-color').trim());
+
+
+        /** CHANGE BIG IMAGE **/
+        //jQuery("#product-main-image").attr('src', jQuery(this).attr('data-src'));
+
+        jQuery("#imgprvw").attr('src', jQuery(this).attr('data-src'));
+
+        /**
+
+        /* stock color */
+        var data_stock = jQuery(this).attr('data-stock').trim();
+        jQuery("#product-view-stock-info").removeClass('stock-yes stock-no');
+        jQuery("#product-view-stock-info").addClass('stock-' + data_stock);
+
+        /* stock icon */
+        jQuery("#product-view-stock-info i").removeClass('fa-check fa-times');
+        if (data_stock == 'yes') {
+            jQuery("#product-view-stock-info i").addClass('fa-check');
+        } else {
+            jQuery("#product-view-stock-info i").addClass('fa-times');
+        }
+
+    });
+
+</script>
+
+<div>
+    
+    @Html.ActionLink("Back to list", "WelcomeHome", "home", new { @id = Convert.ToInt32(HttpContext.Current.Session["CustomerId"]) }, null)
+   
+</div>

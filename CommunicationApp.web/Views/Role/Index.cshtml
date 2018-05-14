@@ -1,0 +1,151 @@
+﻿@model IEnumerable<CommunicationApp.Models.RoleModel>
+
+@{
+    ViewBag.Title = "Roles";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+<h2 class="text-center">Roles</h2>
+@section Scripts {
+
+    <script type="text/javascript">
+
+        function updateid(pid) {
+            id = pid;
+        }
+        function deleteme() {
+
+            window.location = "/Role/Delete?id=" + id;
+        }
+
+        function GetRevokePermission(_RoleId) {
+            RoleId = _RoleId;
+        }
+        function DeleteRevokePermission() {
+
+            window.location = "/Role/RevokePermission?RoleId=" + RoleId;
+        }
+
+    </script>
+}
+<p class="operation">
+    @if (Convert.ToBoolean(TempData["Create"]) == true)
+    {
+        <i class="glyphicon glyphicon-share-alt create_icon"></i>
+        @Html.ActionLink("Create New", "Create")
+    }
+</p>
+
+@{
+    Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = TempData["MessageBody"] });
+}
+
+<div class="table-responsive">
+    <table id="mytable" class="table">
+        <thead>
+            <tr>
+                <th><span>@Html.DisplayNameFor(model => model.RoleType)</span></th>
+                <th><span>@Html.DisplayNameFor(model => model.RoleName)</span></th>
+                <th><span>@Html.DisplayNameFor(model => model.RoleDescription)</span></th>
+                <th><span>@Html.DisplayNameFor(model => model.IsActive)</span></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoleType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoleName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoleDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+
+                    <td class="operation">
+                        @if (Convert.ToBoolean(TempData["Edit"]) == true)
+                        {
+                            @Html.ActionLink(" ", "Edit", new { id = item.RoleId }, new { @class = "glyphicon glyphicon-edit edit_icon", @data_original_title = "Edit", @data_placement = "top", @data_toggle = "tooltip" })
+                        }
+                        |
+                        @if (Convert.ToBoolean(TempData["Detail"]) == true)
+                        {
+                            @Html.ActionLink(" ", "Details", new { id = item.RoleId }, new { @class = "glyphicon glyphicon-info-sign info_icon", @data_original_title = "Details", @data_placement = "top", @data_toggle = "tooltip" })
+                        }|
+                        @if (Convert.ToBoolean(TempData["Delete"]) == true)
+                        {
+                           <a data-toggle="modal" class="glyphicon glyphicon-trash delete_icon" onclick="updateid(@item.RoleId);" href="#myModal"></a>
+                            
+                        }|
+                        @if (Convert.ToBoolean(TempData["Edit"]) == true)
+                        {
+                            @Html.ActionLink("Assign Permission", "AssignPermission", new { RoleId = item.RoleId })
+                        }|
+                        @if (Convert.ToBoolean(TempData["Delete"]) == true)
+                        {
+                            <a data-toggle="modal" onclick="GetRevokePermission(@item.RoleId);" href="#myModalRevokePermission">Revoke Permission</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Delete Role</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <p>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button class="bigButton" data-dismiss="modal">Close</button>
+                <button class="bigButton" onclick="deleteme();">Delete</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalRevokePermission" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <!-- modal header -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Revoke Permission</h4>
+            </div><!-- /modal header -->
+            <!-- modal body -->
+            <div class="modal-body">
+                <p>Are you sure to revoke permission from this role?</p>
+            </div>
+            <!-- /modal body -->
+
+            <div class="modal-footer">
+                <!-- modal footer -->
+                <button class="bigButton" data-dismiss="modal">Close</button>
+                <button class="bigButton" onclick="DeleteRevokePermission();">Revoke</button>
+            </div><!-- /modal footer -->
+
+        </div>
+    </div>
+</div>
+@{
+    Html.RenderAction("Paging", "Base");
+}

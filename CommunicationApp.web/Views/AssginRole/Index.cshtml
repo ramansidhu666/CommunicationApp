@@ -1,0 +1,122 @@
+﻿@using CommunicationApp.Models
+@{
+    ViewBag.Title = "Assign Roles";
+    Layout = "~/Views/Shared/_LayoutBackEnd.cshtml";
+}
+<h2 class="text-center">Assign Roles</h2>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //var UserRoleTypeId = 0;
+        $(".bigButton").click(function () {
+            if ($(this).attr('data-id') != "search")
+            {
+                var RoleId = $(this).parent().siblings().find("select").val();
+                var Id = $("#Id").val();
+                if (RoleId > 0) {
+                    $.ajax({
+                        type: 'Get',
+                        url: 'AssginRole/UpdateRole',
+                        data: { 'UserId': $(this).attr('data-id'), 'RoleId': RoleId, 'Id': Id },
+                        dataType: 'json',
+                        success: function () {
+                            $("#loadingElement").hide();
+                            alert('Permission Set Sucessfully');
+                            window.location.href = '@Url.Action("Index", "AssginRole")';
+                        },
+                        error: function (req, status, err) {
+                            alert('unable to update the role, sorry, pls. try again... ' + err);
+                            $("#loadingElement").hide();
+                        }
+                    });
+                }
+                else {
+                    alert("Please select a valid role.");
+                }
+            }
+        });
+    });
+</script>
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col col-md-1">
+                Username
+            </div>
+            <div class="col col-md-2">
+                @Html.TextBox("SearchUsername", null, new { @class = " col-md-12" })
+            </div>
+            <div class="col col-md-1">
+                Email
+            </div>
+            <div class="col col-md-2">
+                @Html.TextBox("SearchEmailid", null, new { @class = " col-md-12" })
+            </div>
+            <div class="col col-md-3">
+                <input type="submit" value="Search" data-id="search" class="bigButton action" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+        </div>
+    </div>
+}
+
+<div class="table-responsive">
+    <table id="mytable" class="table">
+        <thead>
+            <tr>
+                <th><span>User Name</span></th>
+                <th><span>Email Id</span></th>
+                <th><span>Role</span></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 0;
+                foreach (var item in @ViewBag.UserList)
+                {
+                    List<UserRoleModel> _lst = (List<UserRoleModel>)ViewBag.UserRoleList;
+                    var username = _lst.Where(x => x.UserId == @item.UserId);
+                    if (username.Count() > 0)
+                    {
+                        string RoleId = username.Select(x => x.RoleId).FirstOrDefault().ToString();
+                        <tr>
+                            <td>@username.Select(x => x.User.UserName).FirstOrDefault()</td>
+                            <td>@username.Select(x => x.User.UserEmailAddress).FirstOrDefault()</td>
+                            <td class="nr">
+                                @Html.DropdownListCustom("RoleId", @RoleId, (IEnumerable<SelectListItem>)ViewBag.RoleId)
+                            </td>
+                            <td>
+                                @Html.Hidden("Id", i = username.Select(x => x.UserId).FirstOrDefault())
+                                <input type="button" data-id="@item.UserId" value="Assign Role" class="bigButton" />
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>@item.UserName</td>
+                            <td>@item.UserEmailAddress</td>
+                            <td>
+                                @Html.DropdownListCustom("RoleId", "", (IEnumerable<SelectListItem>)ViewBag.RoleId)
+                            </td>
+                            <td>
+                                @Html.Hidden("Id", i = 0)
+                                <input type="button" data-id="@item.UserId" value="Assign Role" class="bigButton" />
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@{ Html.RenderAction("Paging", "Base"); }
+
+

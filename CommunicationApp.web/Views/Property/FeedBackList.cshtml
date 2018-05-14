@@ -1,0 +1,114 @@
+﻿@model IEnumerable<CommunicationApp.Models.FeedBackModel>
+
+@{
+    ViewBag.Title = "Feedback";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+
+
+
+<h2 class="text-center">Feedback</h2>
+@{Html.RenderAction("DisplayMessage", "Base", new { ShowMessage = TempData["ShowMessage"], MessageBody = @TempData["MessageBody"] });}
+
+
+
+<div>
+    <table id="mytable" class="table">
+        <thead>
+            <tr>
+                <th style="width: 10%" class="txt-align"><span>@Html.DisplayNameFor(model => model.CustomerPhoto)</span></th>
+                <th style="width: 10%" class="txt-align"><span>@Html.DisplayNameFor(model => model.CustomerName)</span></th>
+                <th style="width: 20%" class="txt-align"><span> @Html.DisplayNameFor(model => model.Subject)</span></th>
+                <th style="width: 30%" class="txt-align"><span>@Html.DisplayNameFor(model => model.Message)</span></th>
+                <th style="width: 10%" class="txt-align"><span>Posted On</span></th>
+                <th style="width: 10%" class="txt-align"><span>Action</span></th>
+
+                @*<th><span> @Html.DisplayNameFor(model => model.IsActive)</span></th>*@
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @{
+
+                string RowColors = "";
+
+            }
+            @foreach (var item in Model)
+            {
+
+                if (@item.IsRead == true && @item.IsRead == true)
+                {
+                    RowColors = "Greencolor";
+                }
+                else if (@item.IsRead == false)
+                {
+                    RowColors = "Redcolor";
+                }
+                <tr class="@RowColors">
+                    <td class="txt-align ">
+                        @if ((item.CustomerPhoto != "") && (item.CustomerPhoto != null))
+                        {
+                            <img src="@Url.Content(item.CustomerPhoto)" height="50" width="50" alt="No Image" />
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.CustomerName)
+                    </td>
+                    <td class="txt-align">
+                        @Html.DisplayFor(model => item.Subject)
+                    </td>
+                    <td class="txt-align">
+
+                        @Html.DisplayFor(model => item.Message)
+                    </td>
+                    <td>
+                        @{
+                        var createdata = @item.CreatedOn.ToString();
+                        DateTime create_date = Convert.ToDateTime(createdata);
+                        }
+
+                        @create_date.ToString("MM/dd/yyyy hh:mm tt")
+                    </td>
+                    <td class="operation">
+
+                        @{var ids = "User" + item.FeedBackId; }
+                        @if (@item.IsRead == false)
+                        {
+                            <a class="info_link" style="color: #34C7F4" id="@ids" href="@Url.Action("UpdateFeedback", "Property", new { id = @item.FeedBackId }) ">Read me</a>
+                        }
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    if (Model.ToList().Count == 0)
+    {
+        TempData["Message"] = "No record found .";
+
+    }
+    else
+    {
+        Html.RenderAction("Paging", "Base");
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

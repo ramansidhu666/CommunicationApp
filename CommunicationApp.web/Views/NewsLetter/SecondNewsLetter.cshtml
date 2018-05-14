@@ -1,0 +1,148 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<script type="text/javascript">
+    $(document).ready(
+		function () {
+		    $('.clickMe').click(function () {
+		        "use strict";
+		        $(this).hide();
+		        $('#' + $(this).attr('for'))
+                                .val($(this).text())
+                                .toggleClass("form-control")
+                                .show()
+                                .focus();
+		    });
+
+		    $('.blur').blur(function () {
+		        "use strict";
+		        $(this)
+                    .hide()
+                    .toggleClass("form-control");
+		        var myid = (this).id;
+		        $('span[for=' + myid + ']')
+                    .text($(this).val())
+                    .show();
+		    });
+		}
+	);
+</script>
+
+
+@model CommunicationApp.Models.SecondNewsletterModel
+@using (Html.BeginForm("Test", "NewsLetter", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div id="SecondLetter" class="newsltr_bg" style="display:none">
+        <div style="float:left; width:100%; background:#006f53; padding:8px;">
+            <div style="float:left; width:100%;">
+                <div style="float:left; width:100%; text-align:center; margin:8px 0;">
+                    <h2 style="float:left; text-align:center; width:100%; background-color:#eda320; color: #191919; font-family:'Times New Roman', Times, serif; font-style:italic; text-transform:uppercase; font-weight:bold; font-size:24px; padding:4px;">7 cheap and easy steps to a better open house</h2>
+                </div>
+                <div style="float:left; width:100%; text-align:center; margin:8px 0;">
+
+                    <p style="float:left; text-align:center; width:100%; color: white; font-size:17px; ">
+                        Don't want your house to sit unsold in today's brutal housing market? A real-estate agent explains how to
+                        make open houses more appealing to buyers and safer for sellers.
+                    </p>
+
+                </div>
+                <div style="float:left; width:100%; margin-top:3px; background-color:#f0f0f0; border-radius:12px; margin: 8px 0;">
+                    <div style="float:left; width:100%; margin:4px 0;">
+                        <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="p1" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: #c90101; display: inline; font-size: 16px; font-weight: normal; margin: 0; ">1. Detail and de-clutter.</span></h3>
+                        <input value="" type="text" id="p1" name="p1" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: #c90101; font-size: 16px; display: none; margin:0px; font-family: arial;" hidden>
+
+                        <textarea id="pg1" class="txtarea" name="SecondContent" contenteditable="true" style="float: left; width: 100%;  font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 180px; border: 0px;color:black;background:none; margin: 4px 0 0;">
+                            The first step in preparing for an open house is to ensure that your entire property is clean and de-cluttered, Combs says. The goal of an open house is to enable prospective buyers to envision themselves living there, and clutter and disorder prevent them from doing so. So sellers should detail their entire house room by room. Also, make sure that outdoor spaces are in tiptop condition. Combs encourage sellers to pay particular attention to the walkway leading up to their front door because "that's where the people are going to come in for your open house." As in other endeavors, first impressions are tremendously important to real estate.
+                            You could always hire professionals — cleaners and landscapers — to take care of these chores. But with a little sweat, some cleaning supplies and gas for the lawn mower, homeowners can get their properties open-house ready at minimal cost.
+                        </textarea>
+
+
+                    </div>
+                    <div style="float:left; width:100%; margin:4px 0;">
+
+                        <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="p2" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: #c90101; display: inline; font-size: 16px; font-weight: normal; margin: 0; ">2. Fire up the oven.</span></h3>
+                        <input value="" type="text" id="p2" name="p2" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: #c90101; font-size: 16px; display: none; margin:0px; font-family: arial;" hidden>
+
+                        <textarea id="pg2" class="txtarea" name="SecondContent" contenteditable="true" style="float: left; width: 100%;  font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 180px; border: 0px;color:black;background:none; margin: 4px 0 0;">
+                            While making sure that your home is free of offensive smells such as odors from pets and cigarettes, homeowners should consider injecting some more welcoming aromas into the air. "Smells like cinnamon and chocolate give you a feeling of home ... so, I wouldn't hesitate to throw some sweet rolls or brownies in the oven," Combs says. "What we're trying to do is psychologically have people believe they are at home and want to buy the house."
+                        </textarea>
+
+                    </div>
+                    <div style="float:left; width:100%; margin:4px 0;">
+
+                        <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="p3" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: #c90101; display: inline; font-size: 16px; font-weight: normal; margin: 0; ">3. Lighten up.</span></h3>
+                        <input value="" type="text" id="p3" name="p3" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: #c90101; font-size: 16px; display: none; margin:0px; font-family: arial;" hidden>
+
+                        <textarea id="pg3" class="txtarea" name="SecondContent" contenteditable="true" style="float: left; width: 100%;  font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 180px; border: 0px;color:black;background:none; margin: 4px 0 0;">
+                            It's important that your home is well-lit for open-house day. "People love light, airy houses," Combs says. In addition, a slip and fall on a poorly lit basement step will make prospective buyers wonder if the home is safe. "Before your open house, make sure that all of your light bulbs are working," Combs says.
+                        </textarea>
+                    </div>
+                    <div style="float:left; width:100%; margin:4px 0;">
+
+                        <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="p4" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: #c90101; display: inline; font-size: 16px; font-weight: normal; margin: 0; ">4. Lock it up.</span></h3>
+                        <input value="" type="text" id="p4" name="p4" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: #c90101; font-size: 16px; display: none; margin:0px; font-family: arial;" hidden>
+
+                        <textarea id="pg4" class="txtarea" name="SecondContent" contenteditable="true" style="float: left; width: 100%;  font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 180px; border: 0px;color:black;background:none; margin: 4px 0 0;">
+                            Unfortunately, there has been an increase in open-house-related thefts over the past couple of years, with thieves posing as potential buyers and then making off with homeowners' belongings, Combs says. The most commonly stolen items, according to Combs, are prescription drugs and small pieces of jewelry. To prevent theft, homeowners should store their valuables and prescription drugs in a safe place during the open house. "A lot of people don't think about taking the drugs out of their medicine cabinets," Combs says. "And I think that's really crucial today."
+                        </textarea>
+                    </div>
+                    <div style="float:left; width:100%; margin:4px 0;">
+
+                        <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="p5" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: #c90101; display: inline; font-size: 16px; font-weight: normal; margin: 0; ">5. Get rid of the pets.</span></h3>
+                        <input value="" type="text" id="p5" name="p5" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: #c90101; font-size: 16px; display: none; margin:0px; font-family: arial;" hidden>
+
+                        <textarea id="pg5" class="txtarea" name="pg5" contenteditable="true" style="float: left; width: 100%;  font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 180px; border: 0px;color:black;background:none; margin: 4px 0 0;">
+                            Although you might be a dog lover, the potential buyers coming to see your home may not be. That doesn't mean they won't be interested in purchasing the house, only that you should remove your pets — and pet-related items such as crates and water bowls — from the property during the open house. In addition to turning off certain buyers, pets can be a distraction, Combs says. "People come through a house [because] they want to see the house and not be distracted by [a pet]."
+                        </textarea>
+                    </div>
+                    <div style="float:left; width:100%; margin:4px 0;">
+
+                        <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="p6" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: #c90101; display: inline; font-size: 16px; font-weight: normal; margin: 0; ">6. Make yourself disappear.</span></h3>
+                        <input value="" type="text" id="p6" name="p6" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: #c90101; font-size: 16px; display: none; margin:0px; font-family: arial;" hidden>
+
+                        <textarea id="pg6" class="txtarea" name="pg6" contenteditable="true" style="float: left; width: 100%;  font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 180px; border: 0px;color:black;background:none; margin: 4px 0 0;">
+                            Homeowners should be away from the property during the open house. Potential buyers can feel like they are imposing if the owners remain in the property, which makes it much more difficult for them to envision themselves living there. "It's very disconcerting ... when the owner stays there," Combs says. "The buyers are very uncomfortable." So make arrangements to spend the day someplace else.
+                        </textarea>
+                    </div>
+                    <div style="float:left; width:100%; margin:4px 0;">
+
+                        <h3 style="margin:3px 0px 0px;"><span class="label label-default clickMe" for="p7" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none; border-radius: 0; color: #c90101; display: inline; font-size: 16px; font-weight: normal; margin: 0; ">7. Sell the neighborhood</span></h3>
+                        <input value="" type="text" id="p7" name="p7" class="blur" style=" background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: 0 none !important; color: #c90101; font-size: 16px; display: none; margin:0px; font-family: arial;" hidden>
+
+                        <textarea id="pg7" class="txtarea" name="pg7" contenteditable="true" style="float: left; width: 100%;  font-size: 14px; line-height: 22px; white-space: normal; text-align: justify; padding: 4px 10px; height: 180px; border: 0px;color:black;background:none; margin: 4px 0 0;">
+                            While potential buyers will certainly want to see what your house is like, they will have other questions as well. "I get this all the time: [potential buyers have] a young 3-year-old, and [they] want to know if there are babysitter-aged kids in the neighborhood and they want to know if there are other kids for them to play with," Combs says. Sellers should gather pertinent information about the neighborhood, school system and utility bills and pass it along to their agent. (Or, if they aren't using an agent, then directly to the buyers themselves
+                        </textarea>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div style="float:left; width:100%; background-color:#f0f0f0; padding:8px 0; border-radius:12px;">
+                <div style="float:left; width:25%; padding:6px;">
+                    <img src="" style="width:150px;" alt="" title="" />
+                </div>
+                <div style="float:left; width:50%; padding:6px; text-align:center;">
+                    <h2 style="float:left; width:100%; font-size:20px; font-family:Arial, Helvetica, sans-serif; font-weight:bold; color:#202020; text-align:center; margin-top:6px;">Ajay Shah</h2>
+                    <div style="float:left; width:100%; margin:12px 0 0;">
+                        <p style="float:left; width:100%; font-size:15px; font-family:Arial, Helvetica, sans-serif; color:#202020;">P: 416-747-9777</p>
+                        <p style="float:left; width:100%; font-size:15px; font-family:Arial, Helvetica, sans-serif; color:#202020; margin:0;">homekey123@yahoo.ca | www.homelifemiracle.com</p>
+                        <p style="float:left; width:100%; font-size:15px; font-family:Arial, Helvetica, sans-serif; color:#202020; margin:0;">HomeLife/Miracle Realty Ltd., Brokerage*</p>
+                        <p style="float:left; width:100%; font-size:15px; font-family:Arial, Helvetica, sans-serif; color:#202020; margin:0;">5010 Steeles Avenue West , Suite 11A , Toronto, Ontario, M9V 5C6</p>
+                    </div>
+                </div>
+                <div style="float:left; width:25%; padding:6px;">
+                    <img src="" style="width:150px;" alt="" title="" />
+                </div>
+            </div>
+        </div>
+        <div class="bottom_button_section">
+            <input id="submit" type="submit" value="Send" style="margin-left: 215px; width: 117px" class="button" />
+        </div>
+    </div>
+
+}
+
+
